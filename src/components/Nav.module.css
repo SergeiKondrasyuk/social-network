@@ -1,0 +1,13 @@
+.nav{
+    padding: 20px;
+    background-color: darkseagreen;
+    font-size: 30px;
+}
+
+.navItem {
+    color: white;
+}
+
+.active {
+    color: #ffdb8a;
+}

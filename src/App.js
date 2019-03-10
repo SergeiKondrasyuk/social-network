@@ -14,8 +14,8 @@ const App = () => {
 
             <Nav/>
 
-            <DialogPage/>
-
+            <DialogPage />
+            {/*<ProfilePage />*/}
         </div>
     );
 

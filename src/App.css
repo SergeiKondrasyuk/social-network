@@ -10,7 +10,7 @@
 
 .header {
     grid-area: h;
-    background-color: aquamarine;
+    background-color: darkseagreen;
 }
 
 .header img {
@@ -19,14 +19,5 @@
 
 .nav {
     grid-area: n;
-    background-color: aquamarine;
-}
-
-.content {
-    grid-area: c;
-    background-color: aquamarine;
-}
-.nav {
-    font-size: 30px;
 }
 
