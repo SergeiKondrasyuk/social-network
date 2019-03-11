@@ -58,7 +58,7 @@
 .oldPostsBlock li{
     list-style: none;
     content: '';
-    background-image: url('../img/ava.png');
+    background-image: url('../../img/ava.png');
     background-size: 25px;
     background-repeat: no-repeat;
     background-position: left center;

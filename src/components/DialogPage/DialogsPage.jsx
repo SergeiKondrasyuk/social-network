@@ -1,14 +1,14 @@
 import React from 'react'
-import './DialogPage.css'
-import ava from "../img/ava.png";
-import avaSmile from "../img/avaSmile.png";
+import s from'./DialogPage.module.css'
+import ava from "../../img/ava.png";
+import avaSmile from "../../img/avaSmile.png";
 
 const DialogPage = () => {
-    return <div className='dialogPage'>
+    return <div className={s.dialogPage}>
 
-        <div className='dialogsList'>
-            <div className='dialogsTitle'>Dialogs</div>
-            <ul className='dialogUsers'>
+        <div className={s.dialogsList}>
+            <div className={s.dialogsTitle}>Dialogs</div>
+            <ul className={s.dialogUsers}>
                 <li>Maks</li>
                 <li><b>Dima</b></li>
                 <li>Anna</li>
@@ -21,23 +21,23 @@ const DialogPage = () => {
             </ul>
         </div>
 
-        <div className='currentDialog'>
+        <div className={s.currentDialog}>
             <ul>
-                <li className='message'>
-                    <img className='dialogAva' src={ava}/>
-                    <p className='userName'>Me</p>
-                    <div className='messageBlock'>
-                        <div className='angle'></div>
-                        <p className='messageText'>Hello</p>
+                <li className={s.message}>
+                    <img className={s.dialogAva} src={ava}/>
+                    <p className={s.userName}>Me</p>
+                    <div className={s.messageBlock}>
+                        <div className={s.angle}></div>
+                        <p className={s.messageText}>Hello</p>
                     </div>
                 </li>
 
-                <li className='message'>
-                    <img className='dialogAva' src={avaSmile}/>
-                    <p className='userName'>Dima</p>
-                    <div className='messageBlock'>
-                        <div className='angle'></div>
-                    <div className='messageText'>Универсальное свойство border позволяет одновременно установить толщину,
+                <li className={s.message}>
+                    <img className={s.dialogAva} src={avaSmile}/>
+                    <p className={s.userName}>Dima</p>
+                    <div className={s.messageBlock}>
+                        <div className={s.angle}></div>
+                    <div className={s.messageText}>Универсальное свойство border позволяет одновременно установить толщину,
                         стиль и цвет границы вокруг элемента. Значения могут идти в любом порядке, разделяясь пробелом,
                         браузер сам определит, какое из них соответствует нужному свойству. Для установки границы только
                         на определенных сторонах элемента, воспользуйтесь свойствами border-top, border-bottom,

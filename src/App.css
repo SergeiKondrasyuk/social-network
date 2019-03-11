@@ -10,14 +10,17 @@
 
 .header {
     grid-area: h;
-    background-color: darkseagreen;
-}
-
-.header img {
-    width: 60px;
 }
 
 .nav {
     grid-area: n;
+}
+
+.profile {
+    grid-area: c;
+}
+
+.dialogPage {
+    grid-area: c;
 }
 

@@ -1,9 +1,9 @@
 import React, {Fragment} from 'react'
 import './App.css';
-import Header from "./components/Header";
-import Nav from "./components/Nav";
-import ProfilePage from "./components/ProfilePage";
-import DialogPage from "./components/DialogsPage";
+import Header from "./components/Header/Header";
+import Nav from "./components/Nav/Nav";
+import ProfilePage from "./components/ProfilePage/ProfilePage";
+import DialogPage from "./components/DialogPage/DialogsPage";
 
 
 const App = () => {
@@ -14,8 +14,8 @@ const App = () => {
 
             <Nav/>
 
-            <DialogPage />
-            {/*<ProfilePage />*/}
+            {/*<DialogPage />*/}
+            <ProfilePage />
         </div>
     );
 
