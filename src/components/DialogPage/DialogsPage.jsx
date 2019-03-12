@@ -2,24 +2,12 @@ import React from 'react'
 import s from'./DialogPage.module.css'
 import ava from "../../img/ava.png";
 import avaSmile from "../../img/avaSmile.png";
+import DialogList from "./DialogList/DialogsList";
 
-const DialogPage = () => {
+const DialogPage = (props) => {
     return <div className={s.dialogPage}>
 
-        <div className={s.dialogsList}>
-            <div className={s.dialogsTitle}>Dialogs</div>
-            <ul className={s.dialogUsers}>
-                <li>Maks</li>
-                <li><b>Dima</b></li>
-                <li>Anna</li>
-                <li>Vital</li>
-                <li>Svetlana</li>
-                <li>Victor</li>
-                <li>Alexander</li>
-                <li>Valery</li>
-                <li>Ludmila</li>
-            </ul>
-        </div>
+        <DialogList users={props.users}/>
 
         <div className={s.currentDialog}>
             <ul>

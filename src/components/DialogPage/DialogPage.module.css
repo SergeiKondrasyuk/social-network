@@ -6,7 +6,6 @@
 
 .dialogsList {
     grid-area: dialogsList;
-    border-right: 2px solid darkseagreen;
 }
 
 .currentDialog {
@@ -53,18 +52,6 @@
 .userName {
     margin: 0;
     text-align: center;
-}
-
-.dialogsTitle {
-    font-size: 30px;
-}
-
-.dialogUsers {
-    font-size: 20px;
-}
-
-.dialogUsers li {
-    margin-bottom: 20px;
 }
 
 .angle {

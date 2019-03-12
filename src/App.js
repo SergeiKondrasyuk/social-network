@@ -1,5 +1,5 @@
 import React, {Fragment} from 'react'
-import './App.css';
+import s from './App.module.css';
 import Header from "./components/Header/Header";
 import Nav from "./components/Nav/Nav";
 import ProfilePage from "./components/ProfilePage/ProfilePage";
@@ -7,15 +7,17 @@ import DialogPage from "./components/DialogPage/DialogsPage";
 
 
 const App = () => {
+
+    let users = ['Maks','Dima','Anna','Vital','Svetlana','Victor','Alexander','Valery','Ludmila'];
     return (
-        <div className='app-wrapper'>
+        <div className={s.appWrapper}>
 
             <Header/>
 
             <Nav/>
 
-            {/*<DialogPage />*/}
-            <ProfilePage />
+            <DialogPage users={users}/>
+            {/*<ProfilePage />*/}
         </div>
     );
 
