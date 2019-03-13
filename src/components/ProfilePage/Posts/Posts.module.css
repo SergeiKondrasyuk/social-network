@@ -1,0 +1,16 @@
+.posts {
+    grid-area: posts;
+}
+
+.newPostTextArea {
+    width: 990px;
+    height: 80px;
+   resize: none;
+    border: 0px;
+    background-color: #d5ffec;
+}
+
+.sendButton button{
+    float: right;
+}
+

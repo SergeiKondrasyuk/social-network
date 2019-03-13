@@ -6,9 +6,11 @@ import ProfilePage from "./components/ProfilePage/ProfilePage";
 import DialogPage from "./components/DialogPage/DialogsPage";
 
 
-const App = () => {
+const App = (props) => {
+    let users = props.state.user;
+    let messages = props.state.messages;
+    let avatars  = props.state.avatars;
 
-    let users = ['Maks','Dima','Anna','Vital','Svetlana','Victor','Alexander','Valery','Ludmila'];
     return (
         <div className={s.appWrapper}>
 
@@ -16,8 +18,8 @@ const App = () => {
 
             <Nav/>
 
-            <DialogPage users={users}/>
-            {/*<ProfilePage />*/}
+            {/*<DialogPage users={users} messages={messages} avatars={avatars}/>*/}
+            <ProfilePage />
         </div>
     );
 

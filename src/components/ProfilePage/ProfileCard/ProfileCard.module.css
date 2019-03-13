@@ -1,0 +1,17 @@
+.profileCard{
+    display: grid;
+    grid-template-areas: "avatar profileInfo";
+    grid-template-columns: 160px 1fr;
+    grid-gap: 10px;
+}
+.avatar img {
+    height: 150px;
+}
+
+.name {
+    font-size: 30px;
+}
+
+.profileInfo {
+    grid-area: profileInfo;
+}

@@ -1,8 +1,6 @@
 .profile {
     display: grid;
-    grid-template-areas: "topImage topImage" "avatar profileInfo" "posts posts";
-    grid-template-rows: 160px 1fr;
-    grid-template-columns: 160px 1fr;
+    grid-template-areas: "topImage" "profileCard" "posts";
     grid-gap: 10px;
 }
 
@@ -15,52 +13,6 @@
     width: 990px;
 }
 
-.avatar {
-    grid-area: avatar;
-}
-
-.avatar img {
-    height: 150px;
-}
-
-.profileInfo {
-    grid-area: profileInfo;
-}
-
-.name {
-    font-size: 30px;
-}
 .posts {
     grid-area: posts;
-}
-
-.myPosts {
-    font-size: 20px;
-    margin: 20px 0;
-}
-
-.newPostTextArea {
-    width: 990px;
-    height: 80px;
-   resize: none;
-    border: 0px;
-    background-color: #d5ffec;
-}
-
-.sendButton button{
-    float: right;
-}
-
-.postContent {
-    font-size: 20px;
-}
-
-.oldPostsBlock li{
-    list-style: none;
-    content: '';
-    background-image: url('../../img/ava.png');
-    background-size: 25px;
-    background-repeat: no-repeat;
-    background-position: left center;
-    padding: 10px 0px 10px 30px;
 }
