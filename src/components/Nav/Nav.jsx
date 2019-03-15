@@ -3,13 +3,13 @@ import s from './Nav.module.css';
 
 
 
-const Nav = () => {
+const Nav = (props) => {
     return <div className={s.nav}>
-        <div className={s.navItem}><a>Profile</a></div>
-        <div className={`${s.navItem} ${s.active}`}><a>Messages</a></div>
-        <div className={s.navItem}><a>Music</a></div>
-        <div className={s.navItem}><a>News</a></div>
-        <div className={s.navItem}><a>Settings</a></div>
+        <div className={s.navItem}><a>{props.navItems[0]}</a></div>
+        <div className={`${s.navItem} ${s.active}`}><a>{props.navItems[1]}</a></div>
+        <div className={s.navItem}><a>{props.navItems[2]}</a></div>
+        <div className={s.navItem}><a>{props.navItems[3]}</a></div>
+        <div className={s.navItem}><a>{props.navItems[4]}</a></div>
     </div>
 }
 export default Nav;

@@ -24,3 +24,14 @@
 .post img{
     height: 50px;
 }
+
+.likeCount{
+    color: #09bc4c;
+    font-size: 15px;
+}
+
+.like{
+    color: #09bc4c;
+    font-size: 15px;
+    margin-left: 10px;
+}

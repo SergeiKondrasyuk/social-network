@@ -6,7 +6,7 @@ const DialogList = (props) => {
         <div className={s.dialogsTitle}>Dialogs</div>
         <ul className={s.dialogUsers}>
             <li>{props.users[1]}</li>
-            <li><b>{props.users[2]}</b></li>
+            <li className={s.active}>{props.users[2]}</li>
             <li>{props.users[3]}</li>
             <li>{props.users[4]}</li>
             <li>{props.users[5]}</li>

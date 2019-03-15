@@ -5,14 +5,14 @@ import ProfileCard from "./ProfileCard/ProfileCard";
 import Posts from "./Posts/Posts";
 
 
-const ProfilePage = () => {
+const ProfilePage = (props) => {
     return <div className={s.profile}>
 
         <div className={s.topImage}><img src={topimage}/></div>
 
-        <ProfileCard/>
+        <ProfileCard  profile={props.profile} ava={props.avatars[1]}/>
 
-        <Posts/>
+        <Posts posts={props.posts} avatars={props.avatars} postsLikes={props.postsLikes}/>
     </div>
 
 

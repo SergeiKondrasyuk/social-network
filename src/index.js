@@ -6,7 +6,11 @@ import * as serviceWorker from './serviceWorker';
 let myState = {
     user: ['Me', 'Maks','Dima','Anna','Vital','Svetlana','Victor','Alexander','Valery','Ludmila'],
     messages: ['Hello', 'Hi!', 'how is your progress in learning  node.js?'],
-    avatars: ['../../../../img/avaSmile.png', '../../../../img/ava.png']
+    avatars: ['../../../../img/avaSmile.png', '../../../../img/ava.png'],
+    posts: ['Hello, world!',"This is my own social network!"],
+    postsLikes: [ 15, 19],
+    profile: {name: 'Sergei K.', address: 'Minsk', dob: '23 october', education: 'BSUIR\'13', skype: 'bender.cdf'},
+    navItems: ['Profile', 'Messages','Music','News', 'Settings'],
 }
 
 ReactDOM.render(<App state = {myState}/>, document.getElementById('root'));
