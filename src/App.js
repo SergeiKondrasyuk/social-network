@@ -9,9 +9,9 @@ import DialogPage from "./components/DialogPage/DialogsPage";
 const App = (props) => {
     let users = props.state.user;
     let messages = props.state.messages;
-    let avatars  = props.state.avatars;
+    let avatars = props.state.avatars;
     let posts = props.state.posts;
-    let postsLikes=props.state.postsLikes;
+    let postsLikes = props.state.postsLikes;
     let profile = props.state.profile;
     let navItems = props.state.navItems;
 
@@ -19,16 +19,23 @@ const App = (props) => {
     return (
         <div className={s.appWrapper}>
 
-            <Header/>
+                <div className={s.headerWrapper}>
+                <Header/>
+                </div>
 
-            <Nav navItems={navItems}/>
+                <div className={s.navWrapper}>
+                    <Nav navItems={navItems}/>
+                </div>
 
-            {/*<DialogPage users={users} messages={messages} avatars={avatars} />*/}
-            <ProfilePage posts={posts} avatars={avatars} profile={profile} postsLikes={postsLikes}/>
-        </div>
-    );
+                <div className={s.contentWrapper}>
+                    {/*<DialogPage users={users} messages={messages} avatars={avatars} />*/}
+                    <ProfilePage posts={posts} avatars={avatars} profile={profile} postsLikes={postsLikes}/>
+                </div>
 
-}
+            </div>
+            );
+
+            }
 
 
-export default App;
+            export default App;

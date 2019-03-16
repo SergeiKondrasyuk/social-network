@@ -8,19 +8,15 @@
     grid-gap: 10px;
 }
 
-.header {
+.headerWrapper {
     grid-area: h;
 }
 
-.nav {
+.navWrapper {
     grid-area: n;
 }
 
-.profile {
-    grid-area: c;
-}
-
-.dialogPage {
+.contentWrapper {
     grid-area: c;
 }
 
