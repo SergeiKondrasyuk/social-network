@@ -12,7 +12,7 @@ const ProfilePage = (props) => {
 
         <ProfileCard  profile={props.profile} ava={props.avatars[1]}/>
 
-        <Posts posts={props.posts} avatars={props.avatars} postsLikes={props.postsLikes}/>
+        <Posts avatars={props.avatars} postData={props.postData}/>
     </div>
 
 

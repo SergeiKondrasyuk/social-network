@@ -11,8 +11,8 @@ const Posts = (props) => {
 
             <NewPostForm/>
 
-            <Post post={props.posts[0]} ava={props.avatars[1]} likes={props.postsLikes[0]}/>
-            <Post post={props.posts[1]} ava={props.avatars[1]} likes={props.postsLikes[1]}/>
+            <Post post={props.postData[0].text} ava={props.avatars[1]} likes={props.postData[0].likeCount}/>
+            <Post post={props.postData[1].text} ava={props.avatars[1]} likes={props.postData[1].likeCount}/>
 
         </div>
 

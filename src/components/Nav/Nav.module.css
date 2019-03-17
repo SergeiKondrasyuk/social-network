@@ -1,14 +1,21 @@
 .nav{
     padding: 20px;
     background-color: darkseagreen;
-    font-size: 30px;
+    font-size: 25px;
     border-radius: 0  0 15px 0;
 }
 
-.navItem {
+.navItem a {
     color: white;
+    text-decoration: none;
 }
 
-.active {
-    color: #ffdb8a;
+.navItem a.active {
+    color: darkblue;
+}
+
+.icon {
+    width: 25px;
+    padding-right: 5px;
+    vertical-align: -4px;
 }
