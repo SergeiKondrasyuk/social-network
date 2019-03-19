@@ -29,23 +29,15 @@ const App = (props) => {
                     <Nav navItems={navItems} icons={icons}/>
                 </div>
 
-                <div className={s.contentWrapper}>
-                    <ProfilePage avatars={avatars} profile={profile} postData={postData}/>
-                </div>
-
-                {/*<Route path='/dialogs' component={DialogPage} users={users} messages={messages} avatars={avatars}/>
-                    <Route path='/profile' component={ProfilePage} posts={posts} avatars={avatars} profile={profile} postsLikes={postsLikes}/>
-
-<DialogPage users={users} messages={messages} avatars={avatars}/>
-<ProfilePage posts={posts} avatars={avatars} profile={profile} postsLikes={postsLikes}/>*/}
-
+                <Route exact path='/dialogs' render={() => (<DialogPage users={users} messages={messages} avatars={avatars}/>)}/>
+                <Route exact path='/profile' render={() => (<ProfilePage avatars={avatars} profile={profile} postData={postData}/>)}/>
 
 
             </div>
         </BrowserRouter>
-            );
+    );
 
-            }
+}
 
 
-            export default App;
+export default App;
