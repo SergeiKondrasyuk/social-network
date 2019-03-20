@@ -8,10 +8,9 @@ import {BrowserRouter, Route} from "react-router-dom";
 
 
 const App = (props) => {
-    let users = props.state.user;
+    let users = props.state.users;
+    let dialogUsers = props.state.dialogUsers;
     let messages = props.state.messages;
-    let avatars = props.state.avatars;
-    let profile = props.state.profile;
     let navItems = props.state.navItems;
     let postData = props.state.postData;
     let icons = props.state.icons;
@@ -29,9 +28,11 @@ const App = (props) => {
                     <Nav navItems={navItems} icons={icons}/>
                 </div>
 
-                <Route exact path='/dialogs' render={() => (<DialogPage users={users} messages={messages} avatars={avatars}/>)}/>
-                <Route exact path='/profile' render={() => (<ProfilePage avatars={avatars} profile={profile} postData={postData}/>)}/>
-
+                <div className={s.contentWrapper}>
+                    <Route exact path='/dialogs'
+                           render={() => (<DialogPage users={users} dialogUsers={dialogUsers} messages={messages}/>)}/>
+                    <Route exact path='/profile' render={() => (<ProfilePage users={users} postData={postData}/>)}/>
+                </div>
 
             </div>
         </BrowserRouter>

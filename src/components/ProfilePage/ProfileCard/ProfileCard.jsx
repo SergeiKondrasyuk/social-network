@@ -5,15 +5,14 @@ import s from './ProfileCard.module.css';
 const ProfileCard = (props) => {
     return <div className={s.profileCard}>
 
-        <div className={s.avatar}> <img src={props.ava}/> </div>
+        <div className={s.avatar}> <img src={props.user.avatar}/> </div>
 
         <div className={s.profileInfo}>
-            <div className={s.name}>{props.profile.name}</div>
-            <br/>
-            <div className={s.address}>City: {props.profile.address}</div>
-            <div className={s.dob}>Date of Birth: {props.profile.dob}</div>
-            <div className={s.education}>Education: {props.profile.education}</div>
-            <div className={s.skype}>Skype: {props.profile.skype}</div>
+            <div className={s.name}><span>{props.user.firstName}</span><span> {props.user.lastName}</span></div>
+            <div className={s.address}>City: {props.user.address}</div>
+            <div className={s.dob}>Date of Birth: {props.user.dob}</div>
+            <div className={s.education}>Education: {props.user.education}</div>
+            <div className={s.skype}>Skype: {props.user.skype}</div>
         </div>
 
     </div>

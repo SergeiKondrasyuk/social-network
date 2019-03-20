@@ -6,9 +6,9 @@ import CurrentDialog from "./CurrentDialog/CurrentDialog";
 const DialogPage = (props) => {
     return <div className={s.dialogPage}>
 
-        <DialogList users={props.users}/>
+        <DialogList dialogUsers={props.dialogUsers}/>
 
-        <CurrentDialog messages={props.messages} users={props.users} avatars={props.avatars}/>
+        <CurrentDialog messages={props.messages} users={props.users} dialogUsers={props.dialogUsers}/>
 
     </div>
 }

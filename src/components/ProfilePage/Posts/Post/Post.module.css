@@ -23,6 +23,7 @@
 
 .post img{
     height: 50px;
+    border-radius: 17px;
 }
 
 .likeCount{

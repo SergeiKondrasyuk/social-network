@@ -10,9 +10,9 @@ const ProfilePage = (props) => {
 
         <div className={s.topImage}><img src={topimage}/></div>
 
-        <ProfileCard  profile={props.profile} ava={props.avatars[1]}/>
+        <ProfileCard  user={props.users[0]}/>
 
-        <Posts avatars={props.avatars} postData={props.postData}/>
+        <Posts user={props.users[0]} postData={props.postData}/>
     </div>
 
 

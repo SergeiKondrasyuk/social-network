@@ -6,6 +6,7 @@
 }
 .avatar img {
     height: 150px;
+    border-radius: 50px ;
 }
 
 .name {
