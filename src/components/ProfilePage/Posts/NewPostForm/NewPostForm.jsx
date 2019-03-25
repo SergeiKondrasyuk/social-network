@@ -1,5 +1,6 @@
 import React from 'react';
 import s from './NewPostForm.module.css';
+import PropTypes from "prop-types";
 
 
 const NewPostForm = () => {
@@ -15,3 +16,7 @@ const NewPostForm = () => {
 }
 
 export default NewPostForm;
+
+NewPostForm.propTypes = {
+
+}

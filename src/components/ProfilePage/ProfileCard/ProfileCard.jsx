@@ -1,5 +1,6 @@
 import React from 'react';
 import s from './ProfileCard.module.css';
+import PropTypes from "prop-types";
 
 
 const ProfileCard = (props) => {
@@ -12,7 +13,7 @@ const ProfileCard = (props) => {
             <div className={s.address}>City: {props.user.address}</div>
             <div className={s.dob}>Date of Birth: {props.user.dob}</div>
             <div className={s.education}>Education: {props.user.education}</div>
-            <div className={s.skype}>Skype: {props.user.skype}</div>
+            <div className={s.website}>Website: {props.user.website}</div>
         </div>
 
     </div>
@@ -21,3 +22,12 @@ const ProfileCard = (props) => {
 }
 
 export default ProfileCard;
+
+ProfileCard.propTypes = {
+    avatar: PropTypes.string,
+    firstName: PropTypes.string,
+    address: PropTypes.string,
+    dob: PropTypes.string,
+    education: PropTypes.string,
+    website: PropTypes.string,
+}

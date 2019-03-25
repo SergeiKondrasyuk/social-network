@@ -1,4 +1,9 @@
-.currentDialog img {
-    height: 50px;
-    border-radius: 17px;
+.currentDialog {
+    display: -ms-flexbox;
+    display: -webkit-flex;
+    display: flex;
+    -webkit-flex-direction: column;
+    -ms-flex-direction: column;
+    flex-direction: column;
 }
+

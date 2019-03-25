@@ -16,7 +16,7 @@
     margin: auto 0px auto 50px;
     border: 2px solid darkseagreen;
     padding: 20px;
-    border-radius: 15px;;
+    border-radius: 15px;
 }
 
 .userName {
@@ -36,3 +36,19 @@
     margin-top: 20px;
     margin-left: 44px;
 }
+
+.dialogAva {
+    height: 50px;
+    border-radius: 17px;
+}
+
+.message:nth-child(even){
+    align-self: flex-end;
+
+}
+
+.message img:nth-child(even){
+    height: 80px;
+    border-radius: 25px;
+}
+

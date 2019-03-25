@@ -2,6 +2,7 @@ import React from 'react';
 import s from './Posts.module.css';
 import Post from "./Post/Post";
 import NewPostForm from "./NewPostForm/NewPostForm";
+import PropTypes from "prop-types";
 
 
 const Posts = (props) => {
@@ -24,3 +25,10 @@ const Posts = (props) => {
 }
 
 export default Posts;
+
+Posts.propTypes = {
+    postData: PropTypes.array,
+    text: PropTypes.string,
+    avatar: PropTypes.string,
+    likeCount: PropTypes.number,
+}

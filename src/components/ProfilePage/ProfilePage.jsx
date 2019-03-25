@@ -3,6 +3,7 @@ import topimage from "../../img/topimage.jpg";
 import s from'./ProfilePage.module.css';
 import ProfileCard from "./ProfileCard/ProfileCard";
 import Posts from "./Posts/Posts";
+import PropTypes from "prop-types";
 
 
 const ProfilePage = (props) => {
@@ -13,9 +14,16 @@ const ProfilePage = (props) => {
         <ProfileCard  user={props.users[0]}/>
 
         <Posts user={props.users[0]} postData={props.postData}/>
-    </div>
+
+        </div>
 
 
 }
 
 export default ProfilePage;
+
+ProfilePage.propTypes = {
+    topimage: PropTypes.string,
+    users: PropTypes.array,
+    postData: PropTypes.array,
+}
