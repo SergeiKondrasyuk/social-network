@@ -5,9 +5,16 @@ import App from './App';
 import * as serviceWorker from './serviceWorker';
 import myState from './redux/state.js';
 
-ReactDOM.render(<App state={myState}/>, document.getElementById('root'));
+let addPost = (post) => {
+    myState.postData = [...myState.postData, {id: myState.postData.length++, text: post, likeCount: 0}];
+    renderPage();
+}
 
-// If you want your app to work offline and load faster, you can change
-// unregister() to register() below. Note this comes with some pitfalls.
-// Learn more about service workers: http://bit.ly/CRA-PWA
+const renderPage = () => {
+    ReactDOM.render(<App state={myState} addPost={addPost}/>, document.getElementById('root'));
+}
+
+renderPage();
+
+
 serviceWorker.unregister();

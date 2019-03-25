@@ -15,7 +15,7 @@ const App = (props) => {
     let messages = props.state.messages;
     let navItems = props.state.nav.navItems;
     let postData = props.state.postData;
-
+    let addPost = props.addPost;
 
     return (
         <BrowserRouter>
@@ -36,7 +36,7 @@ const App = (props) => {
                 <div className={s.contentWrapper}>
                     <Route path='/dialogs'
                            render={() => (<DialogPage users={users} dialogUsers={dialogUsers} messages={messages}/>)}/>
-                    <Route exact path='/profile' render={() => (<ProfilePage users={users} postData={postData}/>)}/>
+                    <Route exact path='/profile' render={() => (<ProfilePage users={users} postData={postData} addPost={addPost}/>)}/>
                     <Route exact path='/music' render={() => (<Music />)}/>
                 </div>
 

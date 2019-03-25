@@ -3,20 +3,33 @@ import s from './NewPostForm.module.css';
 import PropTypes from "prop-types";
 
 
-const NewPostForm = () => {
+const NewPostForm = (props) => {
+    debugger
+    let onAddPostButtonClick = () => {
+        props.addPost(enteredPost);
 
-    return <div className={s.newPostForm}>
+    }
+
+    let enteredPost = '';
+
+    let onPostChange = (e) => {
+        enteredPost = e.currentTarget.value;
+    }
+
+    return (
+        <div className={s.newPostForm}>
             <div className={s.newPost}>New post</div>
-            <div><textarea placeholder='Enter you post...' className={s.newPostTextArea}></textarea></div>
-            <div className={s.sendButton}>
-                <button>Send</button>
+            <div>
+                <textarea onChange={onPostChange} placeholder='Enter you post...'
+                          className={s.newPostTextArea}></textarea>
             </div>
-    </div>
-
+            <div className={s.sendButton}>
+                <button onClick={onAddPostButtonClick}>Send</button>
+            </div>
+        </div>
+    )
 }
 
 export default NewPostForm;
 
-NewPostForm.propTypes = {
-
-}
+NewPostForm.propTypes = {}

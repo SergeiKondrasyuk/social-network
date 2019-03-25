@@ -7,13 +7,14 @@ import PropTypes from "prop-types";
 
 
 const ProfilePage = (props) => {
+    debugger
     return <div className={s.profile}>
 
         <div className={s.topImage}><img src={topimage}/></div>
 
         <ProfileCard  user={props.users[0]}/>
 
-        <Posts user={props.users[0]} postData={props.postData}/>
+        <Posts user={props.users[0]} postData={props.postData} addPost={props.addPost}/>
 
         </div>
 
