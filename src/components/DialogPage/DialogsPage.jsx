@@ -5,11 +5,13 @@ import CurrentDialog from "./CurrentDialog/CurrentDialog";
 import PropTypes from "prop-types";
 
 const DialogPage = (props) => {
+    debugger
     return <div className={s.dialogPage}>
 
-        <DialogList users={props.users}/>
+        <DialogList users={props.dialogPage.dialogUsers}/>
 
-        <CurrentDialog messages={props.messages} users={props.users} dialogUsers={props.dialogUsers}/>
+        <CurrentDialog dialogPage={props.dialogPage} updateNewMessage={props.updateNewMessage}
+                       sendMessage={props.sendMessage}/>
 
     </div>
 }

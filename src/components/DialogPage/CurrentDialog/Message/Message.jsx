@@ -11,7 +11,10 @@ const Message = (props) => {
         <p className={s.userName}>{props.user}</p>
         <div className={s.messageBlock}>
             <div className={s.angle}></div>
-            <div className={s.messageText}>{props.message}</div>
+            <div className={s.messageText}>
+                <div>{props.message}</div>
+                <div className={s.addedTime}>{props.addedTime}</div>
+            </div>
         </div>
     </div>
 }

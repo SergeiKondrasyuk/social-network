@@ -42,6 +42,13 @@
     border-radius: 17px;
 }
 
+.addedTime {
+    font-size: 10px;
+    color: darkseagreen;
+    float: right;
+    margin-right: -10px;
+}
+/*
 .message:nth-child(even){
     align-self: flex-end;
 
@@ -51,4 +58,5 @@
     height: 80px;
     border-radius: 25px;
 }
+*/
 

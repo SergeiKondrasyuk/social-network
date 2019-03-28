@@ -2,17 +2,39 @@ import React from 'react'
 import s from './CurrentDialog.module.css'
 import Message from "./Message/Message";
 import PropTypes from 'prop-types';
+import Post from "../../ProfilePage/Posts/Posts";
 
 const CurrentDialog = (props) => {
+    debugger
+    let currentDialogMessages = props.dialogPage.dialogs[0].messages.map(p =>
+        <Message message={p.content} user={p.author.name} avatar={p.author.avatar} addedTime={p.addedTime}/>
+    );
+
+    let newMessageText = React.createRef();
+
+    let onSendMessageButtonClick = () => {
+        debugger
+        props.sendMessage();
+        newMessageText.current.value = '';
+    }
+
+    let onMessageChange = (e) => {
+        let newMessageText = e.target.value;
+        props.updateNewMessage(newMessageText);
+    }
 
     return <div className={s.currentDialog}>
-
-        <Message message={props.messages[0]} user={props.users[1].firstName} avatar={props.users[1].avatar}/>
-        <Message message={props.messages[1]} user={props.users[0].firstName} avatar={props.users[0].avatar}/>
-        <Message message={props.messages[2]} user={props.users[1].firstName} avatar={props.users[1].avatar}/>
-        <Message message={props.messages[3]} user={props.users[0].firstName} avatar={props.users[0].avatar}/>
-
+        {currentDialogMessages}
+        <div>
+                <textarea onChange={onMessageChange} placeholder='Enter you message...'
+                          className={s.newMessageTextArea} ref={newMessageText}></textarea>
+        </div>
+        <div className={s.sendButton}>
+            <button onClick={onSendMessageButtonClick}>Send</button>
+        </div>
     </div>
+
+
 }
 
 export default CurrentDialog;

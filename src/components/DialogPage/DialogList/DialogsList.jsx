@@ -5,8 +5,8 @@ import PropTypes from 'prop-types';
 
 const DialogList = (props) => {
 
-    let usersList = props.users.slice(1).map(d =>
-        <DialogUser user={d.firstName}/>
+    let usersList = props.users.map(d =>
+        <DialogUser user={d}/>
     );
     return <div className={s.dialogsList}>
 

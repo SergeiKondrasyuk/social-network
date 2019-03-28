@@ -7,3 +7,17 @@
     flex-direction: column;
 }
 
+.newMessageTextArea {
+    width: 520px;
+    height: 80px;
+    resize: none;
+    border: 0px;
+    background-color: #d5ffec;
+    vertical-align: auto;
+    padding: 10px;
+    margin-left: 20px;
+}
+
+.sendButton {
+    margin-left: 20px;
+}

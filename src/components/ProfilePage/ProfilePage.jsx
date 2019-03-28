@@ -14,7 +14,7 @@ const ProfilePage = (props) => {
 
         <ProfileCard  user={props.users[0]}/>
 
-        <Posts user={props.users[0]} postData={props.postData} addPost={props.addPost}/>
+        <Posts user={props.users[0]} postData={props.postData} addPost={props.addPost} updateNewPost={props.updateNewPost}/>
 
         </div>
 

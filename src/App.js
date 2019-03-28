@@ -11,13 +11,17 @@ import {BrowserRouter, Route} from "react-router-dom";
 
 const App = (props) => {
     let users = props.state.users;
-    let dialogUsers = props.state.dialogUsers;
-    let messages = props.state.messages;
     let navItems = props.state.nav.navItems;
-    let postData = props.state.postData;
+    let postData = props.state.profilePage.postData;
     let addPost = props.addPost;
+    let updateNewPost = props.updateNewPost;
+    let dialogPage = props.state.dialogPage;
+    let updateNewMessage = props.updateNewMessage;
+    let sendMessage = props.sendMessage;
 
+    debugger
     return (
+
         <BrowserRouter>
             <div className={s.appWrapper}>
 
@@ -35,9 +39,12 @@ const App = (props) => {
 
                 <div className={s.contentWrapper}>
                     <Route path='/dialogs'
-                           render={() => (<DialogPage users={users} dialogUsers={dialogUsers} messages={messages}/>)}/>
-                    <Route exact path='/profile' render={() => (<ProfilePage users={users} postData={postData} addPost={addPost}/>)}/>
-                    <Route exact path='/music' render={() => (<Music />)}/>
+                           render={() => (<DialogPage dialogPage={dialogPage} sendMessage={sendMessage}
+                                                      updateNewMessage={updateNewMessage}/>)}/>
+                    <Route exact path='/profile'
+                           render={() => (<ProfilePage users={users} postData={postData} addPost={addPost}
+                                                       updateNewPost={updateNewPost}/>)}/>
+                    <Route exact path='/music' render={() => (<Music/>)}/>
                 </div>
 
             </div>
