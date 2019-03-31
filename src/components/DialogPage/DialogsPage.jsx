@@ -5,7 +5,7 @@ import CurrentDialog from "./CurrentDialog/CurrentDialog";
 import PropTypes from "prop-types";
 
 const DialogPage = (props) => {
-    debugger
+
     return <div className={s.dialogPage}>
 
         <DialogList users={props.dialogPage.dialogUsers}/>

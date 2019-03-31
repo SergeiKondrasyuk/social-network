@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 
 
 const Message = (props) => {
-
+  const type = props.type==='incoming'? s.incoming: 'outcoming';
     return <div className={s.message}>
         <img className={s.dialogAva} src={props.avatar}/>
 
@@ -12,7 +12,7 @@ const Message = (props) => {
         <div className={s.messageBlock}>
             <div className={s.angle}></div>
             <div className={s.messageText}>
-                <div>{props.message}</div>
+                <div className={type}>{props.message}</div>
                 <div className={s.addedTime}>{props.addedTime}</div>
             </div>
         </div>

@@ -4,26 +4,23 @@ import PropTypes from "prop-types";
 
 
 const NewPostForm = (props) => {
-    debugger
-
     let newPostText = React.createRef();
 
     let onAddPostButtonClick = () => {
         props.addPost();
-        newPostText.current.value = '';
-    }
+    };
 
-    let onPostChange = (e) => {
-        let newPostText = e.target.value;
-        props.updateNewPost(newPostText);
-    }
+    let onPostChange = () => {
+        let newPost = newPostText.current.value;
+        props.updateNewPost(newPost);
+    };
 
     return (
         <div className={s.newPostForm}>
             <div className={s.newPost}>New post</div>
             <div>
                 <textarea onChange={onPostChange} placeholder='Enter you post...'
-                          className={s.newPostTextArea} ref={newPostText}></textarea>
+                          className={s.newPostTextArea} ref={newPostText} value={props.profilePage.newPost}/>
             </div>
             <div className={s.sendButton}>
                 <button onClick={onAddPostButtonClick}>Send</button>
@@ -34,4 +31,4 @@ const NewPostForm = (props) => {
 
 export default NewPostForm;
 
-NewPostForm.propTypes = {}
+NewPostForm.propTypes = {};

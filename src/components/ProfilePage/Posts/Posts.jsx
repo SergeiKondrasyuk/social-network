@@ -7,7 +7,7 @@ import PropTypes from "prop-types";
 
 const Posts = (props) => {
 
-    let postsList = props.postData.map( p =>
+    let postsList = props.profilePage.postData.map( p =>
         <Post post={p.text} ava={props.user.avatar} likes={p.likeCount}/>
     );
 
@@ -15,7 +15,7 @@ const Posts = (props) => {
 
         <div className={s.postsHeader}>My posts</div>
 
-        <NewPostForm posts={props.postData} addPost={props.addPost} updateNewPost={props.updateNewPost}/>
+        <NewPostForm profilePage={props.profilePage} addPost={props.addPost} updateNewPost={props.updateNewPost}/>
 
         {postsList}
 

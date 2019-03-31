@@ -17,6 +17,7 @@ let myState = {
                         id: 1,
                         content: 'Hello',
                         addedTime: '2019-03-11 15:45',
+                        type: 'incoming',
                         author: {
                             id: 2,
                             name: 'Bill',
@@ -27,6 +28,7 @@ let myState = {
                         id: 2,
                         content: 'Hi!',
                         addedTime: '2019-03-11 16:01',
+                        type: 'outcoming',
                         author: {
                             id: 1,
                             name: 'Sergei',
@@ -37,6 +39,7 @@ let myState = {
                         id: 3,
                         content: 'How is your progress in learning REACT?',
                         addedTime: '2019-03-11 16:44',
+                        type: 'incoming',
                         author: {
                             id: 2,
                             name: 'Bill',
@@ -47,6 +50,7 @@ let myState = {
                         id: 4,
                         content: 'Very good',
                         addedTime: '2019-03-11 17:10',
+                        type: 'outcoming',
                         author: {
                             id: 1,
                             name: 'Sergei',
@@ -123,6 +127,7 @@ export const addPost = () => {
 
 export const updateNewPost = (text) => {
     myState.profilePage.newPost = text;
+    functionForSubscriber();
 }
 
 export const sendMessage = () => {
@@ -138,6 +143,7 @@ export const sendMessage = () => {
             id: 5,
             content: myState.dialogPage.dialogs[0].newMessage,
             addedTime: `${currentYear}-${currentMonth}-${currentDay} ${currentHours}:${currentMinutes}`,
+            type: 'outcoming',
             author: {
                 id: 1,
                 name: 'Sergei',
@@ -148,15 +154,15 @@ export const sendMessage = () => {
         myState.dialogPage.dialogs[0].newMessage = '';
         functionForSubscriber();
     }
-}
+};
 
 export const updateNewMessage = (text) => {
     myState.dialogPage.dialogs[0].newMessage = text;
-}
-
-let functionForSubscriber = () => {
+    functionForSubscriber();
 };
 
-export let subscribe = (subscriber) => functionForSubscriber = subscriber;
+let functionForSubscriber = () => {};
+
+export const subscribe = (observer) => functionForSubscriber = observer;
 
 export default myState
