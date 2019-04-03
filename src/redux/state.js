@@ -14,7 +14,7 @@ let myState = {
                 id: 1,
                 messages: [
                     {
-                        id: 1,
+                        id: 11,
                         content: 'Hello',
                         addedTime: '2019-03-11 15:45',
                         type: 'incoming',
