@@ -3,18 +3,14 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
-import myState, {addPost} from './redux/state.js';
-import {sendMessage, subscribe, updateNewMessage, updateNewPost} from "./redux/state";
+import store from './redux/state.js';
 
+const renderPage = () => {
+    ReactDOM.render(<App state={store.getState()} dispatcher={store.dispatcher.bind(store)}/>, document.getElementById('root'));
+};
 
-export const renderPage = (myState) => {
-    ReactDOM.render(<App state={myState} addPost={addPost} updateNewPost={updateNewPost} sendMessage={sendMessage}
-                         updateNewMessage={updateNewMessage}/>, document.getElementById('root'));
-}
-subscribe(() => {
-    renderPage(myState);
-})
+store.subscribe(renderPage);
 
-renderPage(myState);
+renderPage();
 
 serviceWorker.unregister();

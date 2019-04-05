@@ -13,12 +13,19 @@ const CurrentDialog = (props) => {
     let newMessageText = React.createRef();
 
     let onSendMessageButtonClick = () => {
-        props.sendMessage();
+        props.dispatcher(
+            {type: 'SEND_MESSAGE'}
+        )
     }
 
     let onMessageChange = () => {
         let newMessage = newMessageText.current.value;
-        props.updateNewMessage(newMessage);
+        props.dispatcher(
+            {
+                type: 'UPDATE_NEW_MESSAGE',
+                text: newMessage
+            }
+        )
     }
 
     return <div className={s.currentDialog}>

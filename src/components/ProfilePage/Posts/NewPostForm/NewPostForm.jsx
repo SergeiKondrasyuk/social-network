@@ -4,15 +4,26 @@ import PropTypes from "prop-types";
 
 
 const NewPostForm = (props) => {
+    debugger
     let newPostText = React.createRef();
 
     let onAddPostButtonClick = () => {
-        props.addPost();
+        props.dispatcher(
+            {
+                type: 'ADD_POST',
+            }
+        );
     };
 
     let onPostChange = () => {
         let newPost = newPostText.current.value;
-        props.updateNewPost(newPost);
+        props.dispatcher(
+            {
+                type: 'UPDATE_NEW_POST',
+                text: newPost,
+
+            }
+        );
     };
 
     return (

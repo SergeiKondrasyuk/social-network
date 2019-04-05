@@ -14,6 +14,7 @@ const App = (props) => {
     let navItems = props.state.nav.navItems;
     let profilePage = props.state.profilePage;
     let dialogPage = props.state.dialogPage;
+    let dispatcher = props.dispatcher;
 
     return (
 
@@ -34,11 +35,10 @@ const App = (props) => {
 
                 <div className={s.contentWrapper}>
                     <Route path='/dialogs'
-                           render={() => (<DialogPage dialogPage={dialogPage} sendMessage={props.sendMessage}
-                                                      updateNewMessage={props.updateNewMessage}/>)}/>
+                           render={() => (<DialogPage dialogPage={dialogPage} dispatcher={dispatcher}/>)}/>
                     <Route exact path='/profile'
-                           render={() => (<ProfilePage users={users} profilePage={profilePage} addPost={props.addPost}
-                                                       updateNewPost={props.updateNewPost}/>)}/>
+                           render={() => (
+                               <ProfilePage users={users} profilePage={profilePage} dispatcher={dispatcher}/>)}/>
                     <Route exact path='/music' render={() => (<Music/>)}/>
                 </div>
 

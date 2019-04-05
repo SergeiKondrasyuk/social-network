@@ -10,7 +10,7 @@ const DialogPage = (props) => {
 
         <DialogList users={props.dialogPage.dialogUsers}/>
 
-        <CurrentDialog dialogPage={props.dialogPage} updateNewMessage={props.updateNewMessage}
+        <CurrentDialog dialogPage={props.dialogPage} dispatcher={props.dispatcher}
                        sendMessage={props.sendMessage}/>
 
     </div>
