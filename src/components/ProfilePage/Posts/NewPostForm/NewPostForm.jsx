@@ -1,6 +1,8 @@
 import React from 'react';
 import s from './NewPostForm.module.css';
 import PropTypes from "prop-types";
+import {addPostAC, updateNewPostTextAC} from "../../../../redux/profilePageReducer";
+
 
 
 const NewPostForm = (props) => {
@@ -8,22 +10,12 @@ const NewPostForm = (props) => {
     let newPostText = React.createRef();
 
     let onAddPostButtonClick = () => {
-        props.dispatcher(
-            {
-                type: 'ADD_POST',
-            }
-        );
+        props.dispatch(addPostAC());
     };
 
     let onPostChange = () => {
         let newPost = newPostText.current.value;
-        props.dispatcher(
-            {
-                type: 'UPDATE_NEW_POST',
-                text: newPost,
-
-            }
-        );
+        props.dispatch(updateNewPostTextAC(newPost));
     };
 
     return (

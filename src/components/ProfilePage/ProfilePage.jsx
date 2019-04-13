@@ -13,7 +13,7 @@ const ProfilePage = (props) => {
 
         <ProfileCard user={props.users[0]}/>
 
-        <Posts user={props.users[0]} profilePage={props.profilePage} dispatcher={props.dispatcher}/>
+        <Posts user={props.users[0]} profilePage={props.profilePage} dispatch={props.dispatch}/>
 
     </div>
 

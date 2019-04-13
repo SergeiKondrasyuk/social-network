@@ -1,3 +1,7 @@
+import profilePageReducer from "./profilePageReducer";
+import dialogPageReducer from "./dialogPageReducer";
+import navReducer from "./navReducer";
+
 let store = {
     _state: {
         nav: {
@@ -126,9 +130,16 @@ let store = {
         this._stateChanged = subcriberFn;
     },
 
-    dispatcher(action) {
-        switch (action.type) {
-            case 'ADD_POST':
+    dispatch(action) {
+
+        this._state.profilePage = profilePageReducer(this._state.profilePage, action);
+        this._state.dialogPage = dialogPageReducer(this._state.dialogPage, action);
+        this._state.nav = navReducer(this._state.nav, action);
+
+        this._stateChanged();
+
+        /*switch (action.type) {
+            case ADD_POST:
                 if (this._state.profilePage.newPost.trim()) {
                     let newPost = {id: 4, text: this._state.profilePage.newPost, likeCount: 0}
                     this._state.profilePage.postData.push(newPost);
@@ -171,8 +182,13 @@ let store = {
                 break;
             default:
                 break;
-        }
+        }*/
 
     }
 };
-        export default store;
+
+
+
+
+
+export default store;

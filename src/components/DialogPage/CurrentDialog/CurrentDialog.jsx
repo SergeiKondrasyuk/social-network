@@ -3,6 +3,7 @@ import s from './CurrentDialog.module.css'
 import Message from "./Message/Message";
 import PropTypes from 'prop-types';
 import Post from "../../ProfilePage/Posts/Posts";
+import {sendMessageAC, updateNewMessageTextAC} from "../../../redux/dialogPageReducer";
 
 const CurrentDialog = (props) => {
     let currentDialogMessages = props.dialogPage.dialogs[0].messages.map(p =>
@@ -13,19 +14,12 @@ const CurrentDialog = (props) => {
     let newMessageText = React.createRef();
 
     let onSendMessageButtonClick = () => {
-        props.dispatcher(
-            {type: 'SEND_MESSAGE'}
-        )
+        props.dispatch(sendMessageAC())
     }
 
     let onMessageChange = () => {
         let newMessage = newMessageText.current.value;
-        props.dispatcher(
-            {
-                type: 'UPDATE_NEW_MESSAGE',
-                text: newMessage
-            }
-        )
+        props.dispatch(updateNewMessageTextAC(newMessage))
     }
 
     return <div className={s.currentDialog}>

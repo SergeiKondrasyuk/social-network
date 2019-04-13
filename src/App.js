@@ -10,11 +10,12 @@ import {BrowserRouter, Route} from "react-router-dom";
 
 
 const App = (props) => {
-    let users = props.state.users;
+    debugger
+    let users = props.state.users.users;
     let navItems = props.state.nav.navItems;
     let profilePage = props.state.profilePage;
     let dialogPage = props.state.dialogPage;
-    let dispatcher = props.dispatcher;
+    let dispatch = props.dispatch;
 
     return (
 
@@ -35,10 +36,10 @@ const App = (props) => {
 
                 <div className={s.contentWrapper}>
                     <Route path='/dialogs'
-                           render={() => (<DialogPage dialogPage={dialogPage} dispatcher={dispatcher}/>)}/>
+                           render={() => (<DialogPage dialogPage={dialogPage} dispatch={dispatch}/>)}/>
                     <Route exact path='/profile'
                            render={() => (
-                               <ProfilePage users={users} profilePage={profilePage} dispatcher={dispatcher}/>)}/>
+                               <ProfilePage users={users} profilePage={profilePage} dispatch={dispatch}/>)}/>
                     <Route exact path='/music' render={() => (<Music/>)}/>
                 </div>
 

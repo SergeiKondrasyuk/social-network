@@ -15,7 +15,7 @@ const Posts = (props) => {
 
         <div className={s.postsHeader}>My posts</div>
 
-        <NewPostForm profilePage={props.profilePage} dispatcher={props.dispatcher}/>
+        <NewPostForm profilePage={props.profilePage} dispatch={props.dispatch}/>
 
         {postsList}
 
