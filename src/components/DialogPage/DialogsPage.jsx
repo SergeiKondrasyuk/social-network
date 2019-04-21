@@ -1,20 +1,19 @@
 import React from 'react'
 import s from './DialogPage.module.css'
-import DialogList from "./DialogList/DialogsList";
-import CurrentDialog from "./CurrentDialog/CurrentDialog";
 import PropTypes from "prop-types";
+import CurrentDialogContainer from "./CurrentDialog/CurrentDialogContainer";
+import DialogListContainer from "./DialogList/DialogsListContainer";
 
-const DialogPage = (props) => {
+const DialogPage = () => {
 
     return <div className={s.dialogPage}>
 
-        <DialogList users={props.dialogPage.dialogUsers}/>
+        <DialogListContainer/>
 
-        <CurrentDialog dialogPage={props.dialogPage} dispatch={props.dispatch}
-                       sendMessage={props.sendMessage}/>
+        <CurrentDialogContainer/>
 
     </div>
-}
+};
 
 export default DialogPage;
 
@@ -22,4 +21,4 @@ DialogPage.propTypes = {
     users: PropTypes.array,
     message: PropTypes.array,
     dialogUsers: PropTypes.array,
-}
+};

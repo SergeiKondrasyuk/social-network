@@ -4,9 +4,10 @@ import PropTypes from "prop-types";
 
 
 const ProfileCard = (props) => {
+
     return <div className={s.profileCard}>
 
-        <div className={s.avatar}> <img src={props.user.avatar}/> </div>
+        <div className={s.avatar}> <img alt='User avatar' src={props.user.avatar}/> </div>
 
         <div className={s.profileInfo}>
             <div className={s.name}><span>{props.user.firstName}</span><span> {props.user.lastName}</span></div>
@@ -19,7 +20,7 @@ const ProfileCard = (props) => {
     </div>
 
 
-}
+};
 
 export default ProfileCard;
 
@@ -30,4 +31,4 @@ ProfileCard.propTypes = {
     dob: PropTypes.string,
     education: PropTypes.string,
     website: PropTypes.string,
-}
+};

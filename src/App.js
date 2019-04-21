@@ -4,21 +4,15 @@ import Header from "./components/Header/Header";
 import Nav from "./components/Nav/Nav";
 import ProfilePage from "./components/ProfilePage/ProfilePage";
 import DialogPage from "./components/DialogPage/DialogsPage";
-import Friends from "./components/Friends/Friends"
 import Music from "./components/Music/Music"
 import {BrowserRouter, Route} from "react-router-dom";
+import NavContainer from "./components/Nav/NavContainer";
+import FriendsContainer from "./components/Friends/FriendsContainer";
 
 
-const App = (props) => {
-    debugger
-    let users = props.state.users.users;
-    let navItems = props.state.nav.navItems;
-    let profilePage = props.state.profilePage;
-    let dialogPage = props.state.dialogPage;
-    let dispatch = props.dispatch;
+const App = () => {
 
     return (
-
         <BrowserRouter>
             <div className={s.appWrapper}>
 
@@ -27,22 +21,21 @@ const App = (props) => {
                 </div>
 
                 <div className={s.navWrapper}>
-                    <Nav navItems={navItems}/>
+                    <NavContainer/>
                 </div>
 
                 <div className={s.friendsWrapper}>
-                    <Friends users={users}/>
+                    <FriendsContainer/>
                 </div>
 
                 <div className={s.contentWrapper}>
                     <Route path='/dialogs'
-                           render={() => (<DialogPage dialogPage={dialogPage} dispatch={dispatch}/>)}/>
+                           render={() => (<DialogPage/>)}/>
                     <Route exact path='/profile'
                            render={() => (
-                               <ProfilePage users={users} profilePage={profilePage} dispatch={dispatch}/>)}/>
+                               <ProfilePage/>)}/>
                     <Route exact path='/music' render={() => (<Music/>)}/>
                 </div>
-
             </div>
         </BrowserRouter>
     );

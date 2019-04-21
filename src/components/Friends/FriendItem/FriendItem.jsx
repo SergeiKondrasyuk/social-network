@@ -9,10 +9,11 @@ const FriendItem = (props) => {
         <img className={s.avatar} src={props.friendAvatar}/>
         <p className={s.friendName}> {props.friendName}</p>
     </div>
-}
+};
+
 export default FriendItem;
 
 FriendItem.propTypes = {
     friendAvatar: PropTypes.string,
     friendName: PropTypes.string,
-}
+};

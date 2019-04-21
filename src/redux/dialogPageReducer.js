@@ -61,8 +61,9 @@ let initialState = {
 const dialogPageReducer = (state = initialState, action) => {
 
     switch (action.type) {
-        case SEND_MESSAGE :
-            if (state.dialogs[0].newMessage.trim()) {
+        case SEND_MESSAGE : {
+            let cloneState = {...state};
+            if (cloneState.dialogs[0].newMessage.trim()) {
                 let currentDate = new Date();
                 let currentYear = currentDate.getFullYear();
                 let currentMonth = ((currentDate.getMonth() + 1).toString().length === 1) ? `0${currentDate.getMonth() + 1}` : currentDate.getMonth() + 1;
@@ -72,7 +73,7 @@ const dialogPageReducer = (state = initialState, action) => {
 
                 let newMessage = {
                     id: 5,
-                    content: state.dialogs[0].newMessage,
+                    content: cloneState.dialogs[0].newMessage,
                     addedTime: `${currentYear}-${currentMonth}-${currentDay} ${currentHours}:${currentMinutes}`,
                     type: 'outcoming',
                     author: {
@@ -81,13 +82,16 @@ const dialogPageReducer = (state = initialState, action) => {
                         avatar: '../../../../img/ava.jpg',
                     }
                 };
-                state.dialogs[0].messages.push(newMessage);
-                state.dialogs[0].newMessage = '';
+                cloneState.dialogs[0].messages.push(newMessage);
+                cloneState.dialogs[0].newMessage = '';
             }
-            return state;
-        case UPDATE_NEW_MESSAGE:
+            return cloneState;
+        }
+        case UPDATE_NEW_MESSAGE: {
+            let cloneState = {...state};
             state.dialogs[0].newMessage = action.text;
-            return state;
+            return cloneState;
+        }
         default:
             return state;
     }

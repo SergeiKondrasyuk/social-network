@@ -1,21 +1,18 @@
 import React from 'react';
 import s from './NewPostForm.module.css';
 import PropTypes from "prop-types";
-import {addPostAC, updateNewPostTextAC} from "../../../../redux/profilePageReducer";
-
-
 
 const NewPostForm = (props) => {
-    debugger
+
     let newPostText = React.createRef();
 
     let onAddPostButtonClick = () => {
-        props.dispatch(addPostAC());
+        props.addPost();
     };
 
     let onPostChange = () => {
         let newPost = newPostText.current.value;
-        props.dispatch(updateNewPostTextAC(newPost));
+        props.updateNewPostText(newPost);
     };
 
     return (
@@ -23,7 +20,7 @@ const NewPostForm = (props) => {
             <div className={s.newPost}>New post</div>
             <div>
                 <textarea onChange={onPostChange} placeholder='Enter you post...'
-                          className={s.newPostTextArea} ref={newPostText} value={props.profilePage.newPost}/>
+                          className={s.newPostTextArea} ref={newPostText} value={props.newPost}/>
             </div>
             <div className={s.sendButton}>
                 <button onClick={onAddPostButtonClick}>Send</button>
@@ -34,4 +31,8 @@ const NewPostForm = (props) => {
 
 export default NewPostForm;
 
-NewPostForm.propTypes = {};
+NewPostForm.propTypes = {
+    newPost: PropTypes.string,
+    addPost: PropTypes.func,
+    updateNewPostText: PropTypes.func,
+};

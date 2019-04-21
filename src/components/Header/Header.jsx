@@ -6,12 +6,12 @@ import PropTypes from "prop-types";
 
 const Header = () => {
     return <header className={s.header}>
-        <img className={s.logo} src={logo}/>
+        <img alt='Logo' className={s.logo} src={logo}/>
     </header>
-}
+};
 
 export default Header;
 
 Header.propTypes = {
     logo: PropTypes.string,
-}
+};

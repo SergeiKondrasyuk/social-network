@@ -16,10 +16,10 @@ const DialogList = (props) => {
             {usersList}
         </div>
     </div>
-}
+};
 
 export default DialogList;
 
 DialogList.propTypes = {
     users: PropTypes.array,
-}
+};

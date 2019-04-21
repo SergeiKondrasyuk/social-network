@@ -1,21 +1,21 @@
 import React from 'react';
 import s from './Posts.module.css';
 import Post from "./Post/Post";
-import NewPostForm from "./NewPostForm/NewPostForm";
 import PropTypes from "prop-types";
+import NewPostFormContainer from "./NewPostForm/NewPostFormContainer";
 
 
 const Posts = (props) => {
 
-    let postsList = props.profilePage.postData.map( p =>
-        <Post post={p.text} ava={props.user.avatar} likes={p.likeCount}/>
+    let postsList = props.postData.map( p =>
+        <Post post={p.text} ava={props.users[0].avatar} likes={p.likeCount}/>
     );
 
     return <div className={s.posts}>
 
         <div className={s.postsHeader}>My posts</div>
 
-        <NewPostForm profilePage={props.profilePage} dispatch={props.dispatch}/>
+        <NewPostFormContainer />
 
         {postsList}
 

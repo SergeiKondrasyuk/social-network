@@ -5,9 +5,9 @@ import PropTypes from 'prop-types';
 
 const Nav = (props) => {
 
-    let navItems = props.navItems.map(n =>
+    let navItems = props.nav.navItems.map(n =>
         <div className={s.navItem}>
-            <NavLink to={n.link} activeClassName={s.active}><img className={s.icon} src={n.icon}/>{n.title}</NavLink>
+            <NavLink to={n.link} activeClassName={s.active}><img alt='Navigate item icon'className={s.icon} src={n.icon}/>{n.title}</NavLink>
         </div>
     );
 
@@ -16,7 +16,8 @@ const Nav = (props) => {
         {navItems}
 
     </div>
-}
+};
+
 export default Nav;
 
 Nav.prototype = {
@@ -24,4 +25,4 @@ Nav.prototype = {
     link: PropTypes.string,
     icon: PropTypes.string,
     title: PropTypes.string,
-}
+};
