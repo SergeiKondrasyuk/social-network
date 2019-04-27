@@ -20,14 +20,14 @@ const NewPostForm = (props) => {
             <div className={s.newPost}>New post</div>
             <div>
                 <textarea onChange={onPostChange} placeholder='Enter you post...'
-                          className={s.newPostTextArea} ref={newPostText} value={props.newPost}/>
+                          className={s.newPostTextArea} ref={newPostText} value={props.profilePage.newPost}/>
             </div>
             <div className={s.sendButton}>
                 <button onClick={onAddPostButtonClick}>Send</button>
             </div>
         </div>
     )
-}
+};
 
 export default NewPostForm;
 

@@ -16,6 +16,7 @@ const Message = (props) => {
                 <div className={s.addedTime}>{props.addedTime}</div>
             </div>
         </div>
+
     </div>
 };
 

@@ -6,7 +6,7 @@ import {connect} from "react-redux";
 const NewPostFormConnected = (props) => {
     return <NewPostForm updateNewPostText={props.updateNewPostText}
                         addPost={props.addPost}
-                        newPost={props.profilePage.newPost}/>
+                        profilePage={props.profilePage}/>
 };
 
 const mstp = (state) => {
