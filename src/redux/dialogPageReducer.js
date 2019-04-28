@@ -95,8 +95,7 @@ const dialogPageReducer = (state = initialState, action) => {
         default:
             return state;
     }
-
-}
+};
 
 export const sendMessageAC = () => ({type: SEND_MESSAGE});
 export const updateNewMessageTextAC = (newMessage) => ({type: UPDATE_NEW_MESSAGE, text: newMessage,});

@@ -1,8 +1,8 @@
 import React from 'react';
-import s from './FriendItem.module.css';
+import s from './FriendBlockItem.module.css';
 import PropTypes from "prop-types";
 
-const FriendItem = (props) => {
+const FriendBlockItem = (props) => {
 
 
     return <div className={s.friendBlock}>
@@ -11,9 +11,9 @@ const FriendItem = (props) => {
     </div>
 };
 
-export default FriendItem;
+export default FriendBlockItem;
 
-FriendItem.propTypes = {
+FriendBlockItem.propTypes = {
     friendAvatar: PropTypes.string,
     friendName: PropTypes.string,
 };

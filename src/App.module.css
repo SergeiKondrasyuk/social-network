@@ -3,7 +3,7 @@
     width: 1200px;
     margin: 0 auto;
     grid-template-areas: "h h" "n c" "f c";
-    grid-template-rows: 70px 210px 1fr;
+    grid-template-rows: 70px 240px 1fr;
     grid-template-columns: 210px 1fr;
     grid-gap: 10px;
 }
@@ -20,7 +20,7 @@
     grid-area: c;
 }
 
-.friendsWrapper {
+.friendsBlockWrapper {
     grid-area: f;
 }
 
