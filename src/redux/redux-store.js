@@ -5,6 +5,7 @@ import dialogPageReducer from "./dialogPageReducer";
 import navReducer from "./navReducer";
 import usersReducer from "./usersReducer";
 import friendsReducer from "./friendsReducer";
+import loginReducer from "./loginReducer";
 
 let reducers = combineReducers({
     profilePage: profilePageReducer,
@@ -12,6 +13,7 @@ let reducers = combineReducers({
     nav: navReducer,
     users: usersReducer,
     friends: friendsReducer,
+    login: loginReducer,
 });
 
 let store = createStore(reducers);
