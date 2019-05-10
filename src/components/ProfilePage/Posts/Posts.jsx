@@ -7,8 +7,8 @@ import NewPostFormContainer from "./NewPostForm/NewPostFormContainer";
 
 const Posts = (props) => {
 
-    let postsList = props.postData.map( p =>
-        <Post post={p.text} ava={props.users[0].avatar} likes={p.likeCount}/>
+    let postsList = props.postData.reverse().map( p =>
+        <Post post={p.text} ava={props.friends[0].avatar} likes={p.likeCount}/>
     );
 
     return <div className={s.posts}>

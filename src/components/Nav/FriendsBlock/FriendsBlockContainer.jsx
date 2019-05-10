@@ -1,14 +1,15 @@
 import React from 'react';
 import {connect} from "react-redux";
 import FriendsBlock from "./FriendsBlock";
+import friendsReducer from "../../../redux/friendsReducer";
 
 const FriendsBlockConnected = (props) => {
-    return <FriendsBlock users={props.users}/>
+    return <FriendsBlock friends={props.friends}/>
 };
 
 const mstp = (store) => {
     return {
-        users: store.users.users,
+        friends: store.friends.friends,
     }
 };
 

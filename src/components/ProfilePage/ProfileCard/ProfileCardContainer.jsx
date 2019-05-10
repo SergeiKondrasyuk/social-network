@@ -9,7 +9,7 @@ const ProfileCardConnected = (props) => {
 
 const mstp = (store) => {
     return {
-        user: store.users.users[0],
+        user: store.friends.friends[0],
     }
 };
 

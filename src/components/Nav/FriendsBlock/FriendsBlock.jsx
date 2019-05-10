@@ -2,9 +2,10 @@ import React from 'react';
 import s from './FriendsBlock.module.css';
 import FriendBlockItem from './FriendItem/FriendBlockItem';
 import PropTypes from "prop-types";
+import friendsReducer from "../../../redux/friendsReducer";
 
 const FriendsBlock = (props) => {
-    let friendItem = props.users.slice(1).map(f =>
+    let friendItem = props.friends.slice(1).map(f =>
         <FriendBlockItem friendName={f.firstName} friendAvatar={f.avatar}/>
     );
 

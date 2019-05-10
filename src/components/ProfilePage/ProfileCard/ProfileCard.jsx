@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 
 
 const ProfileCard = (props) => {
-
+debugger
     return <div className={s.profileCard}>
 
         <div className={s.avatar}> <img alt='User avatar' src={props.user.avatar}/> </div>

@@ -1,48 +1,79 @@
+import {axiosInstance} from "../dal/axios-instance";
+
+const SET_USERS = 'SET_USERS';
+const SET_STATUS = 'SET_STATUS';
+const FOLLOW = 'FOLLOW';
+const UNFOLLOW = 'UNFOLLOW';
+
+export const statuses = {
+    NOT_INITIALIZED: 'NOT_INITIALIZED',
+    INPROGRESS: 'INPROGRESS',
+    SUCCESS: 'SUCCESS'
+};
+
 let initialState = {
-    users: [
-        {
-            id: 1,
-            firstName: 'Sergei',
-            lastName: 'Kondrasiuk',
-            address: 'Minsk',
-            dob: '23 October',
-            education: 'BSUIR\'13',
-            avatar: '../../../../img/ava.jpg',
-            website: 'http://localhost:3000'
-        },
-        {
-            id: 2,
-            firstName: 'Bill',
-            lastName: 'Gates',
-            address: 'Seattle',
-            dob: '28 October',
-            education: 'Harvard',
-            avatar: '../../../../img/bill.jpg'
-        },
-        {
-            id: 3,
-            firstName: 'Mark',
-            lastName: 'Zuckerberg',
-            address: 'Palo Alto',
-            dob: '14 May',
-            education: 'Harvard',
-            avatar: '../../../../img/mark.jpg'
-        },
-        {
-            id: 4,
-            firstName: 'Pavel',
-            lastName: 'Durov',
-            address: 'Global citizenship',
-            dob: '10 October',
-            education: 'SPbU',
-            avatar: '../../../../img/pavel.jpg'
-        },
-    ],
+    status: statuses.NOT_INITIALIZED,
+    users: [],
 };
 
 const usersReducer = (state = initialState, action) => {
+    switch (action.type) {
+        case SET_USERS : {
+            return {
+                ...state,
+                users: action.users
+            }
+        }
+        case SET_STATUS : {
+            return {
+                ...state,
+                status: action.status
+            }
+        }
+        case FOLLOW : {
+            return {
+                ...state,
+                users: state.users.map(u => {
+                    if (u.id === action.userId) {
+                        return {...u, followed: true}
+                    }
+                    return u;
+                })
+            }
+        }
+        case UNFOLLOW : {
+            return {
+                ...state,
+                users: state.users.map(u => {
+                    if (u.id === action.userId) {
+                        return {...u, followed: false}
+                    }
+                    return u;
+                })
+            }
+        }
+        default: {
+            return state;
+        }
+    }
+};
 
-    return state;
-}
+export const setUsers = (users) => ({type: SET_USERS, users: users});
+export const setStatus = (status) => ({type: SET_STATUS, status});
+export const follow = (userId) => ({type: FOLLOW, userId});
+export const unFollow = (userId) => ({type: UNFOLLOW, userId});
+
+export const getUsers = (status) => (d) => {
+
+    if (status === statuses.NOT_INITIALIZED) {
+    d(setStatus(statuses.INPROGRESS));
+    axiosInstance
+        .get('users?count=20')
+        .then((res) => {
+            d(setStatus(statuses.SUCCESS));
+            d(setUsers(res.data.items));
+        });
+}};
+
 
 export default usersReducer;

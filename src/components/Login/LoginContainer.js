@@ -2,8 +2,9 @@ import React from 'react';
 import {connect} from "react-redux";
 import Login from "./Login";
 import {
+    getCaptcha, loginRequest,
     setCaptchaStatus,
-    setCaptchaUrl,
+    setCaptchaUrl, setLoginResult,
     setLoginStatus, setLoginStatusMessage,
     updateCaptchaValue,
     updateEmailValue, updatePasswordValue, updateRememberMePosition
@@ -20,6 +21,9 @@ const LoginConnected = (props) => {
                   updateRememberMePosition={props.updateRememberMePosition}
                   setLoginStatus={props.setLoginStatus}
                   setLoginStatusMessage={props.setLoginStatusMessage}
+                  setLoginResult={props.setLoginResult}
+                  getCaptcha={props.getCaptcha}
+                  loginRequest={props.loginRequest}
     />
 
 };
@@ -41,6 +45,9 @@ const mdtp = (dispatch) => {
         setLoginStatus: (loginStatus) => {
             dispatch(setLoginStatus(loginStatus))
         },
+        setLoginResult: (loginResult) => {
+            dispatch(setLoginResult(loginResult))
+        },
         updateCaptchaValue: (captchaValue) => {
             dispatch(updateCaptchaValue(captchaValue))
         },
@@ -55,6 +62,12 @@ const mdtp = (dispatch) => {
         },
         setLoginStatusMessage: (loginStatusMessage) => {
             dispatch(setLoginStatusMessage(loginStatusMessage))
+        },
+        getCaptcha: (captchaStatus) => {
+            dispatch(getCaptcha(captchaStatus))
+        },
+        loginRequest: (email, password, rememberMe, captcha) => {
+            dispatch(loginRequest(email, password, rememberMe, captcha))
         },
 
     }

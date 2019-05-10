@@ -1,13 +1,8 @@
 import React from 'react';
-import {statuses} from "../../redux/loginReducer";
-import * as axios from "axios";
+import Redirect from "react-router-dom/es/Redirect";
+import {loginStatuses} from "../../redux/loginReducer";
 
 const Login = (props) => {
-debugger
-    let axiosInstance = axios.create({
-        baseURL: 'https://social-network.samuraijs.com/api/1.0/',
-        withCredentials: true,
-    });
 
     let captchaValueRef = React.createRef();
     let EmailValueRef = React.createRef();
@@ -28,52 +23,10 @@ debugger
     };
 
     let onLoginButtonClick = () => {
-        props.setLoginStatus(statuses.INPROGRESS);
-        axiosInstance.post('auth/login', {
-            email: props.login.email,
-            password: props.login.password,
-            rememberMe: props.login.rememberMe,
-            captcha: props.login.captchaValue,
-
-        }).then((res) => {
-            switch (res.data.resultCode) {
-                case 0: {
-                    props.setLoginStatus(statuses.SUCCESS);
-                    props.setLoginStatusMessage('Login success');
-                    break;
-                }
-                case 1: {
-                    debugger
-                    props.setLoginStatus(statuses.ERROR);
-                    props.setLoginStatusMessage(res.data.messages[0]);
-                    break;
-                }
-                case 10: {
-                    props.setLoginStatus(statuses.ERROR);
-                    props.setLoginStatusMessage(res.data.messages[0]);
-                    break;
-                }
-            }
-
-        })/*.then(() => axiosInstance.put('profile/', {
-
-            "aboutMe": '123',
-
-
-
-        }));*/
+        props.loginRequest(props.login.email, props.login.password, props.login.rememberMe, props.login.captchaValue);
     };
 
-    if (props.login.captchaStatus === statuses.NOT_INITIALIZED) {
-        props.setCaptchaStatus(statuses.INPROGRESS);
-        axiosInstance.get('security/get-captcha-url').then((res) => {
-            props.setCaptchaStatus(statuses.SUCCESS);
-            props.setCaptchaUrl(res.data.url);
-        });
-
-    };
-
-    if (props.login.loginStatus === statuses.NOT_INITIALIZED || props.login.loginStatus === statuses.ERROR){
+    if (props.login.loginStatus !== loginStatuses.SUCCESS) {
         return <div>
             <div><span>Email: </span> <input id='email' onChange={onEmailInputChange}
                                              ref={EmailValueRef}/></div>
@@ -81,27 +34,26 @@ debugger
                                                 ref={PasswordValueRef}/></div>
             <div><span>Remember me: </span> <input type='checkbox' onChange={onRememberMeInputChange}
                                                    ref={RememberMePositionRef}/></div>
+            {props.login.loginResult === 10 && props.getCaptcha(props.login.captchaStatus)}
+            {props.login.loginResult === 10 &&
             <div><img src={props.login.captchaUrl} alt='captcha'/><input onChange={onCaptchaInputChange}
-                                                                         ref={captchaValueRef}/></div>
+                                                                         ref={captchaValueRef}/></div>}
             <div>
-                <button onClick={onLoginButtonClick}>Login</button>
+                <button disabled={props.login.loginStatus === loginStatuses.INPROGRESS}
+                        onClick={onLoginButtonClick}>Login
+                </button>
             </div>
 
             <div>{props.login.loginStatusMessage}</div>
         </div>
     }
 
-
-
-
-
-
-
-    return <div>
-
-        <div>{props.login.loginStatusMessage}</div>
-
-    </div>
+    let pathToRedirect = '/profile';
+    /*    let locState = props.state;
+        if (locState && locState.page) {
+            pathToRedirect = locState.page
+        }*/
+    return <Redirect to={pathToRedirect}/>;
 };
 
 

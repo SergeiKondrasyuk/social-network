@@ -5,14 +5,14 @@ import {connect} from "react-redux";
 
 const PostsConnected = (props) => {
     return <Posts postData={props.postData}
-                  users={props.users}/>
+                  friends={props.friends}/>
 
 };
 
 const mstp = (store) => {
     return {
         postData: store.profilePage.postData,
-        users: store.users.users,
+        friends: store.friends.friends,
     }
 };
 

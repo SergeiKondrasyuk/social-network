@@ -3,9 +3,10 @@ import logo from "../../img/logo.png";
 import s from './Header.module.css';
 import PropTypes from "prop-types";
 import * as axios from "axios";
+import {loginStatuses} from "../../redux/loginReducer";
 
 
-const Header = () => {
+const Header = (props) => {
 
     let axiosInstance = axios.create({
         baseURL: 'https://social-network.samuraijs.com/api/1.0/',
@@ -14,6 +15,9 @@ const Header = () => {
 
     let onLogOutButtonClick = () => {
         axiosInstance.post('auth/logout')
+        props.setLoginStatus(loginStatuses.NOT_INITIALIZED);
+        props.setLoginStatusMessage('Logout success');
+        debugger
     };
 
 

@@ -1,24 +1,25 @@
-import React from 'react'
+import React, {useState} from 'react'
 import s from './App.module.css';
-import Header from "./components/Header/Header";
-import ProfilePage from "./components/ProfilePage/ProfilePage";
-import DialogPage from "./components/DialogPage/DialogsPage";
+import DialogsPageContainer from "./components/DialogPage/DialogsPageContainer";
 import Music from "./components/Music/Music"
 import {BrowserRouter, Route} from "react-router-dom";
 import NavContainer from "./components/Nav/NavContainer";
 import FriendsBlockContainer from "./components/Nav/FriendsBlock/FriendsBlockContainer";
-import FriendsContainer from "./components/Friends/FriendsContainer";
+import UsersContainer from "./components/Users/UsersContainer";
 import LoginContainer from "./components/Login/LoginContainer";
+import HeaderContainer from "./components/Header/HeaderContainer";
+import ProfilePageContainer from "./components/ProfilePage/ProfilePageContainer";
 
 
 const App = () => {
+
 
     return (
         <BrowserRouter>
             <div className={s.appWrapper}>
 
                 <div className={s.headerWrapper}>
-                    <Header/>
+                    <HeaderContainer/>
                 </div>
 
                 <div className={s.navWrapper}>
@@ -30,10 +31,10 @@ const App = () => {
                 </div>
 
                 <div className={s.contentWrapper}>
-                    <Route path='/dialogs' render={() => (<DialogPage/>)}/>
-                    <Route exact path='/profile' render={() => (<ProfilePage/>)}/>
+                    <Route path='/dialogs' render={() => (<DialogsPageContainer/>)}/>
+                    <Route exact path='/profile' render={() => (<ProfilePageContainer/>)}/>
                     <Route exact path='/music' render={() => (<Music/>)}/>
-                    <Route exact path='/friends' render={() => (<FriendsContainer/>)}/>
+                    <Route exact path='/users' render={() => (<UsersContainer/>)}/>
                     <Route exact path='/login' render={() => (<LoginContainer/>)}/>
                 </div>
             </div>
