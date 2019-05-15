@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React from 'react'
 import s from './App.module.css';
 import DialogsPageContainer from "./components/DialogPage/DialogsPageContainer";
 import Music from "./components/Music/Music"
@@ -12,7 +12,6 @@ import ProfilePageContainer from "./components/ProfilePage/ProfilePageContainer"
 
 
 const App = () => {
-
 
     return (
         <BrowserRouter>
@@ -32,7 +31,7 @@ const App = () => {
 
                 <div className={s.contentWrapper}>
                     <Route path='/dialogs' render={() => (<DialogsPageContainer/>)}/>
-                    <Route exact path='/profile' render={() => (<ProfilePageContainer/>)}/>
+                    <Route path='/profile/:userId?' render={() => (<ProfilePageContainer/>)}/>
                     <Route exact path='/music' render={() => (<Music/>)}/>
                     <Route exact path='/users' render={() => (<UsersContainer/>)}/>
                     <Route exact path='/login' render={() => (<LoginContainer/>)}/>

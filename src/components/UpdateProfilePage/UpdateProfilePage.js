@@ -2,11 +2,10 @@ import React from 'react';
 import {Redirect}from "react-router-dom";
 import {loginStatuses} from "../../redux/loginReducer";
 
-const Login = (props) => {
+const UpdateProfilePage = (props) => {
 
-   if (props.auth.isAuth) {
-       debugger
-        return <Redirect to={'/profile/' + props.auth.userInfo.userId}/>
+    if (props.isAuth) {
+        return <Redirect to={'/profile'}/>
     }
 
     let captchaValueRef = React.createRef();
@@ -56,4 +55,4 @@ const Login = (props) => {
 };
 
 
-export default Login;
+export default UpdateProfilePage;

@@ -1,6 +1,5 @@
 import React from 'react';
 import {connect} from "react-redux";
-import Login from "./Login";
 import {
     getCaptcha, loginRequest,
     setCaptchaStatus,
@@ -9,11 +8,12 @@ import {
     updateCaptchaValue,
     updateEmailValue, updatePasswordValue, updateRememberMePosition
 } from "../../redux/loginReducer";
+import UpdateProfilePage from "./UpdateProfilePage";
 
-const LoginConnected = (props) => {
+const UpdateProfilePageConnected = (props) => {
 
-    return <Login login={props.login}
-                  auth={props.auth}
+    return <UpdateProfilePage login={props.login}
+                  isAuth={props.isAuth}
                   setCaptchaUrl={props.setCaptchaUrl}
                   setCaptchaStatus={props.setCaptchaStatus}
                   updateCaptchaValue={props.updateCaptchaValue}
@@ -32,7 +32,7 @@ const LoginConnected = (props) => {
 const mstp = (state) => {
     return {
         login: state.login,
-        auth: state.auth
+        isAuth: state.auth.isAuth
     }
 };
 
@@ -75,6 +75,6 @@ const mdtp = (dispatch) => {
     }
 };
 
-const LoginContainer = connect(mstp, mdtp)(LoginConnected);
+const UpdateProfilePageContainer = connect(mstp, mdtp)(UpdateProfilePageConnected);
 
-export default LoginContainer;
+export default UpdateProfilePageContainer;

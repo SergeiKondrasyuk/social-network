@@ -4,7 +4,7 @@ import Message from "./Message/Message";
 import PropTypes from 'prop-types';
 
 const CurrentDialog = (props) => {
-    debugger
+
     let currentDialogMessages = props.dialogPage.dialogs[0].messages.map(p =>
         <Message message={p.content} user={p.author.name} avatar={p.author.avatar} addedTime={p.addedTime}
                  type={p.type}/>

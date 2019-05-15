@@ -1,7 +1,6 @@
 import React from 'react';
 import {connect} from "react-redux";
 import FriendsBlock from "./FriendsBlock";
-import friendsReducer from "../../../redux/friendsReducer";
 
 const FriendsBlockConnected = (props) => {
     return <FriendsBlock friends={props.friends}/>

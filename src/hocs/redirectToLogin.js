@@ -5,10 +5,11 @@ export let redirectToLogin = (WrapperdComponent) => {
 
     let otherComponent = (props) => {
 
-        if (props.login.loginStatus !== 'SUCCESS') {
+        if (!props.auth.isAuth) {
+            debugger
             return <Redirect to={{
-                pathname: '/login',
-                state: {page: '/profile'}
+
+                pathname: '/login'
             }}/>
         }
 

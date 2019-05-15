@@ -7,6 +7,7 @@ import friendsReducer from "./friendsReducer";
 import usersReducer from "./usersReducer";
 import loginReducer from "./loginReducer";
 import thunk from "redux-thunk";
+import authReducer from "./authReducer";
 
 let reducers = combineReducers({
     profilePage: profilePageReducer,
@@ -15,6 +16,7 @@ let reducers = combineReducers({
     friends: friendsReducer,
     users: usersReducer,
     login: loginReducer,
+    auth: authReducer,
 });
 
 let store = createStore(reducers,applyMiddleware(thunk));

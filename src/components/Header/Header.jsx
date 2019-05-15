@@ -1,31 +1,29 @@
-import React from 'react';
+import React, {Component, useEffect} from 'react';
 import logo from "../../img/logo.png";
 import s from './Header.module.css';
 import PropTypes from "prop-types";
-import * as axios from "axios";
-import {loginStatuses} from "../../redux/loginReducer";
+import {NavLink} from "react-router-dom";
 
 
-const Header = (props) => {
+class Header extends Component {
 
-    let axiosInstance = axios.create({
-        baseURL: 'https://social-network.samuraijs.com/api/1.0/',
-        withCredentials: true,
-    });
+    componentDidMount() {
+        this.props.meRequest();
+    }
 
-    let onLogOutButtonClick = () => {
-        axiosInstance.post('auth/logout')
-        props.setLoginStatus(loginStatuses.NOT_INITIALIZED);
-        props.setLoginStatusMessage('Logout success');
-        debugger
-    };
+    render() {
 
-
-    return <header className={s.header}>
-        <img alt='Logo' className={s.logo} src={logo}/>
-        <button className={s.button} id='logOutButton' onClick={onLogOutButtonClick}>Log out</button>
-    </header>
-};
+        return <header className={s.header}>
+            <img alt='Logo' className={s.logo} src={logo}/>
+            {this.props.isAuth
+                ? <button className={s.button} id='logOutButton' onClick={this.props.logoutRequest}>Log out</button>
+                : <NavLink to='/login'>
+                    <button className={s.button} id='logInButton'>Log in</button>
+                </NavLink>
+            }
+        </header>
+    }
+}
 
 export default Header;
 

@@ -6,12 +6,12 @@
     height: auto;
 }
 
-.navItem a {
+.navItemElement a {
     color: white;
     text-decoration: none;
 }
 
-.navItem a.active {
+.navItemElement a.active {
     color: darkblue;
 }
 

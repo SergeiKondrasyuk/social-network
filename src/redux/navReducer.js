@@ -1,7 +1,7 @@
 let initialState =
     {
         navItems: [
-            {title: 'Profile', link: '/profile', icon: '../../../img/icon-profile.png'},
+            {title: 'Profile', link: '/profile/1054', icon: '../../../img/icon-profile.png'},
             {title: 'Messages', link: '/dialogs', icon: '../../../img/icon-messages.png'},
             {title: 'Users', link: '/users', icon: '../../../img/icon-users.png'},
             {title: 'Music', link: '/music', icon: '../../../img/icon-music.png'},

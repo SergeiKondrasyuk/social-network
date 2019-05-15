@@ -1,34 +1,49 @@
-import React from 'react';
+import React, {Component} from 'react';
 import s from './ProfileCard.module.css';
 import PropTypes from "prop-types";
+import {withRouter} from "react-router-dom";
 
 
-const ProfileCard = (props) => {
-debugger
-    return <div className={s.profileCard}>
+class ProfileCard extends Component {
 
-        <div className={s.avatar}> <img alt='User avatar' src={props.user.avatar}/> </div>
+    componentDidMount() {
+        this.props.profileInfoRequest(this.props.match.params.userId)
+    }
 
-        <div className={s.profileInfo}>
-            <div className={s.name}><span>{props.user.firstName}</span><span> {props.user.lastName}</span></div>
-            <div className={s.address}>City: {props.user.address}</div>
-            <div className={s.dob}>Date of Birth: {props.user.dob}</div>
-            <div className={s.education}>Education: {props.user.education}</div>
-            <div className={s.website}>Website: {props.user.website}</div>
+    render() {
+
+        let {editMode, profileInfo, meIdRequest} = this.props.profilePage;
+
+        let onSaveButtonClick = () => this.props.profileInfoPutRequest(profileInfo);
+        return <div className={s.profileCard}>
+            <div className={s.avatar}><img alt='User avatar' src={profileInfo.photos.large}/></div>
+
+            <div className={s.profileInfo}>
+                <div className={s.name}><span>{profileInfo.fullName}</span></div>
+                {(profileInfo.userId === meIdRequest && profileInfo.userId && meIdRequest) &&
+                <button onClick={this.props.setEditModeStatus}>edit</button>}
+                {Object.keys(this.props.profilePage.profileInfo.contacts).map(key => {
+                    return <div><b>{key}: </b>
+                        {editMode ?
+                            <input onChange={(e) => {
+                                let value = e.target.value;
+                                this.props.onContactChange(value, key)
+                            }}
+                                   value={profileInfo.contacts[key]}/> :
+                            <span>{profileInfo.contacts[key]}</span>}
+                    </div>
+                })}
+                {editMode && <button onClick={onSaveButtonClick}>Save</button>}
+            </div>
+
         </div>
 
-    </div>
 
+    }
+}
 
-};
-
-export default ProfileCard;
+export default withRouter(ProfileCard);
 
 ProfileCard.propTypes = {
-    avatar: PropTypes.string,
-    firstName: PropTypes.string,
-    address: PropTypes.string,
-    dob: PropTypes.string,
-    education: PropTypes.string,
-    website: PropTypes.string,
+
 };

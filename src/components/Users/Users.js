@@ -10,7 +10,7 @@ const Users = (props) => {
         {props.users.users.map(u =>
 
             <div>
-                <img className={s.userPhoto} src={u.photos.small == null ? anonymousUser : u.photos.small}/>
+                <img alt='User_Photo' className={s.userPhoto} src={u.photos.small == null ? anonymousUser : u.photos.small}/>
                 <span>{u.name}</span>
                 {u.followed
                     ? <button onClick={() => {

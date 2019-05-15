@@ -1,19 +1,24 @@
 import React from 'react';
 import {connect} from "react-redux";
 import Header from "./Header";
-import {setLoginStatus, setLoginStatusMessage} from "../../redux/loginReducer";
+import {logoutRequest, setLoginStatus, setLoginStatusMessage} from "../../redux/loginReducer";
+import {meRequest, setIsAuth} from "../../redux/authReducer";
 
 
 const HeaderConnected = (props) => {
 
     return <Header login={props.login}
                    setLoginStatus={props.setLoginStatus}
-                   setLoginStatusMessage={props.setLoginStatusMessage}/>
+                   setIsAuth={props.setIsAuth}
+                   setLoginStatusMessage={props.setLoginStatusMessage}
+                   isAuth={props.isAuth}
+                   meRequest={props.meRequest}
+                   logoutRequest={props.logoutRequest}/>
 };
 
 const mstp = (state) => {
     return {
-        login: state.login
+        isAuth: state.auth.isAuth
     }
 };
 
@@ -24,6 +29,15 @@ const mdtp = (dispatch) => {
         },
         setLoginStatusMessage: (loginStatusMessage) => {
             dispatch(setLoginStatusMessage(loginStatusMessage))
+        },
+        setIsAuth: (value) => {
+            dispatch(setIsAuth(value))
+        },
+        logoutRequest: () => {
+            dispatch(logoutRequest())
+        },
+        meRequest: () => {
+            dispatch(meRequest())
         },
 
     }

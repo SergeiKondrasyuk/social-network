@@ -1,4 +1,5 @@
 import {axiosInstance} from "../dal/axios-instance";
+import {setIsAuth} from "./authReducer";
 
 const SET_CAPTCHAURL = 'SET_CAPTCHAURL';
 const SET_CAPTCHA_STATUS = 'SET_CAPTCHA_STATUS';
@@ -114,6 +115,7 @@ export const getCaptcha = (captchaStatus) => (d) => {
     }
 };
 
+
 export const loginRequest = (email, password, rememberMe, captcha) => (d) => {
     d(setLoginStatus(loginStatuses.INPROGRESS));
 
@@ -122,28 +124,28 @@ export const loginRequest = (email, password, rememberMe, captcha) => (d) => {
         password: password,
         rememberMe: rememberMe,
         captcha: captcha,
-    }).then((res) => {
+    }).then(res => {
         d(setLoginResult(res.data.resultCode));
 
-        switch (res.data.resultCode) {
-            case 0: {
-                d(setLoginStatus(loginStatuses.SUCCESS));
-                debugger
-                d(setLoginStatusMessage('Login success'));
-                break;
-            }
-            case 1: {
-                d(setLoginStatus(loginStatuses.ERROR));
-                d(setLoginStatusMessage(res.data.messages[0]));
-                break;
-            }
-            case 10: {
-                d(setLoginStatus(loginStatuses.ERROR));
-                d(setLoginStatusMessage(res.data.messages[0]));
-                break;
-            }
+        if (res.data.resultCode === 0) {
+            d(setLoginStatusMessage('Login success'));
+            d(setLoginStatus(loginStatuses.SUCCESS));
+            d(setIsAuth(true));
+        } else {
+            d(setLoginStatus(loginStatuses.ERROR));
+            d(setLoginStatusMessage(res.data.messages[0]));
         }
     })
+};
+
+export const logoutRequest = () => (d) => {
+    axiosInstance.post('auth/logout').then(res => {
+        if (res.status === 200) {
+            d(setIsAuth(false));
+            d(setLoginStatus(loginStatuses.NOT_INITIALIZED));
+            d(setLoginStatusMessage('Logout success'));
+        }
+    });
 };
 
 export default loginReducer;
