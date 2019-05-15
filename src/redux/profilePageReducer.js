@@ -150,7 +150,8 @@ export const profileInfoPutRequest = () => (d) => {
             "mainLink": null
         },
         "lookingForAJob": false,
-        "lookingForAJobDescription": null,
+        "lookingForAJobDescription": "yo",
+        fullName: "bendercdf",
     }).then(res => {
 
     });
