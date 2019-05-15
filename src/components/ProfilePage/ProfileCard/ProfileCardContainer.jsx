@@ -2,10 +2,11 @@ import React from 'react';
 import {connect} from "react-redux";
 import ProfileCard from "./ProfileCard";
 import {
-    onContactChange,
+    onAboutMeChange,
+    onContactChange, onFullNameChange,
     profileInfoPutRequest,
     profileInfoRequest,
-    setEditModeStatus
+    setEditModeStatus, setLookingForAJobStatus
 } from "../../../redux/profilePageReducer";
 
 
@@ -15,6 +16,9 @@ const ProfileCardConnected = (props) => {
                         profileInfoPutRequest={props.profileInfoPutRequest}
                         setEditModeStatus={props.setEditModeStatus}
                         onContactChange={props.onContactChange}
+                        onAboutMeChange={props.onAboutMeChange}
+                        onFullNameChange={props.onFullNameChange}
+                        setLookingForAJobStatus={props.setLookingForAJobStatus}
     />
 };
 
@@ -39,6 +43,15 @@ const mdtp = (dispatch) => {
         },
         onContactChange: (value, contactKey) => {
             dispatch(onContactChange(value, contactKey))
+        },
+        onAboutMeChange: (value) => {
+            dispatch(onAboutMeChange(value))
+        },
+        onFullNameChange: (value) => {
+            dispatch(onFullNameChange(value))
+        },
+        setLookingForAJobStatus: (value) => {
+            dispatch(setLookingForAJobStatus(value))
         },
 
     }

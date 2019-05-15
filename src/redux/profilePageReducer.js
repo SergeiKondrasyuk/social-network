@@ -7,6 +7,9 @@ const SET_PROFILE_INFO = 'SET_PROFILE_INFO';
 const ON_CONTACT_CHANGE = 'ON_CONTACT_CHANGE';
 const SET_EDIT_MODE_STATUS = 'SET_EDIT_MODE_STATUS';
 const SET_ME_ID = 'SET_ME_ID';
+const ON_ABOUT_ME_CHANGE = 'ON_ABOUT_ME_CHANGE';
+const ON_FULL_NAME_CHANGE = 'ON_FULL_NAME_CHANGE';
+const SET_LOOKING_JOB_STATUS = 'SET_LOOKING_JOB_STATUS';
 
 export const getProfileInfoStatuses = {
     NOT_INITIALIZED: 'NOT_INITIALIZED',
@@ -37,7 +40,7 @@ let initialState =
                 mainLink: null
             },
             lookingForAJob: null,
-            lookingForAJobDescription: null,
+            lookingForAJobDescription: "yofhdgbedhvbh fhvbfhsvberh jbvrhwj",
             fullName: null,
             userId: null,
             photos: {
@@ -83,6 +86,21 @@ const profilePageReducer = (state = initialState, action) => {
                 ...state,
                 meIdRequest: action.id,
             }
+        }
+        case ON_ABOUT_ME_CHANGE: {
+            let cloneState = {...state};
+            cloneState.profileInfo.aboutMe = action.value;
+            return cloneState;
+        }
+        case ON_FULL_NAME_CHANGE: {
+            let cloneState = {...state};
+            cloneState.profileInfo.fullName = action.value;
+            return cloneState;
+        }
+        case SET_LOOKING_JOB_STATUS: {
+            let cloneState = {...state};
+            cloneState.profileInfo.lookingForAJob = action.value;
+            return cloneState;
         }
         case SET_PROFILE_INFO: {
             return {
@@ -135,24 +153,9 @@ export const profileInfoRequest = (id) => (d) => {
     });
 };
 
-export const profileInfoPutRequest = () => (d) => {
+export const profileInfoPutRequest = (profileInfo) => (d) => {
     d(setEditModeStatus(false));
-    axiosInstance.put('profile/', {
-        "aboutMe": 'cool',
-        "contacts": {
-            "facebook": 'www.facebook.com',
-            "website": null,
-            "vk": null,
-            "twitter": null,
-            "instagram": null,
-            "youtube": null,
-            "github": null,
-            "mainLink": null
-        },
-        "lookingForAJob": false,
-        "lookingForAJobDescription": "yo",
-        fullName: "bendercdf",
-    }).then(res => {
+    axiosInstance.put('profile/', profileInfo).then(res => {
 
     });
 };
@@ -164,6 +167,9 @@ export const setProfileInfo = (profileInfo) => ({type: SET_PROFILE_INFO, status:
 export const setMeId = (id) => ({type: SET_ME_ID, id: id});
 export const setEditModeStatus = (value) => ({type: SET_EDIT_MODE_STATUS, value: value});
 export const onContactChange = (value, contactKey) => ({type: ON_CONTACT_CHANGE, value: value, contactKey: contactKey});
+export const onAboutMeChange = (value) => ({type: ON_ABOUT_ME_CHANGE, value: value});
+export const onFullNameChange = (value) => ({type: ON_FULL_NAME_CHANGE, value: value});
+export const setLookingForAJobStatus = (value) => ({type: SET_LOOKING_JOB_STATUS, value: value});
 
 
 export default profilePageReducer;
