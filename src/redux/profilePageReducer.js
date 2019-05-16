@@ -10,6 +10,8 @@ const SET_ME_ID = 'SET_ME_ID';
 const ON_ABOUT_ME_CHANGE = 'ON_ABOUT_ME_CHANGE';
 const ON_FULL_NAME_CHANGE = 'ON_FULL_NAME_CHANGE';
 const SET_LOOKING_JOB_STATUS = 'SET_LOOKING_JOB_STATUS';
+const ON_JOB_DESCRIPTION_CHANGE = 'ON_JOB_DESCRIPTION_CHANGE';
+const ON_PHOTO_CHANGE = 'ON_PHOTO_CHANGE';
 
 export const getProfileInfoStatuses = {
     NOT_INITIALIZED: 'NOT_INITIALIZED',
@@ -28,28 +30,12 @@ let initialState =
         newPost: '',
         profileInfoRequestStatus: 'NOT_INITIALIZED',
         profileInfo: {
-            aboutMe: null,
-            contacts: {
-                facebook: null,
-                website: null,
-                vk: null,
-                twitter: null,
-                instagram: null,
-                youtube: null,
-                github: null,
-                mainLink: null
-            },
-            lookingForAJob: null,
-            lookingForAJobDescription: "yofhdgbedhvbh fhvbfhsvberh jbvrhwj",
-            fullName: null,
-            userId: null,
+            contacts: {},
             photos: {
                 small: null,
                 large: null
             }
         },
-        editMode: false,
-        meIdRequest: null,
     };
 
 const profilePageReducer = (state = initialState, action) => {
@@ -102,38 +88,25 @@ const profilePageReducer = (state = initialState, action) => {
             cloneState.profileInfo.lookingForAJob = action.value;
             return cloneState;
         }
+        case ON_JOB_DESCRIPTION_CHANGE: {
+            let cloneState = {...state};
+            cloneState.profileInfo.lookingForAJobDescription = action.value;
+            return cloneState;
+        }
         case SET_PROFILE_INFO: {
-            return {
-                ...state,
-                profileInfo: {
-                    ...state.profileInfo,
-                    aboutMe: action.status.aboutMe,
-                    contacts: {
-                        ...state.profileInfo.contacts,
-                        facebook: action.status.contacts.facebook,
-                        website: action.status.contacts.website,
-                        vk: action.status.contacts.vk,
-                        twitter: action.status.contacts.twitter,
-                        instagram: action.status.contacts.instagram,
-                        youtube: action.status.contacts.youtube,
-                        github: action.status.contacts.github,
-                        mainLink: action.status.contacts.mainLink
-                    },
-                    lookingForAJob: action.status.lookingForAJob,
-                    lookingForAJobDescription: action.status.lookingForAJobDescription,
-                    fullName: action.status.fullName,
-                    userId: action.status.userId,
-                    photos: {
-                        ...state.profileInfo.photos,
-                        small: action.status.photos.small,
-                        large: action.status.photos.large
-                    }
-                }
-            }
+            let cloneState = {...state};
+            cloneState.profileInfo = action.profileInfo;
+            return cloneState;
         }
         case ON_CONTACT_CHANGE: {
             let cloneState = {...state};
             cloneState.profileInfo.contacts[action.contactKey] = action.value;
+            return cloneState;
+        }
+        case ON_PHOTO_CHANGE: {
+            debugger
+            let cloneState = {...state};
+            cloneState.profileInfo.photo = action.photo;
             return cloneState;
         }
 
@@ -155,21 +128,32 @@ export const profileInfoRequest = (id) => (d) => {
 
 export const profileInfoPutRequest = (profileInfo) => (d) => {
     d(setEditModeStatus(false));
-    axiosInstance.put('profile/', profileInfo).then(res => {
-
-    });
+    axiosInstance.put('profile/', profileInfo);
+    d(profileInfoRequest(profileInfo))
 };
+
+export const uploadPhotoRequest = (photo) => (d) => {
+    axiosInstance.post('profile/photo/', photo).then(res =>{
+        debugger
+        d(onPhotoChange(res.data.photo));
+        }
+    );
+
+};
+
 
 export const addPostAC = () => ({type: ADD_POST});
 export const updateNewPostTextAC = (newPost) => ({type: UPDATE_NEW_POST, text: newPost});
 export const setProfileInfoRequestStatus = (status) => ({type: SET_PROFILE_INFO_REQUEST_STATUS, status: status});
-export const setProfileInfo = (profileInfo) => ({type: SET_PROFILE_INFO, status: profileInfo});
+export const setProfileInfo = (profileInfo) => ({type: SET_PROFILE_INFO, profileInfo: profileInfo});
 export const setMeId = (id) => ({type: SET_ME_ID, id: id});
 export const setEditModeStatus = (value) => ({type: SET_EDIT_MODE_STATUS, value: value});
 export const onContactChange = (value, contactKey) => ({type: ON_CONTACT_CHANGE, value: value, contactKey: contactKey});
 export const onAboutMeChange = (value) => ({type: ON_ABOUT_ME_CHANGE, value: value});
 export const onFullNameChange = (value) => ({type: ON_FULL_NAME_CHANGE, value: value});
 export const setLookingForAJobStatus = (value) => ({type: SET_LOOKING_JOB_STATUS, value: value});
+export const onJobDescriptionChange = (value) => ({type: ON_JOB_DESCRIPTION_CHANGE, value: value});
+export const onPhotoChange = (photo) => ({type: ON_PHOTO_CHANGE, value: photo});
 
 
 export default profilePageReducer;

@@ -1,7 +1,7 @@
 .profileCard{
     display: grid;
     grid-template-areas: "avatar profileInfo contacts";
-    grid-template-columns: 160px 1fr 1fr;
+    grid-template-columns: 160px 0.5fr 1fr;
     grid-gap: 10px;
 }
 .avatar img {
