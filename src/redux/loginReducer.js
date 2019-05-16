@@ -31,6 +31,7 @@ let initialState = {
 const loginReducer = (state = initialState, action) => {
     switch (action.type) {
         case SET_CAPTCHAURL : {
+            debugger
             return {
                 ...state,
                 captchaUrl: action.captchaUrl
@@ -49,6 +50,7 @@ const loginReducer = (state = initialState, action) => {
             }
         }
         case SET_LOGIN_RESULT : {
+            debugger
             return {
                 ...state,
                 loginResult: action.loginResult
@@ -77,17 +79,12 @@ export const setCaptchaStatus = (captchaStatus) => ({type: SET_CAPTCHA_STATUS, c
 export const setLoginStatus = (loginStatus) => ({type: SET_LOGIN_STATUS, loginStatus});
 export const setLoginResult = (loginResult) => ({type: SET_LOGIN_RESULT, loginResult});
 export const setLoginStatusMessage = (loginStatusMessage) => ({type: SET_LOGIN_STATUS_MESSAGE, loginStatusMessage});
-export const changeInputValue = (propertyName, propertyValue) => ({type: CHANGE_INPUT_VALUE, propertyName, propertyValue});
+export const changeInputValue = (propertyName, propertyValue) => ({
+    type: CHANGE_INPUT_VALUE, propertyName, propertyValue
+});
 
 export const getCaptcha = (captchaStatus) => (d) => {
-    if (captchaStatus === loginStatuses.NOT_INITIALIZED) {
-        d(setCaptchaStatus(loginStatuses.INPROGRESS));
-        axiosInstance.get('security/get-captcha-url').then((res) => {
-            console.log(res);
-            d(setCaptchaStatus(loginStatuses.SUCCESS));
-            d(setCaptchaUrl(res.data.url));
-        });
-    }
+
 };
 
 
@@ -95,20 +92,29 @@ export const loginRequest = (email, password, rememberMe, captcha) => (d) => {
     d(setLoginStatus(loginStatuses.INPROGRESS));
 
     axiosInstance.post('auth/login', {
-        email: email,
-        password: password,
-        rememberMe: rememberMe,
-        captcha: captcha,
+        email, password, rememberMe, captcha,
     }).then(res => {
         d(setLoginResult(res.data.resultCode));
-
-        if (res.data.resultCode === 0) {
-            d(setLoginStatusMessage('Login success'));
-            d(setLoginStatus(loginStatuses.SUCCESS));
-            d(setIsAuth(true));
-        } else {
-            d(setLoginStatus(loginStatuses.ERROR));
-            d(setLoginStatusMessage(res.data.messages[0]));
+        switch (res.data.resultCode) {
+            case 0:
+                d(setLoginStatusMessage('Login success'));
+                d(setLoginStatus(loginStatuses.SUCCESS));
+                d(setIsAuth(true));
+                break;
+            case 1:
+                d(setLoginStatus(loginStatuses.ERROR));
+                d(setLoginStatusMessage(res.data.messages[0]));
+                d(setCaptchaStatus(loginStatuses.NOT_INITIALIZED));
+                break;
+            case 10:
+                debugger
+                d(setLoginStatus(loginStatuses.ERROR));
+                d(setLoginStatusMessage(res.data.messages[0]));
+                axiosInstance.get('security/get-captcha-url').then((res) => {
+                    debugger
+                    d(setCaptchaUrl(res.data.url));
+                });
+                break;
         }
     })
 };

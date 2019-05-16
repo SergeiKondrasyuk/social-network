@@ -10,7 +10,7 @@ const Login = (props) => {
     }
 
     let onLoginButtonClick = () => {
-        props.loginRequest(props.login.email, props.login.password, props.login.rememberMe, props.login.captchaValue);
+        props.loginRequest(props.login.email, props.login.password, props.login.rememberMe, props.login.captcha);
     };
 
     let onChangeHandler = (e) => {
