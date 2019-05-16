@@ -21,8 +21,8 @@ const ProfilePage = () => {
     </div>
 };
 
-export default (ProfilePage);
-//export default redirectToLogin(ProfilePage);
+//export default (ProfilePage);
+export default redirectToLogin(ProfilePage);
 
 ProfilePage.propTypes = {
     topimage: PropTypes.string,

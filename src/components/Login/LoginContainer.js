@@ -2,6 +2,7 @@ import React from 'react';
 import {connect} from "react-redux";
 import Login from "./Login";
 import {
+    changeInputValue,
     getCaptcha, loginRequest,
     setCaptchaStatus,
     setCaptchaUrl, setLoginResult,
@@ -16,15 +17,12 @@ const LoginConnected = (props) => {
                   auth={props.auth}
                   setCaptchaUrl={props.setCaptchaUrl}
                   setCaptchaStatus={props.setCaptchaStatus}
-                  updateCaptchaValue={props.updateCaptchaValue}
-                  updateEmailValue={props.updateEmailValue}
-                  updatePasswordValue={props.updatePasswordValue}
-                  updateRememberMePosition={props.updateRememberMePosition}
                   setLoginStatus={props.setLoginStatus}
                   setLoginStatusMessage={props.setLoginStatusMessage}
                   setLoginResult={props.setLoginResult}
                   getCaptcha={props.getCaptcha}
                   loginRequest={props.loginRequest}
+                  changeInputValue={props.changeInputValue}
     />
 
 };
@@ -50,18 +48,6 @@ const mdtp = (dispatch) => {
         setLoginResult: (loginResult) => {
             dispatch(setLoginResult(loginResult))
         },
-        updateCaptchaValue: (captchaValue) => {
-            dispatch(updateCaptchaValue(captchaValue))
-        },
-        updateEmailValue: (emailValue) => {
-            dispatch(updateEmailValue(emailValue))
-        },
-        updatePasswordValue: (passwordValue) => {
-            dispatch(updatePasswordValue(passwordValue))
-        },
-        updateRememberMePosition: (rememberMePosition) => {
-            dispatch(updateRememberMePosition(rememberMePosition))
-        },
         setLoginStatusMessage: (loginStatusMessage) => {
             dispatch(setLoginStatusMessage(loginStatusMessage))
         },
@@ -70,6 +56,9 @@ const mdtp = (dispatch) => {
         },
         loginRequest: (email, password, rememberMe, captcha) => {
             dispatch(loginRequest(email, password, rememberMe, captcha))
+        },
+        changeInputValue: (propertyName, propertyValue) => {
+            dispatch(changeInputValue(propertyName, propertyValue))
         },
 
     }

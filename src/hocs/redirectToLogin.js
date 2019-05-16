@@ -4,7 +4,9 @@ import {Redirect} from "react-router-dom";
 export let redirectToLogin = (WrapperdComponent) => {
 
     let otherComponent = (props) => {
-
+        if (props.auth.userInfo.userId == null){
+            props.meRequest()
+        }
         if (!props.auth.isAuth) {
             debugger
             return <Redirect to={{

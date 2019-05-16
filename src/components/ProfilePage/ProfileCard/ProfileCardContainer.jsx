@@ -6,7 +6,7 @@ import {
     onContactChange, onFullNameChange, onJobDescriptionChange,
     profileInfoPutRequest,
     profileInfoRequest,
-    setEditModeStatus, setLookingForAJobStatus, uploadPhotoRequest
+    setEditModeStatus, setErrorMessage, setLookingForAJobStatus, uploadPhotoRequest
 } from "../../../redux/profilePageReducer";
 
 
@@ -21,6 +21,7 @@ const ProfileCardConnected = (props) => {
                         setLookingForAJobStatus={props.setLookingForAJobStatus}
                         onJobDescriptionChange={props.onJobDescriptionChange}
                         uploadPhotoRequest={props.uploadPhotoRequest}
+                        setErrorMessage={props.setErrorMessage}
     />
 };
 
@@ -58,8 +59,11 @@ const mdtp = (dispatch) => {
         onJobDescriptionChange: (value) => {
             dispatch(onJobDescriptionChange(value))
         },
-        uploadPhotoRequest: (photo) => {
-            dispatch(uploadPhotoRequest(photo))
+        uploadPhotoRequest: (photo, id) => {
+            dispatch(uploadPhotoRequest(photo, id))
+        },
+        setErrorMessage: (value) => {
+            dispatch(setErrorMessage(value))
         },
 
     }

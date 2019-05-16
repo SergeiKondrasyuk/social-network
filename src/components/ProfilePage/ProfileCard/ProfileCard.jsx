@@ -29,17 +29,19 @@ class ProfileCard extends Component {
             let formData = new FormData();
             let imageFile = document.querySelector('#load_avatar');
             formData.append('image', imageFile.files[0]);
-            imageFile.files[0] && this.props.uploadPhotoRequest(formData);
-            this.props.profileInfoRequest(this.props.match.params.userId);
+            this.props.uploadPhotoRequest(formData, profileInfo.userId);
+            debugger
+            //this.props.profileInfoRequest(this.props.match.params.userId);
         };
 
 
-
-        return <div className={s.profileCard}>
+        return <>{profileInfo && (<div className={s.profileCard}>
             <div className={s.avatar}><img alt='User avatar'
                                            src={profileInfo.photos.large == null ? anonymousUser : profileInfo.photos.large}/>
-                {editMode ? <input type='file' accept=".jpg, .jpeg, .png" id='load_avatar' name='load_avatar'/> : null}
+                {editMode && <input type='file' accept=".jpg, .jpeg, .png" id='load_avatar' name='load_avatar'/>}
+                {this.props.profilePage.errorMessage == null ? null : <div>{this.props.profilePage.errorMessage}</div>}
             </div>
+
             {editMode && <button onClick={onLoadPhotoButtonClick}>load photo</button>}
 
             <div className={s.profileInfo}>
@@ -82,7 +84,7 @@ class ProfileCard extends Component {
             {editMode && <button onClick={onSaveButtonClick}>Save</button>}
 
 
-        </div>
+        </div>)}</>
 
 
     }

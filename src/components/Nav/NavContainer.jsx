@@ -3,13 +3,13 @@ import {connect} from "react-redux";
 import Nav from "./Nav";
 
 const NavConnected = (props) => {
-    return <Nav nav = {props.nav}/>
+    return <Nav auth = {props.auth}/>
 
 };
 
 const mstp = (store) => {
     return {
-        nav: store.nav,
+        auth: store.auth,
         users: store.users.users,
     }
 };

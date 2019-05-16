@@ -12,6 +12,7 @@ const ON_FULL_NAME_CHANGE = 'ON_FULL_NAME_CHANGE';
 const SET_LOOKING_JOB_STATUS = 'SET_LOOKING_JOB_STATUS';
 const ON_JOB_DESCRIPTION_CHANGE = 'ON_JOB_DESCRIPTION_CHANGE';
 const ON_PHOTO_CHANGE = 'ON_PHOTO_CHANGE';
+const SET_ERROR_MESSAGE = 'SET_ERROR_MESSAGE';
 
 export const getProfileInfoStatuses = {
     NOT_INITIALIZED: 'NOT_INITIALIZED',
@@ -29,13 +30,8 @@ let initialState =
         ],
         newPost: '',
         profileInfoRequestStatus: 'NOT_INITIALIZED',
-        profileInfo: {
-            contacts: {},
-            photos: {
-                small: null,
-                large: null
-            }
-        },
+        profileInfo: null,
+        errorMessage: null,
     };
 
 const profilePageReducer = (state = initialState, action) => {
@@ -98,6 +94,11 @@ const profilePageReducer = (state = initialState, action) => {
             cloneState.profileInfo = action.profileInfo;
             return cloneState;
         }
+        case SET_ERROR_MESSAGE: {
+            let cloneState = {...state};
+            cloneState.errorMessage = action.value;
+            return cloneState;
+        }
         case ON_CONTACT_CHANGE: {
             let cloneState = {...state};
             cloneState.profileInfo.contacts[action.contactKey] = action.value;
@@ -132,12 +133,21 @@ export const profileInfoPutRequest = (profileInfo) => (d) => {
     d(profileInfoRequest(profileInfo))
 };
 
-export const uploadPhotoRequest = (photo) => (d) => {
-    axiosInstance.post('profile/photo/', photo).then(res =>{
+export const uploadPhotoRequest = (photo, id) => (d) => {
+    debugger
+    axiosInstance.put('profile/photo/', photo).then(res => {
         debugger
-        d(onPhotoChange(res.data.photo));
-        }
-    );
+        if (res.data.resultCode === 0) {
+            d(onPhotoChange(res.data.photo));
+            d(setEditModeStatus(false));
+            debugger
+            d(profileInfoRequest(id));
+        } else {
+            debugger
+            d(setErrorMessage(res.data.messages));
+            d(profileInfoRequest(id));
+    }
+    });
 
 };
 
@@ -152,6 +162,7 @@ export const onContactChange = (value, contactKey) => ({type: ON_CONTACT_CHANGE,
 export const onAboutMeChange = (value) => ({type: ON_ABOUT_ME_CHANGE, value: value});
 export const onFullNameChange = (value) => ({type: ON_FULL_NAME_CHANGE, value: value});
 export const setLookingForAJobStatus = (value) => ({type: SET_LOOKING_JOB_STATUS, value: value});
+export const setErrorMessage = (value) => ({type: SET_ERROR_MESSAGE, value: value});
 export const onJobDescriptionChange = (value) => ({type: ON_JOB_DESCRIPTION_CHANGE, value: value});
 export const onPhotoChange = (photo) => ({type: ON_PHOTO_CHANGE, value: photo});
 

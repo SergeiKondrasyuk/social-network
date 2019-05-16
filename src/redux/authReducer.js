@@ -5,7 +5,7 @@ const SET_USER_INFO = 'SET_USER_INFO';
 
 
 let initialState = {
-    isAuth: null,
+    isAuth: false,
     userInfo: {
         userId: null,
         userName: null

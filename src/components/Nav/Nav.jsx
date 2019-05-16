@@ -5,16 +5,27 @@ import PropTypes from 'prop-types';
 
 const Nav = (props) => {
 
-    let navItems = props.nav.navItems.map(n =>
-        <div className={s.navItemElement} key={n.title}>
-            <NavLink to={n.link} activeClassName={s.active}><img alt='Navigate item icon'className={s.icon} src={n.icon}/>{n.title}</NavLink>
-        </div>
-    );
+    let userId = props.auth.userInfo.userId;
 
     return <div className={s.nav}>
-
-        {navItems}
-
+        <div className={s.navItemElement}>
+            <NavLink to={'/profile/' + userId} activeClassName={s.active}><img alt='Navigate item icon'className={s.icon} src='../../../img/icon-profile.png'/>Profile</NavLink>
+        </div>
+        <div className={s.navItemElement}>
+            <NavLink to='/dialogs' activeClassName={s.active}><img alt='Navigate item icon'className={s.icon} src='../../../img/icon-messages.png'/>Messages</NavLink>
+        </div>
+        <div className={s.navItemElement}>
+            <NavLink to='/users' activeClassName={s.active}><img alt='Navigate item icon'className={s.icon} src='../../../img/icon-users.png'/>Users</NavLink>
+        </div>
+        <div className={s.navItemElement}>
+            <NavLink to='/music' activeClassName={s.active}><img alt='Navigate item icon'className={s.icon} src='../../../img/icon-music.png'/>Music</NavLink>
+        </div>
+        <div className={s.navItemElement}>
+            <NavLink to='/news' activeClassName={s.active}><img alt='Navigate item icon'className={s.icon} src='../../../img/icon-news.png'/>News</NavLink>
+        </div>
+        <div className={s.navItemElement}>
+            <NavLink to='/settings' activeClassName={s.active}><img alt='Navigate item icon'className={s.icon} src='../../../img/icon-settings.png'/>Settings</NavLink>
+        </div>
     </div>
 };
 

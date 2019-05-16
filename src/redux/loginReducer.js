@@ -3,13 +3,10 @@ import {setIsAuth} from "./authReducer";
 
 const SET_CAPTCHAURL = 'SET_CAPTCHAURL';
 const SET_CAPTCHA_STATUS = 'SET_CAPTCHA_STATUS';
-const UPDATE_CAPTCHA_VALUE = 'UPDATE_CAPTCHA_VALUE';
-const UPDATE_EMAIL_VALUE = 'UPDATE_EMAIL_VALUE';
-const UPDATE_PASSWORD_VALUE = 'UPDATE_PASSWORD_VALUE';
-const REMEMBER_ME_POSITION = 'REMEMBER_ME_POSITION';
 const SET_LOGIN_STATUS = 'SET_LOGIN_STATUS';
 const SET_LOGIN_RESULT = 'SET_LOGIN_RESULT';
 const SET_LOGIN_STATUS_MESSAGE = 'SET_LOGIN_STATUS_MESSAGE';
+const CHANGE_INPUT_VALUE = 'CHANGE_INPUT_VALUE';
 
 
 export const loginStatuses = {
@@ -25,7 +22,7 @@ let initialState = {
     email: '',
     password: '',
     rememberMe: false,
-    captchaValue: '',
+    captcha: '',
     captchaUrl: '',
     loginStatusMessage: '',
     loginResult: null,
@@ -63,31 +60,12 @@ const loginReducer = (state = initialState, action) => {
                 loginStatusMessage: action.loginStatusMessage
             }
         }
-        case UPDATE_EMAIL_VALUE : {
+        case CHANGE_INPUT_VALUE : {
             return {
                 ...state,
-                email: action.emailValue
+                [action.propertyName]: action.propertyValue
             }
         }
-        case UPDATE_PASSWORD_VALUE : {
-            return {
-                ...state,
-                password: action.passwordValue
-            }
-        }
-        case REMEMBER_ME_POSITION : {
-            return {
-                ...state,
-                rememberMe: action.rememberMePosition
-            }
-        }
-        case UPDATE_CAPTCHA_VALUE : {
-            return {
-                ...state,
-                captchaValue: action.captchaValue
-            }
-        }
-
         default: {
             return state;
         }
@@ -99,10 +77,7 @@ export const setCaptchaStatus = (captchaStatus) => ({type: SET_CAPTCHA_STATUS, c
 export const setLoginStatus = (loginStatus) => ({type: SET_LOGIN_STATUS, loginStatus});
 export const setLoginResult = (loginResult) => ({type: SET_LOGIN_RESULT, loginResult});
 export const setLoginStatusMessage = (loginStatusMessage) => ({type: SET_LOGIN_STATUS_MESSAGE, loginStatusMessage});
-export const updateEmailValue = (emailValue) => ({type: UPDATE_EMAIL_VALUE, emailValue});
-export const updatePasswordValue = (passwordValue) => ({type: UPDATE_PASSWORD_VALUE, passwordValue});
-export const updateRememberMePosition = (rememberMePosition) => ({type: REMEMBER_ME_POSITION, rememberMePosition});
-export const updateCaptchaValue = (captchaValue) => ({type: UPDATE_CAPTCHA_VALUE, captchaValue});
+export const changeInputValue = (propertyName, propertyValue) => ({type: CHANGE_INPUT_VALUE, propertyName, propertyValue});
 
 export const getCaptcha = (captchaStatus) => (d) => {
     if (captchaStatus === loginStatuses.NOT_INITIALIZED) {
