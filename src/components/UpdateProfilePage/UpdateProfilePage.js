@@ -43,7 +43,7 @@ const UpdateProfilePage = (props) => {
         <div><img src={props.login.captchaUrl} alt='captcha'/><input onChange={onCaptchaInputChange}
                                                                      ref={captchaValueRef}/></div>}
         <div>
-            <button disabled={props.login.loginStatus === loginStatuses.INPROGRESS}
+            <button disabled={props.login.loginStatus === loginStatuses.IN_PROGRESS}
                     onClick={onLoginButtonClick}>Login
             </button>
         </div>

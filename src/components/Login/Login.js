@@ -3,14 +3,13 @@ import {Redirect} from "react-router-dom";
 import {loginStatuses} from "../../redux/loginReducer";
 
 const Login = (props) => {
-
+    let {email, password, rememberMe, captcha} = props.login;
     if (props.auth.isAuth) {
-        debugger
         return <Redirect to={'/profile/' + props.auth.userInfo.userId}/>
     }
 
     let onLoginButtonClick = () => {
-        props.loginRequest(props.login.email, props.login.password, props.login.rememberMe, props.login.captcha);
+        props.loginRequest(email, password, rememberMe, captcha);
     };
 
     let onChangeHandler = (e) => {
@@ -23,18 +22,18 @@ const Login = (props) => {
             <span>Email: </span> <input id='email' onChange={onChangeHandler} name='email'/>
         </div>
         <div>
-            <span>Password: </span> <input type='password' onChange={onChangeHandler} name='password'/>
+            <span>Password: </span> <input type='password' onChange={onChangeHandler} name='password' value={password}/>
         </div>
         <div>
             <span>Remember me: </span> <input type='checkbox' onChange={onChangeHandler} name='rememberMe'/>
         </div>
-        {props.login.loginResult === 10 && props.getCaptcha(props.login.captchaStatus)}
+
         {props.login.loginResult === 10 &&
         <div>
             <img src={props.login.captchaUrl} alt='captcha'/><input onChange={onChangeHandler} name='captcha'/>
         </div>}
         <div>
-            <button disabled={props.login.loginStatus === loginStatuses.INPROGRESS}
+            <button disabled={props.login.loginStatus === loginStatuses.IN_PROGRESS}
                     onClick={onLoginButtonClick}>Login
             </button>
         </div>

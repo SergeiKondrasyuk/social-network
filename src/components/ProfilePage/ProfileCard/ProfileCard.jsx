@@ -1,10 +1,7 @@
 import React, {Component} from 'react';
 import s from './ProfileCard.module.css';
-import PropTypes from "prop-types";
 import {withRouter} from "react-router-dom";
 import anonymousUser from "../../../img/anonymous-user.png";
-import {axiosInstance} from "../../../dal/axios-instance";
-
 
 class ProfileCard extends Component {
 
@@ -49,9 +46,11 @@ class ProfileCard extends Component {
                 <div className={s.name}>
                     {editMode ? <input onChange={onFullNameChange} value={profileInfo.fullName}
                                        ref={fullNameRef}/> :
-                        <span>{profileInfo.fullName}</span>} {(profileInfo.userId === meIdRequest && profileInfo.userId && meIdRequest) &&
+                        <span>{profileInfo.fullName}</span>}
 
-                <button onClick={this.props.setEditModeStatus}>edit</button>}</div>
+                    {(profileInfo.userId === meIdRequest && profileInfo.userId && meIdRequest) &&
+                    <button onClick={this.props.setEditModeStatus}>edit</button>}
+                </div>
 
                 <div><span><b>About me: </b></span>{editMode ?
                     <input onChange={onAboutMeChange} value={profileInfo.aboutMe}

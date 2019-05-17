@@ -7,7 +7,7 @@ const UNFOLLOW = 'UNFOLLOW';
 
 export const statuses = {
     NOT_INITIALIZED: 'NOT_INITIALIZED',
-    INPROGRESS: 'INPROGRESS',
+    INPROGRESS: 'IN_PROGRESS',
     SUCCESS: 'SUCCESS'
 };
 

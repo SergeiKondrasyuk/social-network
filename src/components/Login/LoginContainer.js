@@ -2,13 +2,9 @@ import React from 'react';
 import {connect} from "react-redux";
 import Login from "./Login";
 import {
-    changeInputValue,
-    getCaptcha, loginRequest,
-    setCaptchaStatus,
+    changeInputValue, loginRequest,
     setCaptchaUrl, setLoginResult,
     setLoginStatus, setLoginStatusMessage,
-    updateCaptchaValue,
-    updateEmailValue, updatePasswordValue, updateRememberMePosition
 } from "../../redux/loginReducer";
 
 const LoginConnected = (props) => {
@@ -20,27 +16,22 @@ const LoginConnected = (props) => {
                   setLoginStatus={props.setLoginStatus}
                   setLoginStatusMessage={props.setLoginStatusMessage}
                   setLoginResult={props.setLoginResult}
-                  getCaptcha={props.getCaptcha}
                   loginRequest={props.loginRequest}
                   changeInputValue={props.changeInputValue}
     />
-
 };
 
-const mstp = (state) => {
+const mapStateToProps = (state) => {
     return {
         login: state.login,
         auth: state.auth
     }
 };
 
-const mdtp = (dispatch) => {
+const mapDispatchToProps = (dispatch) => {
     return {
         setCaptchaUrl: (captchaUrl) => {
             dispatch(setCaptchaUrl(captchaUrl))
-        },
-        setCaptchaStatus: (captchaStatus) => {
-            dispatch(setCaptchaStatus(captchaStatus))
         },
         setLoginStatus: (loginStatus) => {
             dispatch(setLoginStatus(loginStatus))
@@ -51,19 +42,15 @@ const mdtp = (dispatch) => {
         setLoginStatusMessage: (loginStatusMessage) => {
             dispatch(setLoginStatusMessage(loginStatusMessage))
         },
-        getCaptcha: (captchaStatus) => {
-            dispatch(getCaptcha(captchaStatus))
-        },
         loginRequest: (email, password, rememberMe, captcha) => {
             dispatch(loginRequest(email, password, rememberMe, captcha))
         },
         changeInputValue: (propertyName, propertyValue) => {
             dispatch(changeInputValue(propertyName, propertyValue))
         },
-
     }
 };
 
-const LoginContainer = connect(mstp, mdtp)(LoginConnected);
+const LoginContainer = connect(mapStateToProps, mapDispatchToProps)(LoginConnected);
 
 export default LoginContainer;

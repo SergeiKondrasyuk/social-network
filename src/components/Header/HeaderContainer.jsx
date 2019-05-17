@@ -7,7 +7,7 @@ import {meRequest, setIsAuth} from "../../redux/authReducer";
 
 const HeaderConnected = (props) => {
 
-    return <Header login={props.login}
+    return <Header state={props.state}
                    setLoginStatus={props.setLoginStatus}
                    setIsAuth={props.setIsAuth}
                    setLoginStatusMessage={props.setLoginStatusMessage}
@@ -18,6 +18,7 @@ const HeaderConnected = (props) => {
 
 const mstp = (state) => {
     return {
+        state: state,
         isAuth: state.auth.isAuth
     }
 };

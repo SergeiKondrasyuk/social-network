@@ -18,7 +18,6 @@ const authReducer = (state = initialState, action) => {
 
         case SET_IS_AUTH : {
             return {
-
                 ...state,
                 isAuth: action.value
             }

@@ -1,24 +1,21 @@
 import React from "react";
 import {Redirect} from "react-router-dom";
 
-export let redirectToLogin = (WrapperdComponent) => {
+export let redirectToLogin = (WrappedComponent) => {
 
-    let otherComponent = (props) => {
-        if (props.auth.userInfo.userId == null){
-            props.meRequest()
-        }
+    let redirectComponent = (props) => {
+
         if (!props.auth.isAuth) {
             debugger
             return <Redirect to={{
-
                 pathname: '/login'
             }}/>
         }
 
         return <div>
-            <WrapperdComponent {...props}/>
+            <WrappedComponent {...props}/>
         </div>
     };
 
-    return otherComponent;
+    return redirectComponent;
 };
