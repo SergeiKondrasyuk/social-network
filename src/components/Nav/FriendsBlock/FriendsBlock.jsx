@@ -4,7 +4,7 @@ import FriendBlockItem from './FriendItem/FriendBlockItem';
 import PropTypes from "prop-types";
 
 const FriendsBlock = (props) => {
-    let friendItem = props.friends.slice(1).map(f =>
+    let friendItem = props.friends.map(f =>
         <FriendBlockItem friendName={f.firstName} friendAvatar={f.avatar}/>
     );
 

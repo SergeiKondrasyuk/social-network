@@ -1,7 +1,6 @@
 import React from 'react';
 import {connect} from "react-redux";
 import ProfilePage from "./ProfilePage";
-import {setLoginStatus} from "../../redux/loginReducer";
 import {meRequest} from "../../redux/authReducer";
 
 

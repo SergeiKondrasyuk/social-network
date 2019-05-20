@@ -116,36 +116,34 @@ const profilePageReducer = (state = initialState, action) => {
     }
 };
 
-export const profileInfoRequest = (id) => (d) => {
-    d(setProfileInfoRequestStatus(getProfileInfoStatuses.INPROGRESS));
+export const profileInfoRequest = (id) => (dispatch) => {
+    dispatch(setProfileInfoRequestStatus(getProfileInfoStatuses.INPROGRESS));
     axiosInstance.get('profile/' + id).then(res => {
-        d(setProfileInfo(res.data));
-        d(setProfileInfoRequestStatus(getProfileInfoStatuses.SUCCESS));
+        dispatch(setProfileInfo(res.data));
+        dispatch(setProfileInfoRequestStatus(getProfileInfoStatuses.SUCCESS));
     });
     axiosInstance.get('auth/me').then(res => {
-        d(setMeId(res.data.data.id));
+        dispatch(setMeId(res.data.data.id));
     });
 };
 
-export const profileInfoPutRequest = (profileInfo) => (d) => {
-    d(setEditModeStatus(false));
+export const profileInfoPutRequest = () => (dispatch, getState) => {
+    let profileInfo = getState().profilePage.profileInfo;
+    dispatch(setEditModeStatus(false));
     axiosInstance.put('profile/', profileInfo);
-    d(profileInfoRequest(profileInfo))
+    dispatch(profileInfoRequest(profileInfo))
 };
 
-export const uploadPhotoRequest = (photo, id) => (d) => {
-    debugger
+export const uploadPhotoRequest = (photo) => (dispatch, getState) => {
+    let userId = getState().profilePage.profileInfo.userId;
     axiosInstance.put('profile/photo/', photo).then(res => {
-        debugger
         if (res.data.resultCode === 0) {
-            d(onPhotoChange(res.data.photo));
-            d(setEditModeStatus(false));
-            debugger
-            d(profileInfoRequest(id));
+            dispatch(onPhotoChange(res.data.photo));
+            dispatch(setEditModeStatus(false));
+            dispatch(profileInfoRequest(userId));
         } else {
-            debugger
-            d(setErrorMessage(res.data.messages));
-            d(profileInfoRequest(id));
+            dispatch(setErrorMessage(res.data.messages));
+            dispatch(profileInfoRequest(userId));
     }
     });
 

@@ -6,6 +6,7 @@ import {
     setCaptchaUrl, setLoginResult,
     setLoginStatus, setLoginStatusMessage,
 } from "../../redux/loginReducer";
+import {getAuthReducer, getLoginReducer} from "../../redux/selectors";
 
 const LoginConnected = (props) => {
 
@@ -23,8 +24,8 @@ const LoginConnected = (props) => {
 
 const mapStateToProps = (state) => {
     return {
-        login: state.login,
-        auth: state.auth
+        login: getLoginReducer(state),
+        auth: getAuthReducer(state),
     }
 };
 

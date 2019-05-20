@@ -38,8 +38,8 @@ const mdtp = (dispatch) => {
         profileInfoRequest: (id) => {
             dispatch(profileInfoRequest(id))
         },
-        profileInfoPutRequest: (profileInfo) => {
-            dispatch(profileInfoPutRequest(profileInfo))
+        profileInfoPutRequest: () => {
+            dispatch(profileInfoPutRequest())
         },
         setEditModeStatus: (value) => {
             dispatch(setEditModeStatus(value))
@@ -59,8 +59,8 @@ const mdtp = (dispatch) => {
         onJobDescriptionChange: (value) => {
             dispatch(onJobDescriptionChange(value))
         },
-        uploadPhotoRequest: (photo, id) => {
-            dispatch(uploadPhotoRequest(photo, id))
+        uploadPhotoRequest: (photo) => {
+            dispatch(uploadPhotoRequest(photo))
         },
         setErrorMessage: (value) => {
             dispatch(setErrorMessage(value))

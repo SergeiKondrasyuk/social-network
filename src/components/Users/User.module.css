@@ -1,3 +1,35 @@
-.userPhoto {
+.userPhoto img{
     height: 100px;
+}
+
+.user {
+    display: grid;
+    margin: 0px auto 10px auto;
+    grid-template-areas: "a n" "a fu";
+    grid-template-rows: 50px 40px;
+    grid-template-columns: 100px 300px;
+    grid-gap: 10px;
+
+}
+
+.userPhoto {
+    grid-area: a;
+}
+
+.followUnFollowButton {
+    grid-area: fu;
+}
+
+.name {
+    grid-area: n;
+}
+
+.users {
+    display: -webkit-flex;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    align-content: flex-start;
+    align-items: flex-start;
 }

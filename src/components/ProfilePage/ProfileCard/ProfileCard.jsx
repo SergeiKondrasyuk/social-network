@@ -26,7 +26,7 @@ class ProfileCard extends Component {
             let formData = new FormData();
             let imageFile = document.querySelector('#load_avatar');
             formData.append('image', imageFile.files[0]);
-            this.props.uploadPhotoRequest(formData, profileInfo.userId);
+            this.props.uploadPhotoRequest(formData);
             debugger
             //this.props.profileInfoRequest(this.props.match.params.userId);
         };

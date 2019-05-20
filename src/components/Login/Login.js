@@ -3,13 +3,14 @@ import {Redirect} from "react-router-dom";
 import {loginStatuses} from "../../redux/loginReducer";
 
 const Login = (props) => {
-    let {email, password, rememberMe, captcha} = props.login;
+
     if (props.auth.isAuth) {
+        debugger
         return <Redirect to={'/profile/' + props.auth.userInfo.userId}/>
     }
 
     let onLoginButtonClick = () => {
-        props.loginRequest(email, password, rememberMe, captcha);
+        props.loginRequest();
     };
 
     let onChangeHandler = (e) => {
@@ -22,7 +23,7 @@ const Login = (props) => {
             <span>Email: </span> <input id='email' onChange={onChangeHandler} name='email'/>
         </div>
         <div>
-            <span>Password: </span> <input type='password' onChange={onChangeHandler} name='password' value={password}/>
+            <span>Password: </span> <input type='password' onChange={onChangeHandler} name='password'/>
         </div>
         <div>
             <span>Remember me: </span> <input type='checkbox' onChange={onChangeHandler} name='rememberMe'/>
