@@ -1,23 +1,32 @@
 import React from 'react';
 import {connect} from "react-redux";
 import Users from "./Users";
-import {setUsers, setStatus, follow, unFollow, getUsers} from "../../redux/usersReducer";
+import {
+    setUsers,
+    setStatus,
+    getUsers,
+    followUserRequest,
+    unFollowUserRequest
+} from "../../redux/usersReducer";
+import {getAuthReducer} from "../../redux/selectors";
 
 const UsersConnected = (props) => {
 
     return <Users users={props.users}
+                  auth={props.auth}
                   setUsers={props.setUsers}
                   setStatus={props.setStatus}
-                  follow={props.follow}
-                  unFollow={props.unFollow}
                   getUsers={props.getUsers}
+                  followUserRequest={props.followUserRequest}
+                  UnFollowUserRequest={props.UnFollowUserRequest}
     />
 
 };
 
 const mstp = (state) => {
     return {
-        users: state.users
+        users: state.users,
+        auth: getAuthReducer(state),
     }
 };
 
@@ -29,14 +38,14 @@ const mdtp = (dispatch) => {
         setStatus: (status) => {
             dispatch(setStatus(status))
         },
-        follow: (userID) => {
-            dispatch(follow(userID))
-        },
-        unFollow: (userID) => {
-            dispatch(unFollow(userID))
-        },
         getUsers: (status) => {
             dispatch(getUsers(status))
+        },
+        followUserRequest: (userId) => {
+            dispatch(followUserRequest(userId))
+        },
+        UnFollowUserRequest: (userId) => {
+            dispatch(unFollowUserRequest(userId))
         },
     }
 };

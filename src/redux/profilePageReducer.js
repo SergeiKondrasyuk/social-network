@@ -54,7 +54,7 @@ const profilePageReducer = (state = initialState, action) => {
         case SET_PROFILE_INFO_REQUEST_STATUS: {
             return {
                 ...state,
-                profileInfoRequestStatus: action.status,
+                profileInfoRequestStatus: action.getUsersStatus,
             }
         }
         case SET_EDIT_MODE_STATUS: {
@@ -152,7 +152,7 @@ export const uploadPhotoRequest = (photo) => (dispatch, getState) => {
 
 export const addPostAC = () => ({type: ADD_POST});
 export const updateNewPostTextAC = (newPost) => ({type: UPDATE_NEW_POST, text: newPost});
-export const setProfileInfoRequestStatus = (status) => ({type: SET_PROFILE_INFO_REQUEST_STATUS, status: status});
+export const setProfileInfoRequestStatus = (status) => ({type: SET_PROFILE_INFO_REQUEST_STATUS, getUsersStatus: status});
 export const setProfileInfo = (profileInfo) => ({type: SET_PROFILE_INFO, profileInfo: profileInfo});
 export const setMeId = (id) => ({type: SET_ME_ID, id: id});
 export const setEditModeStatus = (value) => ({type: SET_EDIT_MODE_STATUS, value: value});

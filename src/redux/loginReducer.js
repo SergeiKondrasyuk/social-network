@@ -96,7 +96,7 @@ export const loginRequest = () => (dispatch, getState) => {
                 dispatch(setLoginStatus(loginStatuses.ERROR));
                 dispatch(setLoginStatusMessage(res.data.messages[0]));
                 axiosInstance.get('security/get-captcha-url').then((res) => {
-                    res.status === 200 && dispatch(setCaptchaUrl(res.data.url));
+                    res.getUsersStatus === 200 && dispatch(setCaptchaUrl(res.data.url));
                 });
                 break;
         }
@@ -105,7 +105,7 @@ export const loginRequest = () => (dispatch, getState) => {
 
 export const logoutRequest = () => (d) => {
     axiosInstance.post('auth/logout').then(res => {
-        if (res.status === 200) {
+        if (res.getUsersStatus === 200) {
             d(setIsAuth(false));
             d(setLoginStatus(loginStatuses.NOT_INITIALIZED));
             d(setLoginStatusMessage('Logout success'));

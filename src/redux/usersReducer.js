@@ -2,9 +2,6 @@ import {axiosInstance} from "../dal/axios-instance";
 
 const SET_USERS = 'SET_USERS';
 const SET_STATUS = 'SET_STATUS';
-const FOLLOW = 'FOLLOW';
-const UN_FOLLOW = 'UN_FOLLOW';
-
 export const statuses = {
     NOT_INITIALIZED: 'NOT_INITIALIZED',
     INPROGRESS: 'IN_PROGRESS',
@@ -12,7 +9,7 @@ export const statuses = {
 };
 
 let initialState = {
-    status: statuses.NOT_INITIALIZED,
+    getUsersStatus: statuses.NOT_INITIALIZED,
     users: [],
 };
 
@@ -27,29 +24,7 @@ const usersReducer = (state = initialState, action) => {
         case SET_STATUS : {
             return {
                 ...state,
-                status: action.status
-            }
-        }
-        case FOLLOW : {
-            return {
-                ...state,
-                users: state.users.map(u => {
-                    if (u.id === action.userId) {
-                        return {...u, followed: true}
-                    }
-                    return u;
-                })
-            }
-        }
-        case UN_FOLLOW : {
-            return {
-                ...state,
-                users: state.users.map(u => {
-                    if (u.id === action.userId) {
-                        return {...u, followed: false}
-                    }
-                    return u;
-                })
+                getUsersStatus: action.getUsersStatus
             }
         }
         default: {
@@ -58,16 +33,13 @@ const usersReducer = (state = initialState, action) => {
     }
 };
 
-export const setUsers = (users) => ({type: SET_USERS, users: users});
-export const setStatus = (status) => ({type: SET_STATUS, status});
-export const follow = (userId) => ({type: FOLLOW, userId});
-export const unFollow = (userId) => ({type: UN_FOLLOW, userId});
+export const setUsers = (users) => ({type: SET_USERS, users});
+export const setStatus = (getUsersStatus) => ({type: SET_STATUS, getUsersStatus});
 
 export const getUsers = () => (dispatch, getState) => {
-
     let state = getState().users;
 
-    if (state.status === statuses.NOT_INITIALIZED) {
+    if (state.getUsersStatus === statuses.NOT_INITIALIZED) {
         dispatch(setStatus(statuses.INPROGRESS));
         axiosInstance
             .get('users?count=20')
@@ -76,6 +48,37 @@ export const getUsers = () => (dispatch, getState) => {
                 dispatch(setUsers(res.data.items));
             });
     }
+};
+
+export const followUserRequest = (userId) => (dispatch) => {
+    axiosInstance.post(`follow/${userId}`)
+        .then((res) => {
+            debugger
+            if (res.data.resultCode == 0) {
+                dispatch(setStatus(statuses.INPROGRESS));
+                axiosInstance
+                    .get('users?count=20')
+                    .then((res) => {
+                        dispatch(setStatus(statuses.SUCCESS));
+                        dispatch(setUsers(res.data.items));
+                    });
+            }
+        });
+};
+export const unFollowUserRequest = (userId) => (dispatch) => {
+    axiosInstance.delete(`follow/${userId}`)
+        .then((res) => {
+            debugger
+            if (res.data.resultCode == 0) {
+                dispatch(setStatus(statuses.INPROGRESS));
+                axiosInstance
+                    .get('users?count=20')
+                    .then((res) => {
+                        dispatch(setStatus(statuses.SUCCESS));
+                        dispatch(setUsers(res.data.items));
+                    });
+            }
+        });
 };
 
 
