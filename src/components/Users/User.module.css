@@ -47,3 +47,8 @@
     border-radius: 3px;
     cursor: pointer;
 }
+
+.preloader {
+    position: fixed;
+    margin: 15%;
+}

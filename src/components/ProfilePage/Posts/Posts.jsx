@@ -8,7 +8,7 @@ import ava from "../../../img/ava.png"
 
 const Posts = (props) => {
 
-    let postsList = props.postData.reverse().map( p =>
+    let postsList = props.postData.map( p =>
         <Post post={p.text} ava={ava} likes={p.likeCount}/>
     );
 

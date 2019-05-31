@@ -41,7 +41,7 @@ const profilePageReducer = (state = initialState, action) => {
             let cloneState = {...state};
             if (state.newPost.trim()) {
                 let newPost = {id: 4, text: state.newPost, likeCount: 0};
-                cloneState.postData = [newPost, ...cloneState.postData].reverse();
+                cloneState.postData = [...cloneState.postData, newPost];
                 cloneState.newPost = '';
             }
             return cloneState;

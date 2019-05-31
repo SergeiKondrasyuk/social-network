@@ -1,11 +1,11 @@
 import React, {useEffect} from 'react';
-import anonymousUser from "../../img/anonymous-user.png"
+import anonymousUser from '../../img/anonymous-user.png'
 import style from './User.module.css'
 
 const Users = (props) => {
 
     useEffect(() => {
-        props.getUsers(props.users.currentPage)
+        props.getUsers(props.users.currentPage);
     }, [])
 
 

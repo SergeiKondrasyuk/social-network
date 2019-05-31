@@ -1,37 +1,40 @@
 import React from 'react';
-import {connect} from "react-redux";
-import Users from "./Users";
+import {connect} from 'react-redux';
+import Users from './Users';
 import {
-    setUsers,
-    setStatus,
-    getUsers,
-    followUserRequest,
+    setUsers, setStatus, getUsers, followUserRequest,
     unFollowUserRequest, setCurrentPage
-} from "../../redux/usersReducer";
-import {getAuthReducer} from "../../redux/selectors";
+} from '../../redux/usersReducer';
+import {getAuthReducer} from '../../redux/selectors';
+import Preloader from '../common/Preloader';
+import style from './User.module.css'
 
 const UsersConnected = (props) => {
 
-    return <Users users={props.users}
-                  auth={props.auth}
-                  setUsers={props.setUsers}
-                  setStatus={props.setStatus}
-                  getUsers={props.getUsers}
-                  followUserRequest={props.followUserRequest}
-                  unFollowUserRequest={props.unFollowUserRequest}
-                  setCurrentPage={props.setCurrentPage}
-    />
+    return <>
+        <div className={style.preloader}>{props.users.isFetching && <Preloader/>}</div>
+
+        <Users users={props.users}
+               auth={props.auth}
+               setUsers={props.setUsers}
+               setStatus={props.setStatus}
+               getUsers={props.getUsers}
+               followUserRequest={props.followUserRequest}
+               unFollowUserRequest={props.unFollowUserRequest}
+               setCurrentPage={props.setCurrentPage}
+        />
+    </>
 
 };
 
-const mstp = (state) => {
+const mapStateToProps = (state) => {
     return {
         users: state.users,
         auth: getAuthReducer(state),
     }
 };
 
-const mdtp = (dispatch) => {
+const mapDispatchToProps = (dispatch) => {
     return {
         setUsers: (users) => {
             dispatch(setUsers(users))
@@ -54,6 +57,6 @@ const mdtp = (dispatch) => {
     }
 };
 
-const UsersContainer = connect(mstp, mdtp)(UsersConnected);
+const UsersContainer = connect(mapStateToProps, mapDispatchToProps)(UsersConnected);
 
 export default UsersContainer;
