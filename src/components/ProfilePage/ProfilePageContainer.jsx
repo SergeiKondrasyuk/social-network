@@ -1,7 +1,8 @@
 import React from 'react';
 import {connect} from "react-redux";
 import ProfilePage from "./ProfilePage";
-import {meRequest} from "../../redux/authReducer";
+import {me} from "../../redux/authReducer";
+import {profileInfoRequest} from "../../redux/profilePageReducer";
 
 
 const ProfilePageConnected = (props) => {
@@ -9,6 +10,7 @@ const ProfilePageConnected = (props) => {
     return <ProfilePage login={props.login}
                         auth={props.auth}
                         meRequest={props.meRequest}
+                        profileInfoRequest={props.profileInfoRequest}
     />
 
 };
@@ -23,9 +25,11 @@ const mstp = (state) => {
 const mdtp = (dispatch) => {
     return {
         meRequest: () => {
-            dispatch(meRequest())
+            dispatch(me())
         },
-
+        profileInfoRequest: () => {
+            dispatch(profileInfoRequest())
+        },
     }
 };
 

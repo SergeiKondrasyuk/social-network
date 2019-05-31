@@ -116,9 +116,10 @@ const profilePageReducer = (state = initialState, action) => {
     }
 };
 
-export const profileInfoRequest = (id) => (dispatch) => {
+export const profileInfoRequest = () => (dispatch, getState) => {
+    let userId = getState().auth.userInfo.userId;
     dispatch(setProfileInfoRequestStatus(getProfileInfoStatuses.INPROGRESS));
-    axiosInstance.get('profile/' + id).then(res => {
+    axiosInstance.get('profile/' + userId).then(res => {
         dispatch(setProfileInfo(res.data));
         dispatch(setProfileInfoRequestStatus(getProfileInfoStatuses.SUCCESS));
     });
@@ -135,15 +136,14 @@ export const profileInfoPutRequest = () => (dispatch, getState) => {
 };
 
 export const uploadPhotoRequest = (photo) => (dispatch, getState) => {
-    let userId = getState().profilePage.profileInfo.userId;
     axiosInstance.put('profile/photo/', photo).then(res => {
         if (res.data.resultCode === 0) {
             dispatch(onPhotoChange(res.data.photo));
             dispatch(setEditModeStatus(false));
-            dispatch(profileInfoRequest(userId));
+            dispatch(profileInfoRequest());
         } else {
             dispatch(setErrorMessage(res.data.messages));
-            dispatch(profileInfoRequest(userId));
+            dispatch(profileInfoRequest());
     }
     });
 

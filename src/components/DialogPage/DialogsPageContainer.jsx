@@ -1,7 +1,7 @@
 import React from 'react'
 import {connect} from "react-redux";
 import DialogsPage from "./DialogsPage";
-import {meRequest} from "../../redux/authReducer";
+import {me} from "../../redux/authReducer";
 
 const DialogsPageConnected = (props) => {
 
@@ -23,7 +23,7 @@ const mstp = (state) => {
 const mdtp = (dispatch) => {
     return {
         meRequest: () => {
-            dispatch(meRequest())
+            dispatch(me())
         },
 
     }

@@ -8,6 +8,7 @@ import {
     profileInfoRequest,
     setEditModeStatus, setErrorMessage, setLookingForAJobStatus, uploadPhotoRequest
 } from "../../../redux/profilePageReducer";
+import {me} from "../../../redux/authReducer";
 
 
 const ProfileCardConnected = (props) => {
@@ -35,8 +36,8 @@ const mstp = (store) => {
 
 const mdtp = (dispatch) => {
     return {
-        profileInfoRequest: (id) => {
-            dispatch(profileInfoRequest(id))
+        profileInfoRequest: () => {
+            dispatch(profileInfoRequest())
         },
         profileInfoPutRequest: () => {
             dispatch(profileInfoPutRequest())
@@ -65,7 +66,9 @@ const mdtp = (dispatch) => {
         setErrorMessage: (value) => {
             dispatch(setErrorMessage(value))
         },
-
+        meRequest: () => {
+            dispatch(me())
+        },
     }
 };
 

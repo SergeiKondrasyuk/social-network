@@ -13,6 +13,7 @@ import ProfilePageContainer from "./components/ProfilePage/ProfilePageContainer"
 
 const App = () => {
 
+
     return (
         <BrowserRouter>
             <div className={s.appWrapper}>

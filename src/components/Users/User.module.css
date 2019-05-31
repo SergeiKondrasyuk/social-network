@@ -9,7 +9,6 @@
     grid-template-rows: 50px 40px;
     grid-template-columns: 100px 300px;
     grid-gap: 10px;
-
 }
 
 .userPhoto {
@@ -32,4 +31,19 @@
     justify-content: flex-start;
     align-content: flex-start;
     align-items: flex-start;
+}
+
+.selectedPage {
+    background-color: darkseagreen;
+}
+
+.pagination {
+    width: 200px;
+    margin: auto;
+}
+
+.pagination span{
+    padding: 5px;
+    border-radius: 3px;
+    cursor: pointer;
 }

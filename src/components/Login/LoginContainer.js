@@ -2,7 +2,7 @@ import React from 'react';
 import {connect} from "react-redux";
 import Login from "./Login";
 import {
-    changeInputValue, loginRequest,
+    changeInputValue, loginAttempt,
     setCaptchaUrl, setLoginResult,
     setLoginStatus, setLoginStatusMessage,
 } from "../../redux/loginReducer";
@@ -17,7 +17,7 @@ const LoginConnected = (props) => {
                   setLoginStatus={props.setLoginStatus}
                   setLoginStatusMessage={props.setLoginStatusMessage}
                   setLoginResult={props.setLoginResult}
-                  loginRequest={props.loginRequest}
+                  loginAttempt={props.loginAttempt}
                   changeInputValue={props.changeInputValue}
     />
 };
@@ -43,8 +43,8 @@ const mapDispatchToProps = (dispatch) => {
         setLoginStatusMessage: (loginStatusMessage) => {
             dispatch(setLoginStatusMessage(loginStatusMessage))
         },
-        loginRequest: (email, password, rememberMe, captcha) => {
-            dispatch(loginRequest(email, password, rememberMe, captcha))
+        loginAttempt: (email, password, rememberMe, captcha) => {
+            dispatch(loginAttempt(email, password, rememberMe, captcha))
         },
         changeInputValue: (propertyName, propertyValue) => {
             dispatch(changeInputValue(propertyName, propertyValue))

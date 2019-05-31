@@ -10,7 +10,7 @@ const Login = (props) => {
     }
 
     let onLoginButtonClick = () => {
-        props.loginRequest();
+        props.loginAttempt();
     };
 
     let onChangeHandler = (e) => {

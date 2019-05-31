@@ -3,12 +3,13 @@ import s from './Posts.module.css';
 import Post from "./Post/Post";
 import PropTypes from "prop-types";
 import NewPostFormContainer from "./NewPostForm/NewPostFormContainer";
+import ava from "../../../img/ava.png"
 
 
 const Posts = (props) => {
 
     let postsList = props.postData.reverse().map( p =>
-        <Post post={p.text} ava={props.friends[0].avatar} likes={p.likeCount}/>
+        <Post post={p.text} ava={ava} likes={p.likeCount}/>
     );
 
     return <div className={s.posts}>

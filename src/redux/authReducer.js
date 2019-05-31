@@ -1,4 +1,4 @@
-import {axiosInstance} from "../dal/axios-instance";
+import {serverAPI} from "../dal/axios-instance";
 
 const SET_IS_AUTH = 'SET_IS_AUTH';
 const SET_USER_INFO = 'SET_USER_INFO';
@@ -38,12 +38,11 @@ const authReducer = (state = initialState, action) => {
     }
 };
 
-export const meRequest = () => (d) => {
-    axiosInstance.get('auth/me').then(res => {
-        debugger
+export const me = () => (dispatch) => {
+    serverAPI.meRequest().then(res => {
         if (res.data.resultCode === 0) {
-            d(setIsAuth(true));
-            d(setUserInfo(res.data.data.id, res.data.data.login));
+            dispatch(setIsAuth(true));
+            dispatch(setUserInfo(res.data.data.id, res.data.data.login));
         }
     });
 };

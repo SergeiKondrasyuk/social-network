@@ -5,10 +5,13 @@ import PropTypes from "prop-types";
 import PostsContainer from "./Posts/PostsContainer";
 import ProfileCardContainer from "./ProfileCard/ProfileCardContainer";
 import {redirectToLogin} from "../../hocs/redirectToLogin";
-import {withRouter} from "react-router-dom";
 
-const ProfilePage = () => {
-
+const ProfilePage = (props) => {
+debugger
+    useEffect(() => {
+        props.meRequest()
+        props.profileInfoRequest()
+    }, [])
 
     return <div className={s.profile}>
 

@@ -5,10 +5,6 @@ import anonymousUser from "../../../img/anonymous-user.png";
 
 class ProfileCard extends Component {
 
-    componentDidMount() {
-        this.props.profileInfoRequest(this.props.match.params.userId)
-    }
-
     render() {
 
         let {editMode, profileInfo, meIdRequest} = this.props.profilePage;
@@ -27,8 +23,6 @@ class ProfileCard extends Component {
             let imageFile = document.querySelector('#load_avatar');
             formData.append('image', imageFile.files[0]);
             this.props.uploadPhotoRequest(formData);
-            debugger
-            //this.props.profileInfoRequest(this.props.match.params.userId);
         };
 
 

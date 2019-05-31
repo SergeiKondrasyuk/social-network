@@ -6,7 +6,7 @@ import {
     setStatus,
     getUsers,
     followUserRequest,
-    unFollowUserRequest
+    unFollowUserRequest, setCurrentPage
 } from "../../redux/usersReducer";
 import {getAuthReducer} from "../../redux/selectors";
 
@@ -18,7 +18,8 @@ const UsersConnected = (props) => {
                   setStatus={props.setStatus}
                   getUsers={props.getUsers}
                   followUserRequest={props.followUserRequest}
-                  UnFollowUserRequest={props.UnFollowUserRequest}
+                  unFollowUserRequest={props.unFollowUserRequest}
+                  setCurrentPage={props.setCurrentPage}
     />
 
 };
@@ -38,13 +39,16 @@ const mdtp = (dispatch) => {
         setStatus: (status) => {
             dispatch(setStatus(status))
         },
-        getUsers: (status) => {
-            dispatch(getUsers(status))
+        setCurrentPage: (currentPage) => {
+            dispatch(setCurrentPage(currentPage))
+        },
+        getUsers: (pageNumber) => {
+            dispatch(getUsers(pageNumber))
         },
         followUserRequest: (userId) => {
             dispatch(followUserRequest(userId))
         },
-        UnFollowUserRequest: (userId) => {
+        unFollowUserRequest: (userId) => {
             dispatch(unFollowUserRequest(userId))
         },
     }

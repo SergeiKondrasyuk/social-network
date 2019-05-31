@@ -125,7 +125,7 @@ module.exports = function(webpackEnv) {
     // These are the "entry points" to our application.
     // This means they will be the "root" imports that are included in JS bundle.
     entry: [
-      // Include an alternative client for WebpackDevServer. A client's job is to
+      // Include an alternative client for WebpackDevServer. A client'style job is to
       // connect to WebpackDevServer by a socket and get notified about changes.
       // When you save a file, the client will either apply hot updates (in case
       // of CSS changes), or refresh the page (in case of JS changes). When you
@@ -137,7 +137,7 @@ module.exports = function(webpackEnv) {
       // require.resolve('webpack/hot/dev-server'),
       isEnvDevelopment &&
         require.resolve('react-dev-utils/webpackHotDevClient'),
-      // Finally, this is your app's code:
+      // Finally, this is your app'style code:
       paths.appIndexJs,
       // We include the app code last so that if there is a runtime error during
       // initialization, it doesn't blow up the WebpackDevServer client, and
@@ -146,7 +146,7 @@ module.exports = function(webpackEnv) {
     output: {
       // The build folder.
       path: isEnvProduction ? paths.appBuild : undefined,
-      // Add /* filename */ comments to generated require()s in the output.
+      // Add /* filename */ comments to generated require()style in the output.
       pathinfo: isEnvDevelopment,
       // There will be one main bundle, and one file per asynchronous chunk.
       // In development, it does not produce real files.
@@ -288,11 +288,11 @@ module.exports = function(webpackEnv) {
     module: {
       strictExportPresence: true,
       rules: [
-        // Disable require.ensure as it's not a standard language feature.
+        // Disable require.ensure as it'style not a standard language feature.
         { parser: { requireEnsure: false } },
 
         // First, run the linter.
-        // It's important to do this before Babel processes the JS.
+        // It'style important to do this before Babel processes the JS.
         {
           test: /\.(js|mjs|jsx)$/,
           enforce: 'pre',
@@ -374,7 +374,7 @@ module.exports = function(webpackEnv) {
                 cacheDirectory: true,
                 cacheCompression: isEnvProduction,
                 
-                // If an error happens in a package, it's possible to be
+                // If an error happens in a package, it'style possible to be
                 // because it was compiled. Thus, we don't want the browser
                 // debugger to show the original code. Instead, the code
                 // being evaluated would be much more helpful.
@@ -470,7 +470,7 @@ module.exports = function(webpackEnv) {
               },
             },
             // ** STOP ** Are you adding a new loader?
-            // Make sure to add the new loader(s) before the "file" loader.
+            // Make sure to add the new loader(style) before the "file" loader.
           ],
         },
       ],

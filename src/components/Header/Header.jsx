@@ -1,4 +1,4 @@
-import React, {Component, useEffect} from 'react';
+import React, {Component} from 'react';
 import logo from "../../img/logo.png";
 import s from './Header.module.css';
 import PropTypes from "prop-types";
@@ -8,7 +8,7 @@ import {NavLink} from "react-router-dom";
 class Header extends Component {
 
     componentDidMount() {
-        this.props.meRequest();
+        this.props.me();
     }
 
     render() {

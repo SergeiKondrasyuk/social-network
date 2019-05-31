@@ -27,7 +27,7 @@ const UpdateProfilePage = (props) => {
     };
 
     let onLoginButtonClick = () => {
-        props.loginRequest(props.login.email, props.login.password, props.login.rememberMe, props.login.captchaValue);
+        props.login(props.login.email, props.login.password, props.login.rememberMe, props.login.captchaValue);
     };
 
 

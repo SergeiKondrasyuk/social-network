@@ -1,4 +1,4 @@
-import {axiosInstance} from "../dal/axios-instance";
+import {axiosInstance, serverAPI} from "../dal/axios-instance";
 import {setIsAuth} from "./authReducer";
 
 const SET_CAPTCHA_URL = 'SET_CAPTCHA_URL';
@@ -17,7 +17,7 @@ export const loginStatuses = {
 let initialState = {
     loginStatus: loginStatuses.NOT_INITIALIZED,
     email: '',
-    password: '10050000',
+    password: '',
     rememberMe: false,
     captcha: '',
     captchaUrl: '',
@@ -73,39 +73,38 @@ export const changeInputValue = (propertyName, propertyValue) => ({
 });
 
 
-export const loginRequest = () => (dispatch, getState) => {
+export const loginAttempt = () => (dispatch, getState) => {
     let state = getState().login;
     dispatch(setLoginStatus(loginStatuses.IN_PROGRESS));
-
-
-    axiosInstance.post('auth/login', {
-        email: state.email, password: state.password, rememberMe: state.rememberMe, captcha: state.captcha,
-    }).then(res => {
-        dispatch(setLoginResult(res.data.resultCode));
-        switch (res.data.resultCode) {
-            case 0:
-                dispatch(setLoginStatusMessage('Login success'));
-                dispatch(setLoginStatus(loginStatuses.SUCCESS));
-                dispatch(setIsAuth(true));
-                break;
-            case 1:
-                dispatch(setLoginStatus(loginStatuses.ERROR));
-                dispatch(setLoginStatusMessage(res.data.messages[0]));
-                break;
-            case 10:
-                dispatch(setLoginStatus(loginStatuses.ERROR));
-                dispatch(setLoginStatusMessage(res.data.messages[0]));
-                axiosInstance.get('security/get-captcha-url').then((res) => {
-                    res.getUsersStatus === 200 && dispatch(setCaptchaUrl(res.data.url));
-                });
-                break;
-        }
-    })
+    serverAPI.loginRequest(state.email, state.password, state.rememberMe, state.captcha)
+        .then(res => {
+            dispatch(setLoginResult(res.data.resultCode));
+            switch (res.data.resultCode) {
+                case 0:
+                    dispatch(setLoginStatusMessage('Login success'));
+                    dispatch(setLoginStatus(loginStatuses.SUCCESS));
+                    dispatch(setIsAuth(true));
+                    break;
+                case 1:
+                    dispatch(setLoginStatus(loginStatuses.ERROR));
+                    dispatch(setLoginStatusMessage(res.data.messages[0]));
+                    break;
+                case 10:
+                    dispatch(setLoginStatus(loginStatuses.ERROR));
+                    dispatch(setLoginStatusMessage(res.data.messages[0]));
+                    axiosInstance.get('security/get-captcha-url').then((res) => {
+                        res.getUsersStatus === 200 && dispatch(setCaptchaUrl(res.data.url));
+                    });
+                    break;
+                default: break;
+            }
+        })
 };
 
-export const logoutRequest = () => (d) => {
-    axiosInstance.post('auth/logout').then(res => {
-        if (res.getUsersStatus === 200) {
+export const logoutAttempt = () => (d) => {
+    serverAPI.logoutRequest()
+        .then(res => {
+        if (res.data.resultCode === 0) {
             d(setIsAuth(false));
             d(setLoginStatus(loginStatuses.NOT_INITIALIZED));
             d(setLoginStatusMessage('Logout success'));

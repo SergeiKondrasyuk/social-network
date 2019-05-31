@@ -1,8 +1,8 @@
 import React from 'react';
 import {connect} from "react-redux";
 import Header from "./Header";
-import {logoutRequest, setLoginStatus, setLoginStatusMessage} from "../../redux/loginReducer";
-import {meRequest, setIsAuth} from "../../redux/authReducer";
+import {logoutAttempt, setLoginStatus, setLoginStatusMessage} from "../../redux/loginReducer";
+import {me, setIsAuth} from "../../redux/authReducer";
 
 
 const HeaderConnected = (props) => {
@@ -12,7 +12,7 @@ const HeaderConnected = (props) => {
                    setIsAuth={props.setIsAuth}
                    setLoginStatusMessage={props.setLoginStatusMessage}
                    isAuth={props.isAuth}
-                   meRequest={props.meRequest}
+                   me={props.me}
                    logoutRequest={props.logoutRequest}/>
 };
 
@@ -35,10 +35,10 @@ const mdtp = (dispatch) => {
             dispatch(setIsAuth(value))
         },
         logoutRequest: () => {
-            dispatch(logoutRequest())
+            dispatch(logoutAttempt())
         },
-        meRequest: () => {
-            dispatch(meRequest())
+        me: () => {
+            dispatch(me())
         },
 
     }
