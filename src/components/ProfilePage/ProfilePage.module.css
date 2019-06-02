@@ -16,3 +16,8 @@
 .posts {
     grid-area: posts;
 }
+
+.preloader {
+    position: fixed;
+    margin: 20%;
+}

@@ -5,7 +5,7 @@
 .user {
     display: grid;
     margin: 0px auto 10px auto;
-    grid-template-areas: "a n" "a fu";
+    grid-template-areas: 'a n' 'a fu';
     grid-template-rows: 50px 40px;
     grid-template-columns: 100px 300px;
     grid-gap: 10px;
@@ -16,6 +16,10 @@
 }
 
 .followUnFollowButton {
+    grid-area: fu;
+}
+
+.itsYouMessage {
     grid-area: fu;
 }
 
@@ -50,5 +54,5 @@
 
 .preloader {
     position: fixed;
-    margin: 15%;
+    margin: 20%;
 }

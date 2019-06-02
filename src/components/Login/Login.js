@@ -6,7 +6,7 @@ const Login = (props) => {
 
     if (props.auth.isAuth) {
         debugger
-        return <Redirect to={'/profile/' + props.auth.userInfo.userId}/>
+        return <Redirect to={'/profile/'}/>
     }
 
     let onLoginButtonClick = () => {

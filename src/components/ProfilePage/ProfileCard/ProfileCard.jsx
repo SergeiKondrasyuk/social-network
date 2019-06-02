@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
 import s from './ProfileCard.module.css';
-import {withRouter} from "react-router-dom";
 import anonymousUser from "../../../img/anonymous-user.png";
 
 class ProfileCard extends Component {
@@ -42,7 +41,7 @@ class ProfileCard extends Component {
                                        ref={fullNameRef}/> :
                         <span>{profileInfo.fullName}</span>}
 
-                    {(profileInfo.userId === meIdRequest && profileInfo.userId && meIdRequest) &&
+                    {(profileInfo.userId === meIdRequest && profileInfo.id && meIdRequest) &&
                     <button onClick={this.props.setEditModeStatus}>edit</button>}
                 </div>
 
@@ -83,6 +82,6 @@ class ProfileCard extends Component {
     }
 }
 
-export default withRouter(ProfileCard);
+export default ProfileCard;
 
 ProfileCard.propTypes = {};

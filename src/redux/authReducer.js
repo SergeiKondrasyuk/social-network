@@ -1,14 +1,15 @@
 import {serverAPI} from "../dal/axios-instance";
 
 const SET_IS_AUTH = 'SET_IS_AUTH';
-const SET_USER_INFO = 'SET_USER_INFO';
+const SET_ME_DATA = 'SET_ME_DATA';
 
 
 let initialState = {
     isAuth: false,
-    userInfo: {
-        userId: null,
-        userName: null
+    userData: {
+        id: null,
+        login: null,
+        email: null,
     }
 };
 
@@ -22,14 +23,11 @@ const authReducer = (state = initialState, action) => {
                 isAuth: action.value
             }
         }
-        case SET_USER_INFO : {
+        case SET_ME_DATA : {
             return {
                 ...state,
-                userInfo: {
-                    ...state.userInfo,
-                    userId: action.userId,
-                    userName: action.userName,
-                }
+                userData: action.userData,
+
             }
         }
         default: {
@@ -41,14 +39,16 @@ const authReducer = (state = initialState, action) => {
 export const me = () => (dispatch) => {
     serverAPI.meRequest().then(res => {
         if (res.data.resultCode === 0) {
+            let {id, login, email} = res.data.data;
+            debugger
             dispatch(setIsAuth(true));
-            dispatch(setUserInfo(res.data.data.id, res.data.data.login));
+            dispatch(setMeData(id, login, email));
         }
     });
 };
 
 export const setIsAuth = (value) => ({type: SET_IS_AUTH, value});
-export const setUserInfo = (userId, userName) => ({type: SET_USER_INFO, userId, userName});
+export const setMeData = (id, login, email) => ({type: SET_ME_DATA, userData: {id, login, email}});
 
 
 export default authReducer;

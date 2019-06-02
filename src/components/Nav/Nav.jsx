@@ -3,13 +3,11 @@ import s from './Nav.module.css';
 import {NavLink} from "react-router-dom";
 import PropTypes from 'prop-types';
 
-const Nav = (props) => {
-
-    let userId = props.auth.userInfo.userId;
+const Nav = () => {
 
     return <div className={s.nav}>
         <div className={s.navItemElement}>
-            <NavLink to={'/profile/' + userId} activeClassName={s.active}><img alt='Navigate item icon'className={s.icon} src='../../../img/icon-profile.png'/>Profile</NavLink>
+            <NavLink to='/profile/' activeClassName={s.active}><img alt='Navigate item icon'className={s.icon} src='../../../img/icon-profile.png'/>Profile</NavLink>
         </div>
         <div className={s.navItemElement}>
             <NavLink to='/dialogs' activeClassName={s.active}><img alt='Navigate item icon'className={s.icon} src='../../../img/icon-messages.png'/>Messages</NavLink>

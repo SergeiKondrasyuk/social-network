@@ -2,13 +2,10 @@ import React from 'react';
 import {connect} from "react-redux";
 import ProfileCard from "./ProfileCard";
 import {
-    onAboutMeChange,
-    onContactChange, onFullNameChange, onJobDescriptionChange,
-    profileInfoPutRequest,
-    profileInfoRequest,
-    setEditModeStatus, setErrorMessage, setLookingForAJobStatus, uploadPhotoRequest
-} from "../../../redux/profilePageReducer";
-import {me} from "../../../redux/authReducer";
+    onAboutMeChange, onContactChange, onFullNameChange, onJobDescriptionChange,
+    profileInfoPutRequest, profileInfoRequest, setEditModeStatus, setErrorMessage,
+    setLookingForAJobStatus, uploadPhotoRequest
+} from '../../../redux/profilePageReducer';
 
 
 const ProfileCardConnected = (props) => {
@@ -26,52 +23,15 @@ const ProfileCardConnected = (props) => {
     />
 };
 
-const mstp = (store) => {
+const mapStateToProps = (store) => {
     return {
         profilePage: store.profilePage,
-        user: store.friends.friends[0],
-
     }
 };
 
-const mdtp = (dispatch) => {
-    return {
-        profileInfoRequest: () => {
-            dispatch(profileInfoRequest())
-        },
-        profileInfoPutRequest: () => {
-            dispatch(profileInfoPutRequest())
-        },
-        setEditModeStatus: (value) => {
-            dispatch(setEditModeStatus(value))
-        },
-        onContactChange: (value, contactKey) => {
-            dispatch(onContactChange(value, contactKey))
-        },
-        onAboutMeChange: (value) => {
-            dispatch(onAboutMeChange(value))
-        },
-        onFullNameChange: (value) => {
-            dispatch(onFullNameChange(value))
-        },
-        setLookingForAJobStatus: (value) => {
-            dispatch(setLookingForAJobStatus(value))
-        },
-        onJobDescriptionChange: (value) => {
-            dispatch(onJobDescriptionChange(value))
-        },
-        uploadPhotoRequest: (photo) => {
-            dispatch(uploadPhotoRequest(photo))
-        },
-        setErrorMessage: (value) => {
-            dispatch(setErrorMessage(value))
-        },
-        meRequest: () => {
-            dispatch(me())
-        },
-    }
-};
-
-const ProfileCardContainer = connect(mstp, mdtp)(ProfileCardConnected);
+const ProfileCardContainer = connect(mapStateToProps, {
+    profileInfoRequest, profileInfoPutRequest, setEditModeStatus, onContactChange, onAboutMeChange,
+    onFullNameChange, setLookingForAJobStatus, onJobDescriptionChange, uploadPhotoRequest, setErrorMessage
+})(ProfileCardConnected);
 
 export default ProfileCardContainer;

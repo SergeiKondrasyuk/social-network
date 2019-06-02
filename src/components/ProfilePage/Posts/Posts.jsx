@@ -3,20 +3,21 @@ import s from './Posts.module.css';
 import Post from "./Post/Post";
 import PropTypes from "prop-types";
 import NewPostFormContainer from "./NewPostForm/NewPostFormContainer";
-import ava from "../../../img/ava.png"
+import anonymousUser from '../../../img/anonymous-user.png';
 
 
 const Posts = (props) => {
 
-    let postsList = props.postData.map( p =>
-        <Post post={p.text} ava={ava} likes={p.likeCount}/>
+    let postsList = props.postData.map(p =>
+        <Post post={p.text}
+              ava={props.profileInfo.photos.small == null ? anonymousUser : props.profileInfo.photos.small}
+              likes={p.likeCount}/>
     );
-
     return <div className={s.posts}>
 
         <div className={s.postsHeader}>My posts</div>
 
-        <NewPostFormContainer />
+        <NewPostFormContainer/>
 
         {postsList}
 

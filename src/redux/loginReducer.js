@@ -101,7 +101,7 @@ export const loginAttempt = () => (dispatch, getState) => {
         })
 };
 
-export const logoutAttempt = () => (d) => {
+export const logOutAttempt = () => (d) => {
     serverAPI.logoutRequest()
         .then(res => {
         if (res.data.resultCode === 0) {

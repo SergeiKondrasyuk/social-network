@@ -1,23 +1,30 @@
 import React from 'react';
-import Posts from "./Posts";
-import {connect} from "react-redux";
+import Posts from './Posts';
+import {connect} from 'react-redux';
+import {getAuthReducer, getProfilePageReducer} from '../../../redux/selectors';
 
 
 const PostsConnected = (props) => {
+
+    if (props.profileInfo.userId!=props.auth.userData.id){
+        debugger
+        return null
+    }
+
     return <Posts postData={props.postData}
                   friends={props.friends}
-                  profilePage={props.profilePage}/>
-
+                  profileInfo={props.profileInfo}/>
 };
 
-const mstp = (store) => {
+const mapDispatchToProps = (state) => {
     return {
-        postData: store.profilePage.postData,
-        friends: store.friends.friends,
-        profilePage: store.profilePage,
+        postData: state.profilePage.postData,
+        friends: state.friends.friends,
+        profileInfo: getProfilePageReducer(state).profileInfo,
+        auth: getAuthReducer(state),
     }
 };
 
-const PostsContainer = connect(mstp)(PostsConnected);
+const PostsContainer = connect(mapDispatchToProps)(PostsConnected);
 
 export default PostsContainer;

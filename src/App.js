@@ -13,7 +13,6 @@ import ProfilePageContainer from "./components/ProfilePage/ProfilePageContainer"
 
 const App = () => {
 
-
     return (
         <BrowserRouter>
             <div className={s.appWrapper}>
@@ -32,7 +31,7 @@ const App = () => {
 
                 <div className={s.contentWrapper}>
                     <Route path='/dialogs' render={() => (<DialogsPageContainer/>)}/>
-                    <Route exact path='/profile/:userId?' render={() => (<ProfilePageContainer/>)}/>
+                    <Route path='/profile/:userId?' render={() => (<ProfilePageContainer/>)}/>
                     <Route exact path='/music' render={() => (<Music/>)}/>
                     <Route exact path='/users' render={() => (<UsersContainer/>)}/>
                     <Route exact path='/login' render={() => (<LoginContainer/>)}/>

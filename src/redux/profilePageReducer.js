@@ -116,8 +116,7 @@ const profilePageReducer = (state = initialState, action) => {
     }
 };
 
-export const profileInfoRequest = () => (dispatch, getState) => {
-    let userId = getState().auth.userInfo.userId;
+export const profileInfoRequest = (userId) => (dispatch) => {
     dispatch(setProfileInfoRequestStatus(getProfileInfoStatuses.INPROGRESS));
     axiosInstance.get('profile/' + userId).then(res => {
         dispatch(setProfileInfo(res.data));
@@ -135,7 +134,7 @@ export const profileInfoPutRequest = () => (dispatch, getState) => {
     dispatch(profileInfoRequest(profileInfo))
 };
 
-export const uploadPhotoRequest = (photo) => (dispatch, getState) => {
+export const uploadPhotoRequest = (photo) => (dispatch) => {
     axiosInstance.put('profile/photo/', photo).then(res => {
         if (res.data.resultCode === 0) {
             dispatch(onPhotoChange(res.data.photo));

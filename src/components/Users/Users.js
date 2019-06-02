@@ -1,6 +1,7 @@
 import React, {useEffect} from 'react';
 import anonymousUser from '../../img/anonymous-user.png'
 import style from './User.module.css'
+import {NavLink} from 'react-router-dom';
 
 const Users = (props) => {
 
@@ -23,11 +24,13 @@ const Users = (props) => {
     return <div>
         <div className={style.users}>{props.users.users.map(u =>
             <div className={style.user}>
-                <div className={style.userPhoto}><img alt='User_Photo'
-                                                      src={u.photos.small == null ? anonymousUser : u.photos.small}/>
-                </div>
+                <NavLink to={'/profile/'+ u.id}>
+                    <div className={style.userPhoto}><img alt='User_Photo'
+                                                          src={u.photos.small == null ? anonymousUser : u.photos.small}/>
+                    </div>
+                </NavLink>
                 <span className={style.name}>{u.name}</span>
-                {u.id === props.auth.userInfo.userId ? <span>It's you</span> :
+                {u.id === props.auth.userData.id ? <span className={style.itsYouMessage}>It's you</span> :
                     <span className={style.followUnFollowButton}>{u.followed
                         ? <button onClick={() => {
                             props.unFollowUserRequest(u.id)
