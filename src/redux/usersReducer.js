@@ -1,4 +1,4 @@
-import {axiosInstance, serverAPI} from '../dal/axios-instance';
+import {serverAPI} from '../dal/axios-instance';
 
 const SET_USERS = 'SET_USERS';
 const SET_STATUS = 'SET_STATUS';
@@ -41,7 +41,7 @@ const usersReducer = (state = initialState, action) => {
             return {
                 ...state,
                 users: state.users.map(u => {
-                    if (u.id === action.id) {
+                    if (u.id === action.userId) {
                         return {...u, followed: true}
                     }
                     return u;
@@ -52,7 +52,7 @@ const usersReducer = (state = initialState, action) => {
             return {
                 ...state,
                 users: state.users.map(u => {
-                    if (u.id === action.id) {
+                    if (u.id === action.userId) {
                         return {...u, followed: false}
                     }
                     return u;
@@ -97,17 +97,21 @@ export const getUsers = (pageNumber) => (dispatch, getState) => {
         });
 };
 
-export const followUserRequest = (userId) => (dispatch) => {
-    axiosInstance.post(`follow/${userId}`)
-        .then(() => {
-            dispatch(followAC(userId));
+export const followUser = (userId) => (dispatch) => {
+    serverAPI.followUser(userId)
+        .then((res) => {
+            if (res.data.resultCode === 0) {
+                dispatch(followAC(userId));
+            }
         });
 };
 
-export const unFollowUserRequest = (userId) => (dispatch) => {
-    axiosInstance.delete(`follow/${userId}`)
-        .then(() => {
-            dispatch(unFollowAC(userId));
+export const unFollowUser = (userId) => (dispatch) => {
+    serverAPI.unFollowUser(userId)
+        .then((res) => {
+            if (res.data.resultCode === 0) {
+                dispatch(unFollowAC(userId));
+            }
         });
 };
 

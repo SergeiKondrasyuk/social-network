@@ -1,4 +1,4 @@
-import {axiosInstance} from "../dal/axios-instance";
+import {serverAPI} from '../dal/axios-instance';
 
 const ADD_POST = 'ADD_POST';
 const UPDATE_NEW_POST = 'UPDATE_NEW_POST';
@@ -6,7 +6,6 @@ const SET_PROFILE_INFO_REQUEST_STATUS = 'SET_PROFILE_INFO_REQUEST_STATUS';
 const SET_PROFILE_INFO = 'SET_PROFILE_INFO';
 const ON_CONTACT_CHANGE = 'ON_CONTACT_CHANGE';
 const SET_EDIT_MODE_STATUS = 'SET_EDIT_MODE_STATUS';
-const SET_ME_ID = 'SET_ME_ID';
 const ON_ABOUT_ME_CHANGE = 'ON_ABOUT_ME_CHANGE';
 const ON_FULL_NAME_CHANGE = 'ON_FULL_NAME_CHANGE';
 const SET_LOOKING_JOB_STATUS = 'SET_LOOKING_JOB_STATUS';
@@ -32,6 +31,7 @@ let initialState =
         profileInfoRequestStatus: 'NOT_INITIALIZED',
         profileInfo: null,
         errorMessage: null,
+        editMode: false,
     };
 
 const profilePageReducer = (state = initialState, action) => {
@@ -61,12 +61,6 @@ const profilePageReducer = (state = initialState, action) => {
             return {
                 ...state,
                 editMode: action.value,
-            }
-        }
-        case SET_ME_ID: {
-            return {
-                ...state,
-                meIdRequest: action.id,
             }
         }
         case ON_ABOUT_ME_CHANGE: {
@@ -116,34 +110,30 @@ const profilePageReducer = (state = initialState, action) => {
     }
 };
 
-export const profileInfoRequest = (userId) => (dispatch) => {
+export const getProfileInfo = (userId) => (dispatch) => {
     dispatch(setProfileInfoRequestStatus(getProfileInfoStatuses.INPROGRESS));
-    axiosInstance.get('profile/' + userId).then(res => {
+    serverAPI.profileInfoRequest(userId).then(res => {
         dispatch(setProfileInfo(res.data));
         dispatch(setProfileInfoRequestStatus(getProfileInfoStatuses.SUCCESS));
     });
-    axiosInstance.get('auth/me').then(res => {
-        dispatch(setMeId(res.data.data.id));
-    });
 };
 
-export const profileInfoPutRequest = () => (dispatch, getState) => {
+export const putProfileInfo = () => (dispatch, getState) => {
     let profileInfo = getState().profilePage.profileInfo;
     dispatch(setEditModeStatus(false));
-    axiosInstance.put('profile/', profileInfo);
-    dispatch(profileInfoRequest(profileInfo))
+    serverAPI.putProfileInfoRequest(profileInfo);
 };
 
-export const uploadPhotoRequest = (photo) => (dispatch) => {
-    axiosInstance.put('profile/photo/', photo).then(res => {
+export const uploadPhoto = (photo) => (dispatch, getState) => {
+    let userId = getState().profilePage.profileInfo.userId;
+    serverAPI.uploadPhotoRequest(photo).then(res => {
         if (res.data.resultCode === 0) {
             dispatch(onPhotoChange(res.data.photo));
             dispatch(setEditModeStatus(false));
-            dispatch(profileInfoRequest());
+            dispatch(getProfileInfo(userId))
         } else {
             dispatch(setErrorMessage(res.data.messages));
-            dispatch(profileInfoRequest());
-    }
+        }
     });
 
 };
@@ -151,9 +141,11 @@ export const uploadPhotoRequest = (photo) => (dispatch) => {
 
 export const addPostAC = () => ({type: ADD_POST});
 export const updateNewPostTextAC = (newPost) => ({type: UPDATE_NEW_POST, text: newPost});
-export const setProfileInfoRequestStatus = (status) => ({type: SET_PROFILE_INFO_REQUEST_STATUS, getUsersStatus: status});
+export const setProfileInfoRequestStatus = (status) => ({
+    type: SET_PROFILE_INFO_REQUEST_STATUS,
+    getUsersStatus: status
+});
 export const setProfileInfo = (profileInfo) => ({type: SET_PROFILE_INFO, profileInfo: profileInfo});
-export const setMeId = (id) => ({type: SET_ME_ID, id: id});
 export const setEditModeStatus = (value) => ({type: SET_EDIT_MODE_STATUS, value: value});
 export const onContactChange = (value, contactKey) => ({type: ON_CONTACT_CHANGE, value: value, contactKey: contactKey});
 export const onAboutMeChange = (value) => ({type: ON_ABOUT_ME_CHANGE, value: value});

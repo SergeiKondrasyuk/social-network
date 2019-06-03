@@ -24,7 +24,7 @@ const Users = (props) => {
     return <div>
         <div className={style.users}>{props.users.users.map(u =>
             <div className={style.user}>
-                <NavLink to={'/profile/'+ u.id}>
+                <NavLink to={'/profile/' + u.id}>
                     <div className={style.userPhoto}><img alt='User_Photo'
                                                           src={u.photos.small == null ? anonymousUser : u.photos.small}/>
                     </div>
@@ -33,10 +33,10 @@ const Users = (props) => {
                 {u.id === props.auth.userData.id ? <span className={style.itsYouMessage}>It's you</span> :
                     <span className={style.followUnFollowButton}>{u.followed
                         ? <button onClick={() => {
-                            props.unFollowUserRequest(u.id)
+                            props.auth.isAuth ? props.unFollowUser(u.id): alert('Please Login')
                         }}>Unfollow</button>
                         : <button onClick={() => {
-                            props.followUserRequest(u.id)
+                            props.auth.isAuth ? props.followUser(u.id): alert('Please Login')
                         }}>Follow</button>}</span>}
             </div>)}</div>
         <div className={style.pagination}>

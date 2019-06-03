@@ -1,7 +1,7 @@
 import React, {useEffect} from 'react';
 import {connect} from 'react-redux';
 import ProfilePage from './ProfilePage';
-import {profileInfoRequest} from '../../redux/profilePageReducer';
+import {getProfileInfo} from '../../redux/profilePageReducer';
 import {getAuthReducer, getLoginReducer, getProfilePageReducer} from '../../redux/selectors';
 import style from '../Users/User.module.css';
 import Preloader from '../common/Preloader';
@@ -41,5 +41,5 @@ const mapDispatchToProps = (state) => {
 
 let WithUrlDataContainerComponent= withRouter(ProfilePageContainer);
 
-export default connect(mapDispatchToProps, {profileInfoRequest})(WithUrlDataContainerComponent);
+export default connect(mapDispatchToProps, {profileInfoRequest: getProfileInfo})(WithUrlDataContainerComponent);
 

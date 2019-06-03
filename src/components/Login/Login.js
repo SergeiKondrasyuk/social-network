@@ -3,7 +3,7 @@ import {Redirect} from "react-router-dom";
 import {loginStatuses} from "../../redux/loginReducer";
 
 const Login = (props) => {
-
+debugger
     if (props.auth.isAuth) {
         debugger
         return <Redirect to={'/profile/'}/>

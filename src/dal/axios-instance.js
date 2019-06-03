@@ -23,8 +23,34 @@ export const serverAPI = {
         })
     },
 
+    captchaRequest() {
+        return axiosInstance.get('security/get-captcha-url')
+    },
+
     getUsersRequest(page, userCount) {
         return axiosInstance.get(`users?page=${page}&count=${userCount}`);
     },
+
+    followUser(userId) {
+        return axiosInstance.post(`follow/${userId}`)
+    },
+
+    unFollowUser(userId) {
+        return axiosInstance.delete(`follow/${userId}`)
+    },
+
+    profileInfoRequest(userId){
+        return axiosInstance.get('profile/' + userId)
+    },
+
+    putProfileInfoRequest(profileInfo){
+        return axiosInstance.put('profile/', profileInfo);
+    },
+
+    uploadPhotoRequest(photo){
+        return axiosInstance.put('profile/photo/', photo);
+    }
+
+
 
 }

@@ -3,35 +3,39 @@ import {connect} from "react-redux";
 import ProfileCard from "./ProfileCard";
 import {
     onAboutMeChange, onContactChange, onFullNameChange, onJobDescriptionChange,
-    profileInfoPutRequest, profileInfoRequest, setEditModeStatus, setErrorMessage,
-    setLookingForAJobStatus, uploadPhotoRequest
+    putProfileInfo, getProfileInfo, setEditModeStatus, setErrorMessage,
+    setLookingForAJobStatus, uploadPhoto
 } from '../../../redux/profilePageReducer';
+import {getAuthReducer, getProfilePageReducer} from '../../../redux/selectors';
 
 
 const ProfileCardConnected = (props) => {
     return <ProfileCard profilePage={props.profilePage}
-                        profileInfoRequest={props.profileInfoRequest}
-                        profileInfoPutRequest={props.profileInfoPutRequest}
+                        auth={props.auth}
+                        getProfileInfo={props.getProfileInfo}
+                        putProfileInfo={props.putProfileInfo}
                         setEditModeStatus={props.setEditModeStatus}
                         onContactChange={props.onContactChange}
                         onAboutMeChange={props.onAboutMeChange}
                         onFullNameChange={props.onFullNameChange}
                         setLookingForAJobStatus={props.setLookingForAJobStatus}
                         onJobDescriptionChange={props.onJobDescriptionChange}
-                        uploadPhotoRequest={props.uploadPhotoRequest}
+                        uploadPhoto={props.uploadPhoto}
                         setErrorMessage={props.setErrorMessage}
     />
 };
 
-const mapStateToProps = (store) => {
+const mapStateToProps = (state) => {
     return {
-        profilePage: store.profilePage,
+        profilePage: getProfilePageReducer(state),
+        auth: getAuthReducer(state),
+
     }
 };
 
 const ProfileCardContainer = connect(mapStateToProps, {
-    profileInfoRequest, profileInfoPutRequest, setEditModeStatus, onContactChange, onAboutMeChange,
-    onFullNameChange, setLookingForAJobStatus, onJobDescriptionChange, uploadPhotoRequest, setErrorMessage
+    getProfileInfo, putProfileInfo, setEditModeStatus, onContactChange, onAboutMeChange,
+    onFullNameChange, setLookingForAJobStatus, onJobDescriptionChange, uploadPhoto, setErrorMessage
 })(ProfileCardConnected);
 
 export default ProfileCardContainer;

@@ -1,5 +1,5 @@
-import {axiosInstance, serverAPI} from "../dal/axios-instance";
 import {setIsAuth} from "./authReducer";
+import {serverAPI} from '../dal/axios-instance';
 
 const SET_CAPTCHA_URL = 'SET_CAPTCHA_URL';
 const SET_LOGIN_STATUS = 'SET_LOGIN_STATUS';
@@ -92,8 +92,8 @@ export const loginAttempt = () => (dispatch, getState) => {
                 case 10:
                     dispatch(setLoginStatus(loginStatuses.ERROR));
                     dispatch(setLoginStatusMessage(res.data.messages[0]));
-                    axiosInstance.get('security/get-captcha-url').then((res) => {
-                        res.getUsersStatus === 200 && dispatch(setCaptchaUrl(res.data.url));
+                    serverAPI.captchaRequest().then((res) => {
+                       dispatch(setCaptchaUrl(res.data.url));
                     });
                     break;
                 default: break;

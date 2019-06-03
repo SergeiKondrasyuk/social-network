@@ -2,7 +2,7 @@ import React from 'react';
 import {connect} from 'react-redux';
 import Users from './Users';
 import {
-    getUsers, followUserRequest, unFollowUserRequest, setCurrentPage
+    getUsers, followUser, unFollowUser, setCurrentPage
 } from '../../redux/usersReducer';
 import {getAuthReducer, getUsersReducer} from '../../redux/selectors';
 import Preloader from '../common/Preloader';
@@ -15,8 +15,8 @@ const UsersConnected = (props) => {
         <Users users={props.users}
                auth={props.auth}
                getUsers={props.getUsers}
-               followUserRequest={props.followUserRequest}
-               unFollowUserRequest={props.unFollowUserRequest}
+               followUser={props.followUser}
+               unFollowUser={props.unFollowUser}
                setCurrentPage={props.setCurrentPage}
         />
     </>
@@ -29,8 +29,6 @@ const mapStateToProps = (state) => {
     }
 };
 
-const UsersContainer = connect(mapStateToProps, {
-    setCurrentPage, getUsers, followUserRequest, unFollowUserRequest
-})(UsersConnected);
+const UsersContainer = connect(mapStateToProps, {setCurrentPage, getUsers, followUser, unFollowUser})(UsersConnected);
 
 export default UsersContainer;

@@ -1,12 +1,12 @@
 import React, {Component} from 'react';
 import s from './ProfileCard.module.css';
-import anonymousUser from "../../../img/anonymous-user.png";
+import anonymousUser from '../../../img/anonymous-user.png';
 
 class ProfileCard extends Component {
 
     render() {
-
-        let {editMode, profileInfo, meIdRequest} = this.props.profilePage;
+        let {editMode, profileInfo} = this.props.profilePage;
+        let meId = this.props.auth.userData.id
         let aboutMeRef = React.createRef();
         let fullNameRef = React.createRef();
         let lookingForAJobRef = React.createRef();
@@ -16,12 +16,12 @@ class ProfileCard extends Component {
         let onFullNameChange = () => this.props.onFullNameChange(fullNameRef.current.value);
         let onlookingForAJobChange = () => this.props.setLookingForAJobStatus(lookingForAJobRef.current.checked);
         let onJobDescriptionChange = () => this.props.onJobDescriptionChange(JobDescriptionRef.current.value);
-        let onSaveButtonClick = () => this.props.profileInfoPutRequest(profileInfo);
+        let onSaveButtonClick = () => this.props.putProfileInfo(profileInfo);
         let onLoadPhotoButtonClick = () => {
             let formData = new FormData();
             let imageFile = document.querySelector('#load_avatar');
             formData.append('image', imageFile.files[0]);
-            this.props.uploadPhotoRequest(formData);
+            this.props.uploadPhoto(formData);
         };
 
 
@@ -41,7 +41,7 @@ class ProfileCard extends Component {
                                        ref={fullNameRef}/> :
                         <span>{profileInfo.fullName}</span>}
 
-                    {(profileInfo.userId === meIdRequest && profileInfo.id && meIdRequest) &&
+                    {(profileInfo.userId === meId) &&
                     <button onClick={this.props.setEditModeStatus}>edit</button>}
                 </div>
 
