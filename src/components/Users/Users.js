@@ -32,11 +32,11 @@ const Users = (props) => {
                 <span className={style.name}>{u.name}</span>
                 {u.id === props.auth.userData.id ? <span className={style.itsYouMessage}>It's you</span> :
                     <span className={style.followUnFollowButton}>{u.followed
-                        ? <button onClick={() => {
-                            props.auth.isAuth ? props.unFollowUser(u.id): alert('Please Login')
+                        ? <button disabled={props.users.followingInProgress.some(id=>id===u.id)} onClick={() => {
+                            props.auth.isAuth ? props.unFollowUser(u.id) : alert('Please Login')
                         }}>Unfollow</button>
-                        : <button onClick={() => {
-                            props.auth.isAuth ? props.followUser(u.id): alert('Please Login')
+                        : <button disabled={props.users.followingInProgress.some(id=>id===u.id)} onClick={() => {
+                            props.auth.isAuth ? props.followUser(u.id) : alert('Please Login')
                         }}>Follow</button>}</span>}
             </div>)}</div>
         <div className={style.pagination}>
