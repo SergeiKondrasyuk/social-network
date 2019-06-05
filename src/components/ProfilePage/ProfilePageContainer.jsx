@@ -9,7 +9,7 @@ import {withRouter} from 'react-router-dom';
 
 
 const ProfilePageContainer = (props) => {
-
+debugger
     useEffect(() => {
         let userId = props.match.params.userId;
         if (!userId) {

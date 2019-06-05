@@ -1,4 +1,4 @@
-import {setIsAuth} from "./authReducer";
+import {me, setIsAuth} from "./authReducer";
 import {serverAPI} from '../dal/axios-instance';
 
 const SET_CAPTCHA_URL = 'SET_CAPTCHA_URL';
@@ -83,7 +83,7 @@ export const loginAttempt = () => (dispatch, getState) => {
                 case 0:
                     dispatch(setLoginStatusMessage('Login success'));
                     dispatch(setLoginStatus(loginStatuses.SUCCESS));
-                    dispatch(setIsAuth(true));
+                    dispatch(me());
                     break;
                 case 1:
                     dispatch(setLoginStatus(loginStatuses.ERROR));
@@ -93,23 +93,24 @@ export const loginAttempt = () => (dispatch, getState) => {
                     dispatch(setLoginStatus(loginStatuses.ERROR));
                     dispatch(setLoginStatusMessage(res.data.messages[0]));
                     serverAPI.captchaRequest().then((res) => {
-                       dispatch(setCaptchaUrl(res.data.url));
+                        dispatch(setCaptchaUrl(res.data.url));
                     });
                     break;
-                default: break;
+                default:
+                    break;
             }
         })
 };
 
-export const logOutAttempt = () => (d) => {
+export const logOutAttempt = () => (dispatch) => {
     serverAPI.logoutRequest()
         .then(res => {
-        if (res.data.resultCode === 0) {
-            d(setIsAuth(false));
-            d(setLoginStatus(loginStatuses.NOT_INITIALIZED));
-            d(setLoginStatusMessage('Logout success'));
-        }
-    });
+            if (res.data.resultCode === 0) {
+                dispatch(setIsAuth(false, {id: null, login: null, email: null,}));
+                dispatch(setLoginStatus(loginStatuses.NOT_INITIALIZED));
+                dispatch(setLoginStatusMessage('Logout success'));
+            }
+        });
 };
 
 export default loginReducer;
