@@ -28,7 +28,6 @@ let initialState = {
 const loginReducer = (state = initialState, action) => {
     switch (action.type) {
         case SET_CAPTCHA_URL : {
-            debugger
             return {
                 ...state,
                 captchaUrl: action.captchaUrl
