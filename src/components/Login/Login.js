@@ -1,49 +1,59 @@
 import React from 'react';
 import {Redirect} from "react-router-dom";
 import {loginStatuses} from "../../redux/loginReducer";
+import {Field, reduxForm} from 'redux-form';
 
 const Login = (props) => {
-debugger
+
     if (props.auth.isAuth) {
-        debugger
         return <Redirect to={'/profile/'}/>
     }
 
-    let onLoginButtonClick = () => {
-        props.loginAttempt();
-    };
+    let renderInput = ({input, meta, ...props}) => {debugger
+        return <>
+            <input {...props}{...input}/>
+            {meta.touched && meta.invalid && <span style={{color: 'red'}}>{meta.error}</span>}
+            {meta.touched && meta.warning && <span style={{color: 'orange'}}>{meta.warning}</span>}
+        </>
+    }
 
-    let onChangeHandler = (e) => {
-        let value = e.target.type === 'checkbox' ? e.target.checked : e.target.value;
-        props.changeInputValue(e.target.name, value)
-    };
-
-    return <div>
+    return <form onSubmit={props.handleSubmit}>
         <div>
-            <span>Email: </span> <input id='email' onChange={onChangeHandler} name='email'/>
+            <span>Email: </span>
+            <Field component={renderInput} type='email' id='email' name='email' placeholder='Your email'
+                   validate={[requiredValidator]}/>
         </div>
         <div>
-            <span>Password: </span> <input type='password' onChange={onChangeHandler} name='password'/>
+            <span>Password: </span>
+            <Field component={renderInput} type='password' name='password' placeholder='Your password'
+                   validate={[requiredValidator]} warn={shortPasswordWarning}/>
         </div>
         <div>
-            <span>Remember me: </span> <input type='checkbox' onChange={onChangeHandler} name='rememberMe'/>
+            <span>Remember me: </span> <Field component={renderInput} type='checkbox' name='rememberMe'/>
         </div>
 
         {props.login.loginResult === 10 &&
         <div>
-            <img src={props.login.captchaUrl} alt='captcha'/><input onChange={onChangeHandler} name='captcha'/>
+            <img src={props.login.captchaUrl} alt='captcha'/>
+            <div><span>Enter captcha: </span><Field component={renderInput} name='captcha'/></div>
         </div>}
         <div>
-            <button disabled={props.login.loginStatus === loginStatuses.IN_PROGRESS}
-                    onClick={onLoginButtonClick}>Login
-            </button>
+            <button type='submit' disabled={props.login.loginStatus === loginStatuses.IN_PROGRESS}>Login</button>
         </div>
 
         <div>{props.login.loginStatusMessage}</div>
-    </div>
-
-
+    </form>
 };
 
+let requiredValidator = (value) => {
+    return value ? undefined : 'Field is required';
+};
 
-export default Login;
+let shortPasswordWarning = (value) => {
+    if (value && value.length <= 3) return 'Too short password'
+    return undefined
+}
+
+let LoginReduxForm = reduxForm({form: 'login-form'})(Login)
+
+export default LoginReduxForm;

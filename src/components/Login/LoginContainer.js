@@ -1,24 +1,22 @@
 import React from 'react';
 import {connect} from "react-redux";
-import Login from "./Login";
-import {
-    changeInputValue, loginAttempt,
-    setCaptchaUrl, setLoginResult,
-    setLoginStatus, setLoginStatusMessage,
-} from "../../redux/loginReducer";
+import LoginReduxForm from "./Login";
+import {loginAttempt} from "../../redux/loginReducer";
 import {getAuthReducer, getLoginReducer} from "../../redux/selectors";
 
 const LoginConnected = (props) => {
 
-    return <Login login={props.login}
-                  auth={props.auth}
-                  setCaptchaUrl={props.setCaptchaUrl}
-                  setCaptchaStatus={props.setCaptchaStatus}
-                  setLoginStatus={props.setLoginStatus}
-                  setLoginStatusMessage={props.setLoginStatusMessage}
-                  setLoginResult={props.setLoginResult}
-                  loginAttempt={props.loginAttempt}
-                  changeInputValue={props.changeInputValue}
+    let bllSubmit = (values) => {
+        debugger
+        props.loginAttempt(values)
+    }
+
+    return <LoginReduxForm onSubmit={bllSubmit}
+                           initialValues={{email: props.login.email, password: props.login.password,
+                               rememberMe: props.login.rememberMe, captcha: props.login.captcha }}
+                           login={props.login}
+                           auth={props.auth}
+                           loginAttempt={props.loginAttempt}
     />
 };
 
@@ -29,29 +27,6 @@ const mapStateToProps = (state) => {
     }
 };
 
-const mapDispatchToProps = (dispatch) => {
-    return {
-        setCaptchaUrl: (captchaUrl) => {
-            dispatch(setCaptchaUrl(captchaUrl))
-        },
-        setLoginStatus: (loginStatus) => {
-            dispatch(setLoginStatus(loginStatus))
-        },
-        setLoginResult: (loginResult) => {
-            dispatch(setLoginResult(loginResult))
-        },
-        setLoginStatusMessage: (loginStatusMessage) => {
-            dispatch(setLoginStatusMessage(loginStatusMessage))
-        },
-        loginAttempt: (email, password, rememberMe, captcha) => {
-            dispatch(loginAttempt(email, password, rememberMe, captcha))
-        },
-        changeInputValue: (propertyName, propertyValue) => {
-            dispatch(changeInputValue(propertyName, propertyValue))
-        },
-    }
-};
-
-const LoginContainer = connect(mapStateToProps, mapDispatchToProps)(LoginConnected);
+let LoginContainer = connect(mapStateToProps, {loginAttempt})(LoginConnected);
 
 export default LoginContainer;

@@ -5,7 +5,6 @@ const SET_CAPTCHA_URL = 'SET_CAPTCHA_URL';
 const SET_LOGIN_STATUS = 'SET_LOGIN_STATUS';
 const SET_LOGIN_RESULT = 'SET_LOGIN_RESULT';
 const SET_LOGIN_STATUS_MESSAGE = 'SET_LOGIN_STATUS_MESSAGE';
-const CHANGE_INPUT_VALUE = 'CHANGE_INPUT_VALUE';
 
 export const loginStatuses = {
     NOT_INITIALIZED: 'NOT_INITIALIZED',
@@ -29,32 +28,22 @@ const loginReducer = (state = initialState, action) => {
     switch (action.type) {
         case SET_CAPTCHA_URL : {
             return {
-                ...state,
-                captchaUrl: action.captchaUrl
+                ...state, captchaUrl: action.captchaUrl
             }
         }
         case SET_LOGIN_STATUS : {
             return {
-                ...state,
-                loginStatus: action.loginStatus
+                ...state, loginStatus: action.loginStatus
             }
         }
         case SET_LOGIN_RESULT : {
             return {
-                ...state,
-                loginResult: action.loginResult
+                ...state, loginResult: action.loginResult
             }
         }
         case SET_LOGIN_STATUS_MESSAGE : {
             return {
-                ...state,
-                loginStatusMessage: action.loginStatusMessage
-            }
-        }
-        case CHANGE_INPUT_VALUE : {
-            return {
-                ...state,
-                [action.propertyName]: action.propertyValue
+                ...state, loginStatusMessage: action.loginStatusMessage
             }
         }
         default: {
@@ -67,15 +56,12 @@ export const setCaptchaUrl = (captchaUrl) => ({type: SET_CAPTCHA_URL, captchaUrl
 export const setLoginStatus = (loginStatus) => ({type: SET_LOGIN_STATUS, loginStatus});
 export const setLoginResult = (loginResult) => ({type: SET_LOGIN_RESULT, loginResult});
 export const setLoginStatusMessage = (loginStatusMessage) => ({type: SET_LOGIN_STATUS_MESSAGE, loginStatusMessage});
-export const changeInputValue = (propertyName, propertyValue) => ({
-    type: CHANGE_INPUT_VALUE, propertyName, propertyValue
-});
 
 
-export const loginAttempt = () => (dispatch, getState) => {
+export const loginAttempt = (values) => (dispatch, getState) => {
     let state = getState().login;
     dispatch(setLoginStatus(loginStatuses.IN_PROGRESS));
-    serverAPI.loginRequest(state.email, state.password, state.rememberMe, state.captcha)
+    serverAPI.loginRequest(values.email, values.password, values.rememberMe, values.captcha)
         .then(res => {
             dispatch(setLoginResult(res.data.resultCode));
             switch (res.data.resultCode) {
