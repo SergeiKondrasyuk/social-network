@@ -4,19 +4,38 @@ import anonymousUser from '../../../img/anonymous-user.png';
 
 class ProfileCard extends Component {
 
+    state = {
+        statusEditMode: false,
+        statusValue: this.props.profilePage.profileStatus,
+    };
+
     render() {
-        let {editMode, profileInfo} = this.props.profilePage;
+        let {editMode, profileInfo, profileStatus} = this.props.profilePage;
         let meId = this.props.auth.userData.id
         let aboutMeRef = React.createRef();
         let fullNameRef = React.createRef();
         let lookingForAJobRef = React.createRef();
         let JobDescriptionRef = React.createRef();
+        let statusInputRef = React.createRef();
 
         let onAboutMeChange = () => this.props.onAboutMeChange(aboutMeRef.current.value);
         let onFullNameChange = () => this.props.onFullNameChange(fullNameRef.current.value);
         let onlookingForAJobChange = () => this.props.setLookingForAJobStatus(lookingForAJobRef.current.checked);
         let onJobDescriptionChange = () => this.props.onJobDescriptionChange(JobDescriptionRef.current.value);
         let onSaveButtonClick = () => this.props.putProfileInfo(profileInfo);
+        let onUpdateStatusClick = () => this.props.updateStatus('Hello World!');
+        let onStatusBlurEvent = () => {
+            this.setState({
+                statusEditMode: false,
+            })
+        }
+        let onStatusClickEvent = () => {
+            this.setState({
+                statusEditMode: true,
+            }, () => {
+                statusInputRef.current.focus();
+            });
+        }
         let onLoadPhotoButtonClick = () => {
             let formData = new FormData();
             let imageFile = document.querySelector('#load_avatar');
@@ -29,7 +48,8 @@ class ProfileCard extends Component {
             <div className={s.avatar}><img alt='User avatar'
                                            src={profileInfo.photos.large == null ? anonymousUser : profileInfo.photos.large}/>
                 {editMode && <input type='file' accept=".jpg, .jpeg, .png" id='load_avatar' name='load_avatar'/>}
-                {this.props.profilePage.errorMessage == null ? null : <div>{this.props.profilePage.errorMessage}</div>}
+                {this.props.profilePage.updatePhotoErrorMessage == null ? null :
+                    <div style={{color: 'red'}}>{this.props.profilePage.updatePhotoErrorMessage}</div>}
             </div>
 
             {editMode && <button onClick={onLoadPhotoButtonClick}>load photo</button>}
@@ -44,11 +64,18 @@ class ProfileCard extends Component {
                     {(profileInfo.userId === meId) &&
                     <button onClick={this.props.setEditModeStatus}>edit</button>}
                 </div>
-
-                <div><span><b>About me: </b></span>{editMode ?
+                <div>
+                    <span><b>Status: </b></span>{this.state.statusEditMode
+                    ? <input value={this.state.statusValue} onBlur={onStatusBlurEvent} ref={statusInputRef}/>
+                    : <span onClick={onStatusClickEvent}>{profileStatus}</span>}
+                    <button onClick={onUpdateStatusClick}>Update status</button>
+                </div>
+                <div>
+                    <span><b>About me: </b></span>{editMode ?
                     <input onChange={onAboutMeChange} value={profileInfo.aboutMe}
                            ref={aboutMeRef}/> :
-                    <span>{profileInfo.aboutMe}</span>}</div>
+                    <span>{profileInfo.aboutMe}</span>}
+                </div>
 
                 <div><span><b>Looking for a job </b></span>{editMode ?
                     <input type='checkbox' onChange={onlookingForAJobChange} checked={profileInfo.lookingForAJob}
@@ -62,17 +89,21 @@ class ProfileCard extends Component {
 
             </div>
 
-            <div className={s.contacts}>{Object.keys(profileInfo.contacts).map(key => {
-                return <div><b>{key}: </b>
-                    {editMode ?
-                        <input onChange={(e) => {
-                            let value = e.target.value;
-                            this.props.onContactChange(value, key)
-                        }}
-                               value={profileInfo.contacts[key]}/> :
-                        <span>{profileInfo.contacts[key]}</span>}
-                </div>
-            })}</div>
+            <div className={s.contacts}>
+                {Object.keys(profileInfo.contacts).map(key => {
+                    return <div><b>{key}: </b>
+                        {editMode ?
+                            <input type='url' onChange={(e) => {
+                                let value = e.target.value;
+                                this.props.onContactChange(value, key)
+                            }}
+                                   value={profileInfo.contacts[key]}/> :
+                            <span>{profileInfo.contacts[key]}</span>}
+                    </div>
+                })}
+                {this.props.profilePage.updateProfileErrorMessage == null ? null :
+                    <div style={{color: 'red'}}>{this.props.profilePage.updateProfileErrorMessage}</div>}
+            </div>
             {editMode && <button onClick={onSaveButtonClick}>Save</button>}
 
 

@@ -32,7 +32,6 @@ const authReducer = (state = initialState, action) => {
 export const me = () => (dispatch) => {
     serverAPI.meRequest().then(res => {
         if (res.data.resultCode === 0) {
-            debugger
             let {id, login, email} = res.data.data;
             let userData = {id, login, email};
             dispatch(setIsAuth(true, userData));

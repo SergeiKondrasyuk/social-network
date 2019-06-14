@@ -29,7 +29,8 @@ const Users = (props) => {
                                                           src={u.photos.small == null ? anonymousUser : u.photos.small}/>
                     </div>
                 </NavLink>
-                <span className={style.name}>{u.name}</span>
+                <span className={style.name}><b>Name: </b>{u.name}</span>
+                <span className={style.status}><b>Status: </b>{u.status}</span>
                 {u.id === props.auth.userData.id ? <span className={style.itsYouMessage}>It's you</span> :
                     <span className={style.followUnFollowButton}>{u.followed
                         ? <button disabled={props.users.followingInProgress.some(id=>id===u.id)} onClick={() => {

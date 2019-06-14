@@ -49,7 +49,15 @@ export const serverAPI = {
 
     uploadPhotoRequest(photo){
         return axiosInstance.put('profile/photo/', photo);
-    }
+    },
+
+    updateStatusRequest(status){
+        return axiosInstance.put('profile/status/', {status: status});
+    },
+
+    getStatusRequest(userId){
+        return axiosInstance.get('profile/status/' + userId)
+    },
 
 
 
