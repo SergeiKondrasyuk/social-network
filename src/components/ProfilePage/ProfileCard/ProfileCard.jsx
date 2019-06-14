@@ -9,6 +9,24 @@ class ProfileCard extends Component {
         statusValue: this.props.profilePage.profileStatus,
     };
 
+    onStatusBlurEvent = () => {
+        this.setState({statusEditMode: false});
+        if (this.props.profilePage.profileStatus !== this.state.statusValue) {
+            this.props.updateStatus(this.state.statusValue);
+        }
+    };
+
+    onStatusClickEvent = () => {
+        this.setState({statusEditMode: true,}, () => {
+            //statusInputRef.current.focus();
+        });
+    };
+
+    onStatusChange = (e) => {
+        this.setState({statusValue: e.currentTarget.value });
+    };
+
+
     render() {
         let {editMode, profileInfo, profileStatus} = this.props.profilePage;
         let meId = this.props.auth.userData.id
@@ -24,18 +42,7 @@ class ProfileCard extends Component {
         let onJobDescriptionChange = () => this.props.onJobDescriptionChange(JobDescriptionRef.current.value);
         let onSaveButtonClick = () => this.props.putProfileInfo(profileInfo);
         let onUpdateStatusClick = () => this.props.updateStatus('Hello World!');
-        let onStatusBlurEvent = () => {
-            this.setState({
-                statusEditMode: false,
-            })
-        }
-        let onStatusClickEvent = () => {
-            this.setState({
-                statusEditMode: true,
-            }, () => {
-                statusInputRef.current.focus();
-            });
-        }
+
         let onLoadPhotoButtonClick = () => {
             let formData = new FormData();
             let imageFile = document.querySelector('#load_avatar');
@@ -66,9 +73,9 @@ class ProfileCard extends Component {
                 </div>
                 <div>
                     <span><b>Status: </b></span>{this.state.statusEditMode
-                    ? <input value={this.state.statusValue} onBlur={onStatusBlurEvent} ref={statusInputRef}/>
-                    : <span onClick={onStatusClickEvent}>{profileStatus}</span>}
-                    <button onClick={onUpdateStatusClick}>Update status</button>
+                    ? <input value={this.state.statusValue} onBlur={this.onStatusBlurEvent}
+                             ref={statusInputRef} autoFocus={true} onChange={this.onStatusChange}/>
+                        : <span onClick={this.onStatusClickEvent} style={{cursor: 'pointer'}}>{profileStatus}</span>}
                 </div>
                 <div>
                     <span><b>About me: </b></span>{editMode ?

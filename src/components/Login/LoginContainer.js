@@ -9,7 +9,7 @@ const LoginConnected = (props) => {
     let bllSubmit = (values) => {
         debugger
         props.loginAttempt(values)
-    }
+    };
 
     return <LoginReduxForm onSubmit={bllSubmit}
                            initialValues={{email: props.login.email, password: props.login.password,

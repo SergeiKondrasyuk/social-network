@@ -15,9 +15,9 @@ const Login = (props) => {
             {meta.touched && meta.invalid && <span style={{color: 'red'}}>{meta.error}</span>}
             {meta.touched && meta.warning && <span style={{color: 'orange'}}>{meta.warning}</span>}
         </>
-    }
+    };
 
-    return <form onSubmit={props.handleSubmit}>
+    return (<form onSubmit={props.handleSubmit}>
         <div>
             <span>Email: </span>
             <Field component={renderInput} type='email' id='email' name='email' placeholder='Your email'
@@ -42,7 +42,7 @@ const Login = (props) => {
         </div>
 
         <div>{props.login.loginStatusMessage}</div>
-    </form>
+    </form>)
 };
 
 let requiredValidator = (value) => {
