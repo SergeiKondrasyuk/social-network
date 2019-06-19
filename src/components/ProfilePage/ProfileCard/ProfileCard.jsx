@@ -41,7 +41,6 @@ class ProfileCard extends Component {
         let onlookingForAJobChange = () => this.props.setLookingForAJobStatus(lookingForAJobRef.current.checked);
         let onJobDescriptionChange = () => this.props.onJobDescriptionChange(JobDescriptionRef.current.value);
         let onSaveButtonClick = () => this.props.putProfileInfo(profileInfo);
-        let onUpdateStatusClick = () => this.props.updateStatus('Hello World!');
 
         let onLoadPhotoButtonClick = () => {
             let formData = new FormData();
@@ -66,7 +65,7 @@ class ProfileCard extends Component {
                 <div className={s.name}>
                     {editMode ? <input onChange={onFullNameChange} value={profileInfo.fullName}
                                        ref={fullNameRef}/> :
-                        <span>{profileInfo.fullName}</span>}
+                        <span>{profileInfo.fullName} </span>}
 
                     {(profileInfo.userId === meId) &&
                     <button onClick={this.props.setEditModeStatus}>edit</button>}
