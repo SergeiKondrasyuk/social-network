@@ -4,7 +4,6 @@ import s from './ProfilePage.module.css';
 import PropTypes from "prop-types";
 import PostsContainer from "./Posts/PostsContainer";
 import ProfileCardContainer from "./ProfileCard/ProfileCardContainer";
-import {redirectToLogin} from "../../hocs/redirectToLogin";
 
 const ProfilePage = () => {
 
@@ -19,8 +18,7 @@ const ProfilePage = () => {
     </div>
 };
 
-//export default (ProfilePage);
-export default redirectToLogin(ProfilePage);
+export default ProfilePage;
 
 ProfilePage.propTypes = {
     topImage: PropTypes.string,

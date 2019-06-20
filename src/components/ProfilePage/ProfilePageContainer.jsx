@@ -6,6 +6,8 @@ import {getAuthReducer, getLoginReducer, getProfilePageReducer} from '../../redu
 import style from '../Users/User.module.css';
 import Preloader from '../common/Preloader';
 import {withRouter} from 'react-router-dom';
+import {RedirectToLogin} from '../../hocs/RedirectToLogin';
+import {compose} from 'redux';
 
 
 const ProfilePageContainer = (props) => {
@@ -20,7 +22,7 @@ const ProfilePageContainer = (props) => {
         props.getStatus(userId);
     }, [])
 
-    if(!props.profilePage.profileInfo) {
+    if (!props.profilePage.profileInfo) {
         return <div className={style.preloader}><Preloader/></div>
     }
 
@@ -40,7 +42,9 @@ const mapDispatchToProps = (state) => {
     }
 };
 
-let WithUrlDataContainerComponent= withRouter(ProfilePageContainer);
 
-export default connect(mapDispatchToProps, {profileInfoRequest: getProfileInfo, getStatus})(WithUrlDataContainerComponent);
-
+export default compose(
+    connect(mapDispatchToProps, {profileInfoRequest: getProfileInfo, getStatus}),
+    RedirectToLogin,
+    withRouter
+)(ProfilePageContainer);

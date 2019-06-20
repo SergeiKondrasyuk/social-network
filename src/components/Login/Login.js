@@ -9,7 +9,7 @@ const Login = (props) => {
         return <Redirect to={'/profile/'}/>
     }
 
-    let renderInput = ({input, meta, ...props}) => {debugger
+    let renderInput = ({input, meta, ...props}) => {
         return <>
             <input {...props}{...input}/>
             {meta.touched && meta.invalid && <span style={{color: 'red'}}>{meta.error}</span>}

@@ -1,9 +1,15 @@
 import React from "react";
 import {Redirect} from "react-router-dom";
+import {getAuthReducer} from '../redux/selectors';
+import {connect} from 'react-redux';
 
-export let redirectToLogin = (WrappedComponent) => {
+export let RedirectToLogin = (WrappedComponent) => {
 
-    let redirectComponent = (props) => {
+    let mapStateToPropsForRedirect = (state) => ({
+        auth: getAuthReducer(state),
+    })
+
+    let RedirectComponent = (props) => {
 
         if (!props.auth.isAuth) {
             debugger
@@ -17,5 +23,7 @@ export let redirectToLogin = (WrappedComponent) => {
         </div>
     };
 
-    return redirectComponent;
+        let ConnectedRedirectToLogin = connect(mapStateToPropsForRedirect)(RedirectComponent);
+
+    return ConnectedRedirectToLogin;
 };

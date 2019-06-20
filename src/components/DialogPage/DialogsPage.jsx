@@ -3,7 +3,6 @@ import s from './DialogPage.module.css'
 import PropTypes from "prop-types";
 import CurrentDialogContainer from "./CurrentDialog/CurrentDialogContainer";
 import DialogListContainer from "./DialogList/DialogsListContainer";
-import {redirectToLogin} from "../../hocs/redirectToLogin";
 
 const DialogPage = () => {
 
@@ -16,7 +15,7 @@ const DialogPage = () => {
     </div>
 };
 
-export default redirectToLogin(DialogPage);
+export default DialogPage;
 
 DialogPage.propTypes = {
     users: PropTypes.array,
