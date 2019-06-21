@@ -18,7 +18,6 @@ class ProfileCard extends Component {
 
     onStatusClickEvent = () => {
         this.setState({statusEditMode: true,}, () => {
-            //statusInputRef.current.focus();
         });
     };
 

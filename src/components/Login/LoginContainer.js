@@ -4,10 +4,9 @@ import LoginReduxForm from "./Login";
 import {loginAttempt} from "../../redux/loginReducer";
 import {getAuthReducer, getLoginReducer} from "../../redux/selectors";
 
-const LoginConnected = (props) => {
+const LoginContainer = (props) => {
 
     let bllSubmit = (values) => {
-        debugger
         props.loginAttempt(values)
     };
 
@@ -27,6 +26,4 @@ const mapStateToProps = (state) => {
     }
 };
 
-let LoginContainer = connect(mapStateToProps, {loginAttempt})(LoginConnected);
-
-export default LoginContainer;
+export default connect(mapStateToProps, {loginAttempt})(LoginContainer);

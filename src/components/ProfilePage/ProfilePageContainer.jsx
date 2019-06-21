@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import ProfilePage from './ProfilePage';
 import {getProfileInfo, getStatus} from '../../redux/profilePageReducer';
@@ -8,31 +8,35 @@ import Preloader from '../common/Preloader';
 import {withRouter} from 'react-router-dom';
 import {RedirectToLogin} from '../../hocs/RedirectToLogin';
 import {compose} from 'redux';
+import {me} from '../../redux/authReducer';
 
 
-const ProfilePageContainer = (props) => {
+class ProfilePageContainer extends Component {
 
-    useEffect(() => {
+    componentDidMount() {
+        this.props.me();
+        let userId = this.props.match.params.userId;
         debugger
-        let userId = props.match.params.userId;
         if (!userId) {
-            userId = props.auth.userData.id;
+            userId = this.props.auth.userData.id;
         }
-        props.profileInfoRequest(userId);
-        props.getStatus(userId);
-    }, [])
-
-    if (!props.profilePage.profileInfo) {
-        return <div className={style.preloader}><Preloader/></div>
+        this.props.profileInfoRequest(userId);
+        this.props.getStatus(userId);
     }
 
-    return <ProfilePage login={props.login}
-                        auth={props.auth}
-                        profileInfoRequest={props.profileInfoRequest}
-                        profilePage={props.profilePage}
-    />
+    render() {
+        debugger
+        if (!this.props.profilePage.profileInfo) {
+            return <div className={style.preloader}><Preloader/></div>
+        }
 
-};
+        return <ProfilePage login={this.props.login}
+                            auth={this.props.auth}
+                            profileInfoRequest={this.props.profileInfoRequest}
+                            profilePage={this.props.profilePage}
+        />
+    }
+}
 
 const mapDispatchToProps = (state) => {
     return {
@@ -44,7 +48,7 @@ const mapDispatchToProps = (state) => {
 
 
 export default compose(
-    connect(mapDispatchToProps, {profileInfoRequest: getProfileInfo, getStatus}),
+    connect(mapDispatchToProps, {profileInfoRequest: getProfileInfo, getStatus, me}),
     RedirectToLogin,
     withRouter
 )(ProfilePageContainer);

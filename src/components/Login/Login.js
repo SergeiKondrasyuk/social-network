@@ -3,19 +3,21 @@ import {Redirect} from "react-router-dom";
 import {loginStatuses} from "../../redux/loginReducer";
 import {Field, reduxForm} from 'redux-form';
 
+let renderInput = ({input, meta, ...props}) => {
+    return <>
+        <input {...props}{...input}/>
+        {meta.touched && meta.invalid && <span style={{color: 'red'}}>{meta.error}</span>}
+        {meta.touched && meta.warning && <span style={{color: 'orange'}}>{meta.warning}</span>}
+    </>
+};
+
 const Login = (props) => {
 
     if (props.auth.isAuth) {
         return <Redirect to={'/profile/'}/>
     }
 
-    let renderInput = ({input, meta, ...props}) => {
-        return <>
-            <input {...props}{...input}/>
-            {meta.touched && meta.invalid && <span style={{color: 'red'}}>{meta.error}</span>}
-            {meta.touched && meta.warning && <span style={{color: 'orange'}}>{meta.warning}</span>}
-        </>
-    };
+
 
     return (<form onSubmit={props.handleSubmit}>
         <div>
@@ -44,6 +46,7 @@ const Login = (props) => {
         <div>{props.login.loginStatusMessage}</div>
     </form>)
 };
+let LoginReduxForm = reduxForm({form: 'login-form'})(Login)
 
 let requiredValidator = (value) => {
     return value ? undefined : 'Field is required';
@@ -53,7 +56,5 @@ let shortPasswordWarning = (value) => {
     if (value && value.length <= 3) return 'Too short password'
     return undefined
 }
-
-let LoginReduxForm = reduxForm({form: 'login-form'})(Login)
 
 export default LoginReduxForm;
