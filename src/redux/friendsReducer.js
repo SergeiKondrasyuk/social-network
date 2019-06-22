@@ -11,7 +11,7 @@ let initialState = {
             firstName: 'Mark',
             lastName: 'Zuckerberg',
             avatar: '../../../../img/mark.jpg'
-        },
+            },
         {
             id: 3,
             firstName: 'Pavel',

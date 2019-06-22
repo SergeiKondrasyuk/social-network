@@ -6,9 +6,9 @@ import {getAuthReducer, getLoginReducer, getProfilePageReducer} from '../../redu
 import style from '../Users/User.module.css';
 import Preloader from '../common/Preloader';
 import {withRouter} from 'react-router-dom';
-import {RedirectToLogin} from '../../hocs/RedirectToLogin';
 import {compose} from 'redux';
 import {me} from '../../redux/authReducer';
+import {RedirectToLogin} from "../../hocs/redirectToLogin";
 
 
 class ProfilePageContainer extends Component {

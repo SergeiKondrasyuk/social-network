@@ -2,7 +2,7 @@ import React from 'react'
 import {connect} from "react-redux";
 import DialogsPage from "./DialogsPage";
 import {me} from "../../redux/authReducer";
-import {RedirectToLogin} from '../../hocs/RedirectToLogin';
+import {RedirectToLogin} from "../../hocs/redirectToLogin";
 
 const DialogsPageConnected = (props) => {
 

@@ -1,5 +1,8 @@
+import {serverAPI} from "../dal/axios-instance";
+
 const SEND_MESSAGE = 'SEND_MESSAGE';
 const UPDATE_NEW_MESSAGE = 'UPDATE_NEW_MESSAGE';
+const SET_ALL_DIALOGS = 'SET_ALL_DIALOGS';
 
 let initialState = {
     dialogs: [
@@ -92,6 +95,11 @@ const dialogPageReducer = (state = initialState, action) => {
             state.dialogs[0].newMessage = action.text;
             return cloneState;
         }
+        case SET_ALL_DIALOGS: {
+            return{
+                ...state, dialogs: action.dialogs
+            }
+        }
         default:
             return state;
     }
@@ -99,6 +107,20 @@ const dialogPageReducer = (state = initialState, action) => {
 
 export const sendMessageAC = () => ({type: SEND_MESSAGE});
 export const updateNewMessageTextAC = (newMessage) => ({type: UPDATE_NEW_MESSAGE, text: newMessage,});
+export const setAllDialogs = (dialogs) => ({type: SET_ALL_DIALOGS, dialogs});
 
+export const getAllDialogs =() => (dispatch) => {
+    serverAPI.getAllDialogsRequest().then(res => {
+        if (res.data.resultCode === 0){
+            dispatch(setAllDialogs(res));
+        }
+    })
+};
+
+export const sendMessageToFriend =(friendId, message) => (dispatch) => {
+    serverAPI.sendMessageToFriendRequest(friendId, message).then(
+
+    )
+};
 
 export default dialogPageReducer;

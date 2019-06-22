@@ -1,4 +1,4 @@
-import React from 'react'
+import * as React from 'react'
 import s from './App.module.css';
 import DialogsPageContainer from "./components/DialogPage/DialogsPageContainer";
 import Music from "./components/Music/Music"

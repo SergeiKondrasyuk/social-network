@@ -7,12 +7,10 @@ export let RedirectToLogin = (WrappedComponent) => {
 
     let mapStateToPropsForRedirect = (state) => ({
         auth: getAuthReducer(state),
-    })
-
+    });
     let RedirectComponent = (props) => {
 
         if (!props.auth.isAuth) {
-            debugger
             return <Redirect to={{
                 pathname: '/login'
             }}/>

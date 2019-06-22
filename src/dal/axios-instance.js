@@ -40,7 +40,7 @@ export const serverAPI = {
     },
 
     profileInfoRequest(userId){
-        return axiosInstance.get('profile/' + userId)
+        return axiosInstance.get(`profile/${userId}`)
     },
 
     putProfileInfoRequest(profileInfo){
@@ -59,6 +59,20 @@ export const serverAPI = {
         return axiosInstance.get('profile/status/' + userId)
     },
 
+    getAllDialogsRequest(){
+        return axiosInstance.get('dialogs/')
+    },
 
+    refreshDialogRequest(userId){
+        return axiosInstance.get(`dialogs/${userId}`)
+    },
 
-}
+    getMessagesWithFriendRequest(userId){
+        return axiosInstance.get(`dialogs/${userId}/messages`)
+    },
+
+    sendMessageToFriendRequest(friendId, message){
+        return axiosInstance.post(`dialogs/${friendId}/messages`, {body: message})
+    },
+
+};
