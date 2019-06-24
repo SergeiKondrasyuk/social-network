@@ -1,7 +1,6 @@
 import React from 'react'
 import s from './DialogList.module.css'
 import DialogUser from "./DialogUser/DialogsUser";
-import PropTypes from 'prop-types';
 
 const DialogList = (props) => {
 
@@ -19,7 +18,3 @@ const DialogList = (props) => {
 };
 
 export default DialogList;
-
-DialogList.propTypes = {
-    users: PropTypes.array,
-};

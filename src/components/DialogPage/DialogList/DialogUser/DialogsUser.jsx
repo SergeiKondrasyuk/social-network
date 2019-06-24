@@ -1,8 +1,6 @@
 import React from 'react'
 import s from './DialogUser.module.css'
 import {NavLink} from "react-router-dom";
-import PropTypes from "prop-types";
-
 
 const DialogUser = (props) => {
 
@@ -12,8 +10,4 @@ const DialogUser = (props) => {
 }
 
 export default DialogUser;
-
-DialogUser.propTypes = {
-    user: PropTypes.string,
-}
 
