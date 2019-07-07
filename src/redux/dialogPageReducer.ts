@@ -99,6 +99,7 @@ const dialogPageReducer = (state = initialState, action: any) => {
 
 export const sendMessageAC = () => ({type: SEND_MESSAGE});
 <<<<<<< HEAD:src/redux/dialogPageReducer.ts
+<<<<<<< HEAD:src/redux/dialogPageReducer.ts
 export const updateNewMessageTextAC = (newMessage: string) => ({type: UPDATE_NEW_MESSAGE, text: newMessage,});
 export const setAllDialogs = (dialogs: any) => ({type: SET_ALL_DIALOGS, dialogs});
 
@@ -115,6 +116,10 @@ export const sendMessageToFriend =(friendId: number, message: string) => (dispat
 
     )
 };
+=======
+export const updateNewMessageTextAC = (newMessage) => ({type: UPDATE_NEW_MESSAGE, text: newMessage,});
+
+>>>>>>> parent of c470148... 22.06:src/redux/dialogPageReducer.js
 =======
 export const updateNewMessageTextAC = (newMessage) => ({type: UPDATE_NEW_MESSAGE, text: newMessage,});
 

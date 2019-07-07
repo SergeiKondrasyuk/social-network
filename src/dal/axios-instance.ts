@@ -41,8 +41,13 @@ export const serverAPI = {
     },
 
 <<<<<<< HEAD:src/dal/axios-instance.ts
+<<<<<<< HEAD:src/dal/axios-instance.ts
     profileInfoRequest(userId: number){
         return axiosInstance.get(`profile/${userId}`)
+=======
+    profileInfoRequest(userId){
+        return axiosInstance.get('profile/' + userId)
+>>>>>>> parent of c470148... 22.06:src/dal/axios-instance.js
 =======
     profileInfoRequest(userId){
         return axiosInstance.get('profile/' + userId)
@@ -66,6 +71,7 @@ export const serverAPI = {
     },
 
 <<<<<<< HEAD:src/dal/axios-instance.ts
+<<<<<<< HEAD:src/dal/axios-instance.ts
     getAllDialogsRequest(){
         return axiosInstance.get('dialogs/')
     },
@@ -81,6 +87,9 @@ export const serverAPI = {
     sendMessageToFriendRequest(friendId: number, message: string){
         return axiosInstance.post(`dialogs/${friendId}/messages`, {body: message})
     },
+=======
+
+>>>>>>> parent of c470148... 22.06:src/dal/axios-instance.js
 =======
 
 >>>>>>> parent of c470148... 22.06:src/dal/axios-instance.js

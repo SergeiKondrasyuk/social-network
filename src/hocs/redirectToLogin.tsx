@@ -8,9 +8,12 @@ export let RedirectToLogin = (WrappedComponent: any) => {
     let mapStateToPropsForRedirect = (state: any) => ({
         auth: getAuthReducer(state),
 <<<<<<< HEAD:src/hocs/redirectToLogin.tsx
+<<<<<<< HEAD:src/hocs/redirectToLogin.tsx
     });
     let RedirectComponent = (props: any) => {
 =======
+=======
+>>>>>>> parent of c470148... 22.06:src/hocs/redirectToLogin.js
     })
 
     let RedirectComponent = (props) => {
