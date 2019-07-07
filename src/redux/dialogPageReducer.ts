@@ -1,8 +1,5 @@
-import {serverAPI} from "../dal/axios-instance";
-
 const SEND_MESSAGE = 'SEND_MESSAGE';
 const UPDATE_NEW_MESSAGE = 'UPDATE_NEW_MESSAGE';
-const SET_ALL_DIALOGS = 'SET_ALL_DIALOGS';
 
 let initialState = {
     dialogs: [
@@ -95,17 +92,13 @@ const dialogPageReducer = (state = initialState, action: any) => {
             state.dialogs[0].newMessage = action.text;
             return cloneState;
         }
-        case SET_ALL_DIALOGS: {
-            return{
-                ...state, dialogs: action.dialogs
-            }
-        }
         default:
             return state;
     }
 };
 
 export const sendMessageAC = () => ({type: SEND_MESSAGE});
+<<<<<<< HEAD:src/redux/dialogPageReducer.ts
 export const updateNewMessageTextAC = (newMessage: string) => ({type: UPDATE_NEW_MESSAGE, text: newMessage,});
 export const setAllDialogs = (dialogs: any) => ({type: SET_ALL_DIALOGS, dialogs});
 
@@ -122,5 +115,9 @@ export const sendMessageToFriend =(friendId: number, message: string) => (dispat
 
     )
 };
+=======
+export const updateNewMessageTextAC = (newMessage) => ({type: UPDATE_NEW_MESSAGE, text: newMessage,});
+
+>>>>>>> parent of c470148... 22.06:src/redux/dialogPageReducer.js
 
 export default dialogPageReducer;
