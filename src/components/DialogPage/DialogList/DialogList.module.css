@@ -1,0 +1,14 @@
+.dialogsList {
+    border-right: 2px solid darkseagreen;
+}
+
+.dialogsTitle {
+    font-size: 30px;
+}
+
+
+
+.dialogUsers div {
+
+    margin: 15px;
+}

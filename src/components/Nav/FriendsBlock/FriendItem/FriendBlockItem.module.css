@@ -1,0 +1,53 @@
+.friendBlock {
+    width: 50px;
+    padding: 10px 10px 0 0;
+}
+
+.friendBlock:nth-child(3n) {
+    padding: 10px 0 0 0;
+}
+
+.avatar {
+    height: 50px;
+    border-radius: 17px;
+}
+
+.friendName {
+    margin: 0;
+    text-align: center;
+}
+
+
+
+
+/*
+
+.friendBlock img{
+
+    padding: 20px;
+    background-color: darkseagreen;
+    border-radius: 0  0 15px 0;
+}
+
+.friendsTitle {
+    font-size: 25px;
+}
+
+
+
+
+
+.navItem a {
+    color: white;
+    text-decoration: none;
+}
+
+.navItem a.active {
+    color: darkblue;
+}
+
+.icon {
+    width: 25px;
+    padding-right: 5px;
+    vertical-align: -4px;
+}*/

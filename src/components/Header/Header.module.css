@@ -1,0 +1,16 @@
+.header {
+    grid-area: h;
+    background-color: darkseagreen;
+    border-radius: 0 0 15px 0;
+}
+
+.logo {
+    margin: 5px 0 0 5px;
+    width: 60px;
+}
+
+.button {
+    float: right;
+    margin-right: 20px;
+    margin-top: 23px;
+}

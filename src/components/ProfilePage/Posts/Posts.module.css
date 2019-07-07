@@ -1,0 +1,7 @@
+.posts {
+    grid-area: posts;
+}
+
+.postsHeader {
+    font-size: 30px;
+}
