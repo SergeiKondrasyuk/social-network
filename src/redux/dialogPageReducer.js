@@ -3,124 +3,82 @@ import {serverAPI} from "../dal/axios-instance";
 const SEND_MESSAGE = 'SEND_MESSAGE';
 const UPDATE_NEW_MESSAGE = 'UPDATE_NEW_MESSAGE';
 const SET_ALL_DIALOGS = 'SET_ALL_DIALOGS';
+const SET_MESSAGES = 'SET_MESSAGES';
+const SET_CURRENT_DIALOG = 'SET_CURRENT_DIALOG';
+const PUT_UP_DIALOG = 'PUT_UP_DIALOG';
+
+const update = (state, action) => ({...state, ...action.payload});
 
 let initialState = {
-    dialogs: [
-        {
-            id: 1,
-            messages: [
-                {
-                    id: 1,
-                    content: 'Hello',
-                    addedTime: '2019-03-11 15:45',
-                    type: 'incoming',
-                    author: {
-                        id: 2,
-                        name: 'Bill',
-                        avatar: '../../../../img/bill.jpg',
-                    }
-                },
-                {
-                    id: 2,
-                    content: 'Hi!',
-                    addedTime: '2019-03-11 16:01',
-                    type: 'outcoming',
-                    author: {
-                        id: 1,
-                        name: 'Sergei',
-                        avatar: '../../../../img/ava.jpg',
-                    }
-                },
-                {
-                    id: 3,
-                    content: 'How is your progress in learning REACT?',
-                    addedTime: '2019-03-11 16:44',
-                    type: 'incoming',
-                    author: {
-                        id: 2,
-                        name: 'Bill',
-                        avatar: '../../../../img/bill.jpg',
-                    }
-                },
-                {
-                    id: 4,
-                    content: 'Very good',
-                    addedTime: '2019-03-11 17:10',
-                    type: 'outcoming',
-                    author: {
-                        id: 1,
-                        name: 'Sergei',
-                        avatar: '../../../../img/ava.jpg',
-                    }
-                },
-
-            ],
-            newMessage: '',
-        }
-    ],
-    dialogUsers: ['Maks', 'Bill', 'Anna', 'Vital', 'Svetlana', 'Victor', 'Alexander', 'Valery', 'Ludmila'],
+    dialogs: [],
+    messages: [],
+    selectedDialogId: null
 };
 
 const dialogPageReducer = (state = initialState, action) => {
 
     switch (action.type) {
         case SEND_MESSAGE : {
-            let cloneState = {...state};
-            if (cloneState.dialogs[0].newMessage.trim()) {
-                let currentDate = new Date();
-                let currentYear = currentDate.getFullYear();
-                let currentMonth = ((currentDate.getMonth() + 1).toString().length === 1) ? `0${currentDate.getMonth() + 1}` : currentDate.getMonth() + 1;
-                let currentDay = ((currentDate.getDate()).toString().length === 1) ? `0${currentDate.getDate()}` : currentDate.getDate();
-                let currentHours = ((currentDate.getHours()).toString().length === 1) ? `0${currentDate.getHours()}` : currentDate.getHours();
-                let currentMinutes = ((currentDate.getMinutes()).toString().length === 1) ? `0${currentDate.getMinutes()}` : currentDate.getMinutes();
-
-                let newMessage = {
-                    id: 5,
-                    content: cloneState.dialogs[0].newMessage,
-                    addedTime: `${currentYear}-${currentMonth}-${currentDay} ${currentHours}:${currentMinutes}`,
-                    type: 'outcoming',
-                    author: {
-                        id: 1,
-                        name: 'Sergei',
-                        avatar: '../../../../img/ava.jpg',
-                    }
-                };
-                cloneState.dialogs[0].messages.push(newMessage);
-                cloneState.dialogs[0].newMessage = '';
-            }
-            return cloneState;
+            return {...state, messages: [...state.messages, action.message]}
         }
         case UPDATE_NEW_MESSAGE: {
-            let cloneState = {...state};
-            state.dialogs[0].newMessage = action.text;
-            return cloneState;
+
         }
-        case SET_ALL_DIALOGS: {
-            return{
-                ...state, dialogs: action.dialogs
-            }
+        case PUT_UP_DIALOG: {
+            return {...state, dialogs: [state.dialogs.find(d=>d.id === action.dialogId),
+                    ...state.dialogs.filter(d => d.id != action.dialogId)]}
         }
+        case SET_ALL_DIALOGS:
+        case SET_MESSAGES:
+        case SET_CURRENT_DIALOG:
+            return update(state, action)
         default:
             return state;
     }
 };
 
-export const sendMessageAC = () => ({type: SEND_MESSAGE});
-export const updateNewMessageTextAC = (newMessage) => ({type: UPDATE_NEW_MESSAGE, text: newMessage,});
-export const setAllDialogs = (dialogs) => ({type: SET_ALL_DIALOGS, dialogs});
+export const sendMessage = (message) => ({type: SEND_MESSAGE, message});
+export const updateNewMessageText = (newMessage) => ({type: UPDATE_NEW_MESSAGE, text: newMessage});
+export const setAllDialogs = (dialogs) => ({type: SET_ALL_DIALOGS, payload: {dialogs}});
+export const setMessages = (messages) => ({type: SET_MESSAGES, payload: {messages}});
+export const setCurrentDialog = (selectedDialogId) => ({type: SET_CURRENT_DIALOG, payload: {selectedDialogId}});
+export const putUpDialog = (dialogId) => ({type: PUT_UP_DIALOG, payload: {dialogId}});
 
-export const getAllDialogs =() => (dispatch) => {
+export const getAllDialogs = () => (dispatch) => {
     serverAPI.getAllDialogsRequest().then(res => {
-        if (res.data.resultCode === 0){
-            dispatch(setAllDialogs(res));
+        debugger
+        if (res.status === 200) {
+            dispatch(setAllDialogs(res.data));
         }
     })
 };
 
-export const sendMessageToFriend =(friendId, message) => (dispatch) => {
-    serverAPI.sendMessageToFriendRequest(friendId, message).then(
-
-    )
+export const getMessagesWithUser = (userId) => (dispatch) => {
+    serverAPI.getMessagesWithUserRequest(userId).then(res => {
+        debugger
+        if (res.status === 200) {
+            dispatch(setMessages(res.data.items));
+        }
+    })
 };
+
+export const sendMessageToUser = (userId, message) => async (dispatch) => {
+    let response = await serverAPI.sendMessageToUserRequest(userId, message);
+    debugger
+    dispatch(sendMessage(response.data.data.message));
+    debugger
+};
+
+export const putUpDialogToTop = (userId) => (dispatch, getState) => {
+    serverAPI.putUpDialogToTopRequest(userId).then(res => {
+        let dialog = getState().dialogs.find(d => d.id == userId);
+        if (dialog) {
+            dispatch(putUpDialog(userId))
+        } else {
+            dispatch(getAllDialogs())
+        }
+    });
+}
+
 
 export default dialogPageReducer;

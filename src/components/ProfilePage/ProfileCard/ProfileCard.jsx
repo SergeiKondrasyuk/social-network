@@ -6,6 +6,7 @@ class ProfileCard extends Component {
 
     state = {
         statusEditMode: false,
+        profileEditMode: false,
         statusValue: this.props.profilePage.profileStatus,
     };
 
@@ -17,17 +18,30 @@ class ProfileCard extends Component {
     };
 
     onStatusClickEvent = () => {
-        this.setState({statusEditMode: true,}, () => {
-        });
+        this.setState({statusEditMode: true});
     };
 
     onStatusChange = (e) => {
-        this.setState({statusValue: e.currentTarget.value });
+        this.setState({statusValue: e.currentTarget.value});
     };
+
+    changeProfileEditMode = (value) => {
+        this.setState({profileEditMode: value});
+    }
+
+    onSaveButtonClick = () => {
+        this.props.putProfileInfo(this.props.profilePage.profileInfo);
+        this.setState({profileEditMode: false});
+    }
+
+    onCancelButtonClick = () => {
+        this.props.getProfileInfo(this.props.auth.userData.id);
+        this.setState({profileEditMode: false});
+    }
 
 
     render() {
-        let {editMode, profileInfo, profileStatus} = this.props.profilePage;
+        let {profileInfo, profileStatus} = this.props.profilePage;
         let meId = this.props.auth.userData.id
         let aboutMeRef = React.createRef();
         let fullNameRef = React.createRef();
@@ -39,7 +53,6 @@ class ProfileCard extends Component {
         let onFullNameChange = () => this.props.onFullNameChange(fullNameRef.current.value);
         let onlookingForAJobChange = () => this.props.setLookingForAJobStatus(lookingForAJobRef.current.checked);
         let onJobDescriptionChange = () => this.props.onJobDescriptionChange(JobDescriptionRef.current.value);
-        let onSaveButtonClick = () => this.props.putProfileInfo(profileInfo);
 
         let onLoadPhotoButtonClick = () => {
             let formData = new FormData();
@@ -52,42 +65,43 @@ class ProfileCard extends Component {
         return <>{profileInfo && (<div className={s.profileCard}>
             <div className={s.avatar}><img alt='User avatar'
                                            src={profileInfo.photos.large == null ? anonymousUser : profileInfo.photos.large}/>
-                {editMode && <input type='file' accept=".jpg, .jpeg, .png" id='load_avatar' name='load_avatar'/>}
+                {this.state.profileEditMode &&
+                <input type='file' accept=".jpg, .jpeg, .png" id='load_avatar' name='load_avatar'/>}
                 {this.props.profilePage.updatePhotoErrorMessage == null ? null :
                     <div style={{color: 'red'}}>{this.props.profilePage.updatePhotoErrorMessage}</div>}
             </div>
 
-            {editMode && <button onClick={onLoadPhotoButtonClick}>load photo</button>}
+            {this.state.profileEditMode && <button onClick={onLoadPhotoButtonClick}>load photo</button>}
 
             <div className={s.profileInfo}>
 
                 <div className={s.name}>
-                    {editMode ? <input onChange={onFullNameChange} value={profileInfo.fullName}
-                                       ref={fullNameRef}/> :
+                    {this.state.profileEditMode ? <input onChange={onFullNameChange} value={profileInfo.fullName}
+                                                         ref={fullNameRef}/> :
                         <span>{profileInfo.fullName} </span>}
 
                     {(profileInfo.userId === meId) &&
-                    <button onClick={this.props.setEditModeStatus}>edit</button>}
+                    <button onClick={() => this.changeProfileEditMode(true)}>edit</button>}
                 </div>
                 <div>
                     <span><b>Status: </b></span>{this.state.statusEditMode
                     ? <input value={this.state.statusValue} onBlur={this.onStatusBlurEvent}
                              ref={statusInputRef} autoFocus={true} onChange={this.onStatusChange}/>
-                        : <span onClick={this.onStatusClickEvent} style={{cursor: 'pointer'}}>{profileStatus}</span>}
+                    : <span onClick={this.onStatusClickEvent} style={{cursor: 'pointer'}}>{profileStatus}</span>}
                 </div>
                 <div>
-                    <span><b>About me: </b></span>{editMode ?
+                    <span><b>About me: </b></span>{this.state.profileEditMode ?
                     <input onChange={onAboutMeChange} value={profileInfo.aboutMe}
                            ref={aboutMeRef}/> :
                     <span>{profileInfo.aboutMe}</span>}
                 </div>
 
-                <div><span><b>Looking for a job </b></span>{editMode ?
+                <div><span><b>Looking for a job </b></span>{this.state.profileEditMode ?
                     <input type='checkbox' onChange={onlookingForAJobChange} checked={profileInfo.lookingForAJob}
                            ref={lookingForAJobRef}/> :
                     <input type='checkbox' checked={profileInfo.lookingForAJob}/>}</div>
 
-                <div><span><b>My skills: </b></span>{editMode ?
+                <div><span><b>My skills: </b></span>{this.state.profileEditMode ?
                     <input onChange={onJobDescriptionChange} value={profileInfo.lookingForAJobDescription}
                            ref={JobDescriptionRef}/> :
                     <span>{profileInfo.lookingForAJobDescription}</span>}</div>
@@ -97,7 +111,7 @@ class ProfileCard extends Component {
             <div className={s.contacts}>
                 {Object.keys(profileInfo.contacts).map(key => {
                     return <div><b>{key}: </b>
-                        {editMode ?
+                        {this.state.profileEditMode ?
                             <input type='url' onChange={(e) => {
                                 let value = e.target.value;
                                 this.props.onContactChange(value, key)
@@ -109,7 +123,13 @@ class ProfileCard extends Component {
                 {this.props.profilePage.updateProfileErrorMessage == null ? null :
                     <div style={{color: 'red'}}>{this.props.profilePage.updateProfileErrorMessage}</div>}
             </div>
-            {editMode && <button onClick={onSaveButtonClick}>Save</button>}
+            {this.state.profileEditMode
+            && <>
+                <button onClick={this.onSaveButtonClick}>Save</button>
+                <button onClick={this.onCancelButtonClick}>Cancel</button>
+            </>
+
+            }
 
 
         </div>)}</>

@@ -60,19 +60,46 @@ export const serverAPI = {
     },
 
     getAllDialogsRequest(){
-        return axiosInstance.get('dialogs/')
+        return axiosInstance.get('dialogs')
     },
 
     refreshDialogRequest(userId){
         return axiosInstance.get(`dialogs/${userId}`)
     },
 
-    getMessagesWithFriendRequest(userId){
+    putUpDialogToTopRequest(userId){
+        return axiosInstance.put(`dialogs/${userId}`)
+    },
+
+    getMessagesWithUserRequest(userId){
         return axiosInstance.get(`dialogs/${userId}/messages`)
     },
 
-    sendMessageToFriendRequest(friendId, message){
-        return axiosInstance.post(`dialogs/${friendId}/messages`, {body: message})
+    sendMessageToUserRequest(userId, message){
+        return axiosInstance.post(`dialogs/${userId}/messages`, {body: message})
     },
 
+    isFriendSeenMessageRequest(messageId){
+        return axiosInstance.get(`dialogs/messages/${messageId}/viewed`)
+    },
+
+    markSpamMessageRequest(messageId){
+        return axiosInstance.post(`dialogs/messages/${messageId}/spam`)
+    },
+
+    deleteMessageRequest(messageId){
+        return axiosInstance.delete(`dialogs/messages/${messageId}`)
+    },
+
+    restoreMessageRequest(messageId){
+        return axiosInstance.put(`dialogs/messages/${messageId}/restore`)
+    },
+
+    getOnlyNewMessagesRequest(userId, date){
+        return axiosInstance.get(`dialogs/${userId}/messages/new?newerThen=${date}`)
+    },
+
+    getListOfNewMessagesRequest(){
+        return axiosInstance.get(`dialogs/messages/new/count`)
+    },
 };

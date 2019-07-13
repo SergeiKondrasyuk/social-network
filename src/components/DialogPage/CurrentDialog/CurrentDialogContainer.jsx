@@ -1,32 +1,40 @@
-import React from 'react';
-import {sendMessageAC, updateNewMessageTextAC} from "../../../redux/dialogPageReducer";
+import React, {Component, useEffect} from 'react';
+import {
+    getMessagesWithUser,
+    putUpDialogToTop,
+    sendMessageToUser, setCurrentDialog,
+    updateNewMessageText
+} from "../../../redux/dialogPageReducer";
 import {connect} from "react-redux";
 import CurrentDialog from "./CurrentDialog";
+import {compose} from 'redux';
+import {withRouter} from 'react-router-dom';
 
 
-const CurrentDialogConnected = (props) => {
-    return <CurrentDialog onMessageChange={props.onMessageChange}
-                          onSendMessageButtonClick={props.onSendMessageButtonClick}
-                          dialogPage={props.dialogPage}/>
-};
+class CurrentDialogContainer extends Component {
 
-const mstp = (state) => {
+    render() {
+
+        return <CurrentDialog sendMessageToUser={this.props.sendMessageToUser}
+                              dialogPage={this.props.dialogPage}
+                              selectedDialogId={this.props.selectedDialogId}
+                              userId={this.props.match.params.userId}
+        />
+    }
+}
+
+const mapStateToProps = (state) => {
     return {
-        dialogPage: state.dialogPage
+        dialogPage: state.dialogPage,
+        selectedDialogId: state.dialogPage.selectedDialogId
     }
 };
 
-const mdtp = (dispatch) => {
-    return ({
-        onMessageChange: (newPost) => {
-            dispatch(updateNewMessageTextAC(newPost))
-        },
-        onSendMessageButtonClick: () => {
-            dispatch(sendMessageAC())
-        }
-    })
-};
 
-const CurrentDialogContainer = connect(mstp, mdtp)(CurrentDialogConnected);
-
-export default CurrentDialogContainer;
+export default compose(
+    connect(mapStateToProps, {
+        updateNewMessageText, sendMessageToUser, putUpDialogToTop,
+        getMessagesWithUser, setCurrentDialog
+    }),
+    withRouter
+)(CurrentDialogContainer);

@@ -1,46 +1,40 @@
 import React from 'react'
 import s from './CurrentDialog.module.css'
 import Message from "./Message/Message";
-import PropTypes from 'prop-types';
 
 const CurrentDialog = (props) => {
 
-    let currentDialogMessages = props.dialogPage.dialogs[0].messages.map(p =>
-        <Message message={p.content} user={p.author.name} avatar={p.author.avatar} addedTime={p.addedTime}
-                 type={p.type}/>
+
+
+    let currentDialogMessages = props.dialogPage.messages.map(p =>
+        <Message message={p.body} user={p.senderName} /*avatar={p.author.avatar} addedTime={p.addedTime}
+                 type={p.type}*//>
     );
 
-    let newMessageText = React.createRef();
+    let newMessageTextRef = React.createRef();
 
     let onSendMessageButtonClick = () => {
-        props.onSendMessageButtonClick();
+        props.sendMessageToUser(props.selectedDialogId, newMessageTextRef.current.value);
     };
 
-    let onMessageChange = () => {
-        let newMessage = newMessageText.current.value;
-        props.onMessageChange(newMessage);
-    };
 
     return <div className={s.currentDialog}>
-        {currentDialogMessages}
-        <div>
-                <textarea onChange={onMessageChange} placeholder='Enter you message...'
-                          className={s.newMessageTextArea} ref={newMessageText}
-                          value={props.dialogPage.dialogs[0].newMessage}/>
-        </div>
-        <div className={s.sendButton}>
-            <button onClick={onSendMessageButtonClick}>Send</button>
-        </div>
+        {!!props.selectedDialogId ?
+            <>
+                {currentDialogMessages}
+                <div>
+                <textarea placeholder='Enter you message...'
+                          className={s.newMessageTextArea} ref={newMessageTextRef}
+                          value={null}/>
+                </div>
+                <div className={s.sendButton}>
+                    <button onClick={onSendMessageButtonClick}>Send</button>
+                </div>
+            </>
+            : <div>Please select dialog</div>}
     </div>
 
 
 };
 
 export default CurrentDialog;
-
-CurrentDialog.propTypes = {
-    users: PropTypes.array,
-    messages: PropTypes.array,
-    onSendMessageButtonClick: PropTypes.func,
-    onMessageChange: PropTypes.func,
-};

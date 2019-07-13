@@ -1,12 +1,12 @@
-import React from 'react'
+import React, {useEffect} from 'react'
 import s from './DialogList.module.css'
 import DialogUser from "./DialogUser/DialogsUser";
-import PropTypes from 'prop-types';
+import {sendMessageToUser} from '../../../redux/dialogPageReducer';
 
 const DialogList = (props) => {
 
-    let usersList = props.users.map(d =>
-        <DialogUser user={d}/>
+    let usersList = props.dialogs.map(d =>
+        <DialogUser dialog={d.userName} id={d.id}/>
     );
     return <div className={s.dialogsList}>
 
@@ -19,7 +19,3 @@ const DialogList = (props) => {
 };
 
 export default DialogList;
-
-DialogList.propTypes = {
-    users: PropTypes.array,
-};

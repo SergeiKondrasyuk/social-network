@@ -16,23 +16,22 @@ class ProfilePageContainer extends Component {
     componentDidMount() {
         this.props.me();
         let userId = this.props.match.params.userId;
-        debugger
         if (!userId) {
             userId = this.props.auth.userData.id;
         }
-        this.props.profileInfoRequest(userId);
+        this.props.getProfileInfo(userId);
         this.props.getStatus(userId);
     }
 
     render() {
-        debugger
+
         if (!this.props.profilePage.profileInfo) {
             return <div className={style.preloader}><Preloader/></div>
         }
 
         return <ProfilePage login={this.props.login}
                             auth={this.props.auth}
-                            profileInfoRequest={this.props.profileInfoRequest}
+                            getProfileInfo={this.props.getProfileInfo}
                             profilePage={this.props.profilePage}
         />
     }
@@ -48,7 +47,7 @@ const mapDispatchToProps = (state) => {
 
 
 export default compose(
-    connect(mapDispatchToProps, {profileInfoRequest: getProfileInfo, getStatus, me}),
+    connect(mapDispatchToProps, {getProfileInfo, getStatus, me}),
     RedirectToLogin,
     withRouter
 )(ProfilePageContainer);

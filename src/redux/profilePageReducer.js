@@ -6,7 +6,6 @@ const SET_PROFILE_INFO_REQUEST_STATUS = 'SET_PROFILE_INFO_REQUEST_STATUS';
 const SET_PROFILE_INFO = 'SET_PROFILE_INFO';
 const SET_PROFILE_STATUS = 'SET_PROFILE_STATUS';
 const ON_CONTACT_CHANGE = 'ON_CONTACT_CHANGE';
-const SET_EDIT_MODE_STATUS = 'SET_EDIT_MODE_STATUS';
 const ON_ABOUT_ME_CHANGE = 'ON_ABOUT_ME_CHANGE';
 const ON_FULL_NAME_CHANGE = 'ON_FULL_NAME_CHANGE';
 const SET_LOOKING_JOB_STATUS = 'SET_LOOKING_JOB_STATUS';
@@ -35,7 +34,6 @@ let initialState =
         profileStatus: null,
         updatePhotoErrorMessage: null,
         updateProfileErrorMessage: null,
-        editMode: false,
     };
 
 const profilePageReducer = (state = initialState, action) => {
@@ -59,12 +57,6 @@ const profilePageReducer = (state = initialState, action) => {
             return {
                 ...state,
                 profileInfoRequestStatus: action.getUsersStatus,
-            }
-        }
-        case SET_EDIT_MODE_STATUS: {
-            return {
-                ...state,
-                editMode: action.value,
             }
         }
         case ON_ABOUT_ME_CHANGE: {
@@ -145,7 +137,6 @@ export const putProfileInfo = () => (dispatch, getState) => {
             if (res.data.resultCode === 0) {
                 dispatch(setPhotoUpdateErrorMessage(''))
                 dispatch(setProfileUpdateErrorMessage(''))
-                dispatch(setEditModeStatus(false));
             } else {
                 dispatch(setProfileUpdateErrorMessage(res.data.messages));
             }
@@ -173,7 +164,6 @@ export const uploadPhoto = (photo) => (dispatch, getState) => {
     serverAPI.uploadPhotoRequest(photo).then(res => {
         if (res.data.resultCode === 0) {
             dispatch(onPhotoChange(res.data.photo));
-            dispatch(setEditModeStatus(false));
             dispatch(getProfileInfo(userId))
         } else {
             dispatch(setPhotoUpdateErrorMessage(res.data.messages));
@@ -190,7 +180,6 @@ export const setProfileInfoRequestStatus = (status) => ({
 });
 export const setProfileInfo = (profileInfo) => ({type: SET_PROFILE_INFO, profileInfo});
 export const setProfileStatus = (profileStatus) => ({type: SET_PROFILE_STATUS, profileStatus});
-export const setEditModeStatus = (value) => ({type: SET_EDIT_MODE_STATUS, value});
 export const onContactChange = (value, contactKey) => ({type: ON_CONTACT_CHANGE, value, contactKey});
 export const onAboutMeChange = (value) => ({type: ON_ABOUT_ME_CHANGE, value});
 export const onFullNameChange = (value) => ({type: ON_FULL_NAME_CHANGE, value});
