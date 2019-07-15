@@ -1,9 +1,8 @@
-import React, {Component, useEffect} from 'react';
+import React, {Component} from 'react';
 import {
     getMessagesWithUser,
     putUpDialogToTop,
     sendMessageToUser, setCurrentDialog,
-    updateNewMessageText
 } from "../../../redux/dialogPageReducer";
 import {connect} from "react-redux";
 import CurrentDialog from "./CurrentDialog";
@@ -14,7 +13,6 @@ import {withRouter} from 'react-router-dom';
 class CurrentDialogContainer extends Component {
 
     render() {
-
         return <CurrentDialog sendMessageToUser={this.props.sendMessageToUser}
                               dialogPage={this.props.dialogPage}
                               selectedDialogId={this.props.selectedDialogId}
@@ -33,8 +31,7 @@ const mapStateToProps = (state) => {
 
 export default compose(
     connect(mapStateToProps, {
-        updateNewMessageText, sendMessageToUser, putUpDialogToTop,
-        getMessagesWithUser, setCurrentDialog
+        sendMessageToUser, putUpDialogToTop, getMessagesWithUser, setCurrentDialog
     }),
     withRouter
 )(CurrentDialogContainer);
