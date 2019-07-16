@@ -12,7 +12,8 @@ const update = (state, action) => ({...state, ...action.payload});
 let initialState = {
     dialogs: [],
     messages: [],
-    selectedDialogId: null
+    selectedDialogId: null,
+    currentUserAvatar: null,
 };
 
 const dialogPageReducer = (state = initialState, action) => {
@@ -28,8 +29,10 @@ const dialogPageReducer = (state = initialState, action) => {
             return {...state, dialogs: [state.dialogs.find(d=>d.id === action.dialogId),
                     ...state.dialogs.filter(d => d.id != action.dialogId)]}
         }
+        case SET_MESSAGES:{
+            return {...state, messages  :action.messages, currentUserAvatar: action.avatar}
+        }
         case SET_ALL_DIALOGS:
-        case SET_MESSAGES:
         case SET_CURRENT_DIALOG:
             return update(state, action)
         default:
@@ -40,7 +43,7 @@ const dialogPageReducer = (state = initialState, action) => {
 export const sendMessage = (message) => ({type: SEND_MESSAGE, message});
 export const updateNewMessageText = (newMessage) => ({type: UPDATE_NEW_MESSAGE, text: newMessage});
 export const setAllDialogs = (dialogs) => ({type: SET_ALL_DIALOGS, payload: {dialogs}});
-export const setMessages = (messages) => ({type: SET_MESSAGES, payload: {messages}});
+export const setMessages = (messages, avatar) => ({type: SET_MESSAGES, messages, avatar});
 export const setCurrentDialog = (selectedDialogId) => ({type: SET_CURRENT_DIALOG, payload: {selectedDialogId}});
 export const putUpDialog = (dialogId) => ({type: PUT_UP_DIALOG, payload: {dialogId}});
 
@@ -53,18 +56,19 @@ export const getAllDialogs = () => (dispatch) => {
     })
 };
 
-export const getMessagesWithUser = (userId) => (dispatch) => {
+export const getMessagesWithUser = (userId) => (dispatch,getState) => {
+    let state = getState().dialogPage;
     serverAPI.getMessagesWithUserRequest(userId).then(res => {
         debugger
         if (res.status === 200) {
-            dispatch(setMessages(res.data.items));
+            debugger
+            dispatch(setMessages(res.data.items, state.dialogs[0].photos.small));
         }
     })
 };
 
 export const sendMessageToUser = (userId, message) => async (dispatch) => {
     let response = await serverAPI.sendMessageToUserRequest(userId, message);
-    debugger
     dispatch(sendMessage(response.data.data.message));
     debugger
 };
@@ -78,7 +82,7 @@ export const putUpDialogToTop = (userId) => (dispatch, getState) => {
             dispatch(getAllDialogs())
         }
     });
-}
+};
 
 
 export default dialogPageReducer;

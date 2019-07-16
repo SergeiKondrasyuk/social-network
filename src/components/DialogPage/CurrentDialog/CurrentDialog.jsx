@@ -7,7 +7,7 @@ const CurrentDialog = (props) => {
 
 
     let currentDialogMessages = props.dialogPage.messages.map(p =>
-        <Message message={p.body} user={p.senderName} /*avatar={p.author.avatar} addedTime={p.addedTime}
+        <Message message={p.body} user={p.senderName} avatar={props.auth.userData.id === p.senderId ? null: props.currentUserAvatar} /*addedTime={p.addedTime}
                  type={p.type}*//>
     );
 
@@ -15,6 +15,7 @@ const CurrentDialog = (props) => {
 
     let onSendMessageButtonClick = () => {
         props.sendMessageToUser(props.selectedDialogId, newMessageTextRef.current.value);
+
     };
 
 

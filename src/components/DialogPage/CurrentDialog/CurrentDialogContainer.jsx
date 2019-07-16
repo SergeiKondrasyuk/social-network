@@ -9,6 +9,7 @@ import {connect} from "react-redux";
 import CurrentDialog from "./CurrentDialog";
 import {compose} from 'redux';
 import {withRouter} from 'react-router-dom';
+import {getAuthReducer} from "../../../redux/selectors";
 
 
 class CurrentDialogContainer extends Component {
@@ -16,8 +17,10 @@ class CurrentDialogContainer extends Component {
     render() {
 
         return <CurrentDialog sendMessageToUser={this.props.sendMessageToUser}
+                              auth={this.props.auth}
                               dialogPage={this.props.dialogPage}
                               selectedDialogId={this.props.selectedDialogId}
+                              currentUserAvatar={this.props.currentUserAvatar}
                               userId={this.props.match.params.userId}
         />
     }
@@ -26,7 +29,9 @@ class CurrentDialogContainer extends Component {
 const mapStateToProps = (state) => {
     return {
         dialogPage: state.dialogPage,
-        selectedDialogId: state.dialogPage.selectedDialogId
+        selectedDialogId: state.dialogPage.selectedDialogId,
+        currentUserAvatar: state.dialogPage.currentUserAvatar,
+        auth: getAuthReducer(state),
     }
 };
 
