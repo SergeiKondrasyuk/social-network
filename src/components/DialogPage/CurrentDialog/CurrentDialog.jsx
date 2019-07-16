@@ -1,9 +1,10 @@
 import React from 'react'
 import s from './CurrentDialog.module.css'
 import Message from "./Message/Message";
+import Field from 'redux-form/es/Field';
+import {reduxForm} from 'redux-form';
 
 const CurrentDialog = (props) => {
-
 
 
     let currentDialogMessages = props.dialogPage.messages.map(p =>
@@ -11,11 +12,8 @@ const CurrentDialog = (props) => {
                  type={p.type}*//>
     );
 
-    let newMessageTextRef = React.createRef();
-
-    let onSendMessageButtonClick = () => {
-        props.sendMessageToUser(props.selectedDialogId, newMessageTextRef.current.value);
-
+    let sendMessage = (values) => {
+        props.sendMessageToUser(props.selectedDialogId, values.newMessageTextArea);
     };
 
 
@@ -23,19 +21,26 @@ const CurrentDialog = (props) => {
         {!!props.selectedDialogId ?
             <>
                 {currentDialogMessages}
-                <div>
-                <textarea placeholder='Enter you message...'
-                          className={s.newMessageTextArea} ref={newMessageTextRef}
-                          value={null}/>
-                </div>
-                <div className={s.sendButton}>
-                    <button onClick={onSendMessageButtonClick}>Send</button>
-                </div>
+                <AddMessageFormRedux onSubmit={sendMessage}/>
             </>
             : <div>Please select dialog</div>}
     </div>
-
-
 };
+
+const AddMessageForm = (props) => {
+    return (
+        <form onSubmit={props.handleSubmit}>
+            <div>
+                <Field component='textarea' name='newMessageTextArea' placeholder='Enter you message...'
+                       className={s.newMessageTextArea}/>
+            </div>
+            <div className={s.sendButton}>
+                <button>Send</button>
+            </div>
+        </form>
+    )
+}
+
+const AddMessageFormRedux = reduxForm({form: 'dialogAddMessageForm'})(AddMessageForm)
 
 export default CurrentDialog;

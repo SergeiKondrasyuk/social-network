@@ -1,7 +1,6 @@
 import {serverAPI} from "../dal/axios-instance";
 
 const SEND_MESSAGE = 'SEND_MESSAGE';
-const UPDATE_NEW_MESSAGE = 'UPDATE_NEW_MESSAGE';
 const SET_ALL_DIALOGS = 'SET_ALL_DIALOGS';
 const SET_MESSAGES = 'SET_MESSAGES';
 const SET_CURRENT_DIALOG = 'SET_CURRENT_DIALOG';
@@ -22,9 +21,6 @@ const dialogPageReducer = (state = initialState, action) => {
         case SEND_MESSAGE : {
             return {...state, messages: [...state.messages, action.message]}
         }
-        case UPDATE_NEW_MESSAGE: {
-
-        }
         case PUT_UP_DIALOG: {
             return {...state, dialogs: [state.dialogs.find(d=>d.id === action.dialogId),
                     ...state.dialogs.filter(d => d.id != action.dialogId)]}
@@ -41,7 +37,6 @@ const dialogPageReducer = (state = initialState, action) => {
 };
 
 export const sendMessage = (message) => ({type: SEND_MESSAGE, message});
-export const updateNewMessageText = (newMessage) => ({type: UPDATE_NEW_MESSAGE, text: newMessage});
 export const setAllDialogs = (dialogs) => ({type: SET_ALL_DIALOGS, payload: {dialogs}});
 export const setMessages = (messages, avatar) => ({type: SET_MESSAGES, messages, avatar});
 export const setCurrentDialog = (selectedDialogId) => ({type: SET_CURRENT_DIALOG, payload: {selectedDialogId}});

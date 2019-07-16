@@ -46,7 +46,9 @@ const Login = (props) => {
         <div>{props.login.loginStatusMessage}</div>
     </form>)
 };
-let LoginReduxForm = reduxForm({form: 'login-form'})(Login)
+let LoginReduxForm = reduxForm({
+    form: 'login-form' //unique form name
+})(Login)
 
 let requiredValidator = (value) => {
     return value ? undefined : 'Field is required';
