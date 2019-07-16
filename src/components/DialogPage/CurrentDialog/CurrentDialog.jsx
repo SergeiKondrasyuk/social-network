@@ -21,7 +21,7 @@ const CurrentDialog = (props) => {
         {!!props.selectedDialogId ?
             <>
                 {currentDialogMessages}
-                <AddMessageFormRedux onSubmit={sendMessage}/>
+                <AddMessageFormRedux onSubmit={sendMessage} props={props}/>
             </>
             : <div>Please select dialog</div>}
     </div>
@@ -32,7 +32,8 @@ const AddMessageForm = (props) => {
         <form onSubmit={props.handleSubmit}>
             <div>
                 <Field component='textarea' name='newMessageTextArea' placeholder='Enter you message...'
-                       className={s.newMessageTextArea}/>
+                       className={s.newMessageTextArea}
+                />
             </div>
             <div className={s.sendButton}>
                 <button>Send</button>

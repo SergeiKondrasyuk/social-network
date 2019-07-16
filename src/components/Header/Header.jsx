@@ -8,6 +8,8 @@ function Header(props) {
 
     return <header className={s.header}>
         <img alt='Logo' className={s.logo} src={logo}/>
+        {!!props.newMessagesCount &&
+        <span className={s.newMessagesNotification}>New messages: {props.newMessagesCount}</span>}
         {props.isAuth
             ? <button className={s.button} id='logOutButton' onClick={props.logOutAttempt}>Log out</button>
             : <NavLink to='/login'>

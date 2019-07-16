@@ -13,12 +13,14 @@ import {getAuthReducer} from "../../../redux/selectors";
 
 class CurrentDialogContainer extends Component {
 
+
     render() {
         return <CurrentDialog sendMessageToUser={this.props.sendMessageToUser}
                               auth={this.props.auth}
                               dialogPage={this.props.dialogPage}
                               selectedDialogId={this.props.selectedDialogId}
                               currentUserAvatar={this.props.currentUserAvatar}
+                              putUpDialogToTop={this.props.putUpDialogToTop}
                               userId={this.props.match.params.userId}
         />
     }

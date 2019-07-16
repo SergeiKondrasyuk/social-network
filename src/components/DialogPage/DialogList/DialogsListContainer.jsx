@@ -14,7 +14,7 @@ class DialogListContainer extends Component {
         this.props.getAllDialogs();
         let userId = this.props.match.params.userId;
         if (!!userId) {
-            // props.putUpDialogToTop(userId);
+            this.props.putUpDialogToTop(userId);
             this.props.getMessagesWithUser(userId);
             this.props.setCurrentDialog(userId);
         }
@@ -25,6 +25,7 @@ class DialogListContainer extends Component {
         if (userId !== prevProps.match.params.userId) {
             this.props.getMessagesWithUser(userId);
             this.props.setCurrentDialog(userId);
+            this.props.putUpDialogToTop(userId)
         } //else {this.props.setCurrentDialog(null);}
     }
 

@@ -124,7 +124,6 @@ export const getProfileInfo = (userId) => (dispatch) => {
     dispatch(setProfileInfoRequestStatus(getProfileInfoStatuses.INPROGRESS));
     serverAPI.profileInfoRequest(userId).then(res => {
         if (res.status === 200) {
-            debugger
             dispatch(setProfileInfo(res.data));
             dispatch(setProfileInfoRequestStatus(getProfileInfoStatuses.SUCCESS));
         }

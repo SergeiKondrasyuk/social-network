@@ -16,6 +16,7 @@ const HeaderContainer = (props) => {
                    setIsAuth={props.setIsAuth}
                    setLoginStatusMessage={props.setLoginStatusMessage}
                    isAuth={props.isAuth}
+                   newMessagesCount={props.newMessagesCount}
                    me={props.me}
                    logOutAttempt={props.logOutAttempt}/>
 };
@@ -23,7 +24,8 @@ const HeaderContainer = (props) => {
 const mapStateToProps = (state) => {
     return {
         state: state,
-        isAuth: state.auth.isAuth
+        isAuth: state.auth.isAuth,
+        newMessagesCount: state.dialogPage.newMessagesCount
     }
 };
 

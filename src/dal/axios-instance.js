@@ -99,7 +99,7 @@ export const serverAPI = {
         return axiosInstance.get(`dialogs/${userId}/messages/new?newerThen=${date}`)
     },
 
-    getListOfNewMessagesRequest(){
+    getCountOfNewMessagesRequest(){
         return axiosInstance.get(`dialogs/messages/new/count`)
     },
 };
