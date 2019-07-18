@@ -6,7 +6,7 @@ import {sendMessageToUser} from '../../../redux/dialogPageReducer';
 const DialogList = (props) => {
 
     let usersList = props.dialogs.map(d =>
-        <DialogUser dialog={d.userName} id={d.id} avatar={d.photos.small}/>
+        <DialogUser dialog={d.userName} id={d.id} avatar={d.photos.small} newMessagesCount={d.newMessagesCount}/>
     );
     return <div className={s.dialogsList}>
 

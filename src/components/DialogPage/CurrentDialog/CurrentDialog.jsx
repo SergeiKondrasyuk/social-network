@@ -21,6 +21,7 @@ const CurrentDialog = (props) => {
         {!!props.selectedDialogId ?
             <>
                 {currentDialogMessages}
+                {props.dialogPage.messages.length < props.currentDialogMessagesCount && <button>Show previous</button>}
                 <AddMessageFormRedux onSubmit={sendMessage} props={props}/>
             </>
             : <div>Please select dialog</div>}

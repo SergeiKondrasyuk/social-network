@@ -21,6 +21,7 @@ class CurrentDialogContainer extends Component {
                               selectedDialogId={this.props.selectedDialogId}
                               currentUserAvatar={this.props.currentUserAvatar}
                               putUpDialogToTop={this.props.putUpDialogToTop}
+                              currentDialogMessagesCount={this.props.currentDialogMessagesCount}
                               userId={this.props.match.params.userId}
         />
     }
@@ -31,6 +32,7 @@ const mapStateToProps = (state) => {
         dialogPage: state.dialogPage,
         selectedDialogId: state.dialogPage.selectedDialogId,
         currentUserAvatar: state.dialogPage.currentUserAvatar,
+        currentDialogMessagesCount: state.dialogPage.currentDialogMessagesCount,
         auth: getAuthReducer(state),
     }
 };

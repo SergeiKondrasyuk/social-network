@@ -1,7 +1,7 @@
 .dialogPage {
     display: grid;
     grid-template-areas: "dialogsList currentDialog";
-    grid-template-columns: 150px 1fr;
+    grid-template-columns: 180px 1fr;
 }
 
 .dialogsList {

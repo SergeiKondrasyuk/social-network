@@ -9,6 +9,7 @@ import usersReducer from "./usersReducer";
 import loginReducer from "./loginReducer";
 import thunk from "redux-thunk";
 import authReducer from "./authReducer";
+import {logger} from 'redux-logger';
 
 let reducers = combineReducers({
     profilePage: profilePageReducer,
@@ -21,6 +22,6 @@ let reducers = combineReducers({
     form: formReducer
 });
 
-let store = createStore(reducers, applyMiddleware(thunk));
+let store = createStore(reducers, applyMiddleware(logger, thunk));
 
 export default store;

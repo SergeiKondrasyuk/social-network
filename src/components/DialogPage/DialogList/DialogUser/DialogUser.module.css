@@ -9,6 +9,6 @@
     font-size: 20px;
 }
 
-.avatar{
+.avatar, .newMessageIcon{
     height: 30px;
 }

@@ -1,11 +1,13 @@
-import {serverAPI} from "../dal/axios-instance";
+import {dialogsAPI} from "../dal/axios-instance";
 
 const SEND_MESSAGE = 'SEND_MESSAGE';
 const SET_ALL_DIALOGS = 'SET_ALL_DIALOGS';
 const SET_MESSAGES = 'SET_MESSAGES';
 const SET_CURRENT_DIALOG = 'SET_CURRENT_DIALOG';
+const SET_NEED_REFRESH = 'SET_NEED_REFRESH';
 const PUT_UP_DIALOG = 'PUT_UP_DIALOG';
 const SET_NEW_MESSAGES_COUNT = 'SET_NEW_MESSAGES_COUNT';
+const SET_HAS_NEW_MESSAGES = 'SET_HAS_NEW_MESSAGES';
 
 const update = (state, action) => ({...state, ...action.payload});
 
@@ -14,7 +16,9 @@ let initialState = {
     messages: [],
     selectedDialogId: null,
     currentUserAvatar: null,
-    newMessagesCount: 2,
+    newMessagesCount: 0,
+    needRefresh: false,
+    currentDialogMessagesCount: 0,
 };
 
 const dialogPageReducer = (state = initialState, action) => {
@@ -30,12 +34,29 @@ const dialogPageReducer = (state = initialState, action) => {
             }
         }
         case SET_MESSAGES: {
-            return {...state, messages: action.messages, currentUserAvatar: action.avatar}
+            return {
+                ...state,
+                messages: action.messages,
+                currentDialogMessagesCount: action.messagesTotalCount,
+                currentUserAvatar: action.avatar
+            }
+        }
+        case SET_HAS_NEW_MESSAGES: {
+            return {
+                ...state, dialogs: state.dialogs.map(d => {
+                    if (d.id == action.userId) {
+                        return {...d, hasNewMessages: action.hasNewMessages}
+                    } else return d
+                })
+            }
         }
         case SET_ALL_DIALOGS:
         case SET_CURRENT_DIALOG:
-        case SET_NEW_MESSAGES_COUNT:
             return update(state, action)
+        case SET_NEW_MESSAGES_COUNT:
+            return {
+                ...update(state, action)
+            }
         default:
             return state;
     }
@@ -43,40 +64,60 @@ const dialogPageReducer = (state = initialState, action) => {
 
 export const sendMessage = (message) => ({type: SEND_MESSAGE, message});
 export const setAllDialogs = (dialogs) => ({type: SET_ALL_DIALOGS, payload: {dialogs}});
-export const setMessages = (messages, avatar) => ({type: SET_MESSAGES, messages, avatar});
+export const setMessages = (messages, messagesTotalCount, avatar) => ({
+    type: SET_MESSAGES,
+    messages,
+    messagesTotalCount,
+    avatar
+});
 export const setCurrentDialog = (selectedDialogId) => ({type: SET_CURRENT_DIALOG, payload: {selectedDialogId}});
 export const putUpDialog = (dialogId) => ({type: PUT_UP_DIALOG, dialogId});
-export const setCountOfNewMessages = (newMessagesCount) => ({type: SET_NEW_MESSAGES_COUNT, payload: {newMessagesCount}});
+export const setCountOfNewMessages = (newMessagesCount) => ({
+    type: SET_NEW_MESSAGES_COUNT,
+    payload: {newMessagesCount}
+});
+export const setHasNewMessages = (userId, hasNewMessages) => ({type: SET_HAS_NEW_MESSAGES, userId, hasNewMessages});
+export const setNeedRefresh = (needRefresh) => ({type: SET_NEED_REFRESH, payload: {needRefresh}});
 
 export const getAllDialogs = () => (dispatch) => {
-    serverAPI.getAllDialogsRequest().then(res => {
+    dialogsAPI.getAllDialogsRequest().then(res => {
         if (res.status === 200) {
             dispatch(setAllDialogs(res.data));
         }
     })
 };
 
-export const getMessagesWithUser = (userId) => (dispatch, getState) => {
+export const getMessagesWithUser = (userId) => async (dispatch, getState) => {
     let state = getState().dialogPage;
-    serverAPI.getMessagesWithUserRequest(userId).then(res => {
-        if (res.status === 200) {
-            dispatch(setMessages(res.data.items, state.dialogs[0].photos.small));
-        }
-    })
+    let res = await dialogsAPI.getMessagesWithUserRequest(userId)
+    if (res.messages.some(m => !m.viewed)) {
+        dispatch(setNeedRefresh(true))
+    }
+    dispatch(setMessages(res.messages, res.messagesTotalCount, state.dialogs[0].photos.small)); //!!!!!!!!!!
+    dispatch(setHasNewMessages(userId, false));
 };
 
 export const sendMessageToUser = (userId, message) => async (dispatch) => {
-    let response = await serverAPI.sendMessageToUserRequest(userId, message);
+    let response = await dialogsAPI.sendMessageToUserRequest(userId, message);
     dispatch(sendMessage(response.data.data.message));
 };
 
-export const getCountOfNewMessages = () => async (dispatch) => {
-    let count = await serverAPI.getCountOfNewMessagesRequest();
-    dispatch(setCountOfNewMessages(count));
+export const getCountOfNewMessages = () => async (dispatch, getState) => {
+    let state = getState();
+    let count = await dialogsAPI.getCountOfNewMessagesRequest();
+    if (state.dialogPage.newMessagesCount !== count.data || state.dialogPage.needRefresh) {
+        debugger
+        dispatch(setNeedRefresh(false));
+        dispatch(setCountOfNewMessages(count.data));
+        dispatch(getAllDialogs());
+        if (state.dialogPage.selectedDialogId != null) {
+            dispatch(getMessagesWithUser(state.dialogPage.selectedDialogId))
+        }
+    }
 };
 
 export const putUpDialogToTop = (userId) => (dispatch, getState) => {
-    serverAPI.putUpDialogToTopRequest(userId).then(res => {
+    dialogsAPI.putUpDialogToTopRequest(userId).then(res => {
         if (res.data.resultCode === 0) {
             let dialog = getState().dialogPage.dialogs.find(d => d.id == userId);
             if (dialog) {
