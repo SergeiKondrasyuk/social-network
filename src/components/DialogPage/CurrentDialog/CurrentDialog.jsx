@@ -1,15 +1,16 @@
 import React from 'react'
 import s from './CurrentDialog.module.css'
-import Message from "./Message/Message";
 import Field from 'redux-form/es/Field';
 import {reduxForm} from 'redux-form';
+import MessageContainer from './Message/MessageContainer';
 
 const CurrentDialog = (props) => {
 
 
     let currentDialogMessages = props.dialogPage.messages.map(p =>
-        <Message message={p.body} user={p.senderName} avatar={props.auth.userData.id === p.senderId ? null: props.currentUserAvatar} /*addedTime={p.addedTime}
-                 type={p.type}*//>
+        <MessageContainer message={p.body} user={p.senderName} id={p.id}
+                 avatar={props.auth.userData.id !== p.senderId && props.currentUserAvatar}
+                 viewed={p.viewed} addedTime={p.addedAt}/>
     );
 
     let sendMessage = (values) => {

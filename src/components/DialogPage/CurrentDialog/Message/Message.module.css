@@ -2,24 +2,36 @@
     margin: 5px ;
     display: grid;
     grid-template-areas: "dialogAva messageBlock" "userName messageBlock";
-    grid-template-rows: 30px 1fr;
-    grid-template-columns: 30px 1fr;
+    grid-template-rows: 50px 20px;
+    grid-template-columns: 50px 100%;
     grid-gap: 0px;
 
 }
 
 .messageBlock{
     grid-area: messageBlock;
+    display: grid;
+    grid-template-areas: "angle messageText viewed deleteButton" "angle messageText null spamButton" "angle messageText addedTime nulll";
+    grid-template-rows: 10px auto 10px;
+    grid-template-columns: 5px 85% 10px 50px;
+    grid-gap: 0px;
 }
+
+.messageBlock:hover button{
+    opacity: 1;
+}
+
 .messageText {
-    width: 400px;
-    margin: auto 0px auto 50px;
+    grid-area: messageText;
+    width: 85%;
+    margin: auto 0px auto 30px;
     border: 2px solid darkseagreen;
     padding: 20px;
     border-radius: 15px;
 }
 
 .userName {
+    grid-area: userName;
     margin: 0;
     text-align: center;
 }
@@ -28,13 +40,14 @@
     display: block;
     width: 11px;
     height: 11px;
-    position: absolute;
+    position: relative;
     background: #fff;
     border-bottom: darkseagreen 2px solid;
     border-left: darkseagreen 2px solid;
     transform: rotate(45deg);
-    margin-top: 20px;
-    margin-left: 44px;
+    margin-top: 25px;
+    margin-left: 30px;
+    border-radius: 2px;
 }
 
 .dialogAva {
@@ -43,20 +56,47 @@
 }
 
 .addedTime {
+    grid-area: addedTime;
     font-size: 10px;
     color: darkseagreen;
-    float: right;
-    margin-right: -10px;
-}
-/*
-.message:nth-child(even){
-    align-self: flex-end;
-
+    width: 80px;
+    position: relative;
+    left: -115px;
+    bottom: 10px;
 }
 
-.message img:nth-child(even){
-    height: 80px;
-    border-radius: 25px;
+.viewed {
+    grid-area: viewed;
+    font-size: 20px;
+    color: darkseagreen;
+    position: relative;
+    left: -52px;
+    top: -3px;
 }
-*/
+
+.messageBlock button {
+    border: none;
+    border-radius: 10px;
+    outline: none;
+    height: 20px;
+    position: relative;
+    height: 20px;
+    opacity: 0;
+    transition: 0.3s;
+}
+
+.spamButton{
+    grid-area: spamButton;
+    background-color: orange;
+    height: 20px;
+    left: -35px;
+    top: 20px;
+}
+
+.deleteButton{
+    grid-area: deleteButton;
+    background-color: red;
+    top: 5px;
+    left: -35px;
+}
 

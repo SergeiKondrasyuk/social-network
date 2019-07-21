@@ -92,15 +92,15 @@ export const dialogsAPI = {
     },
 
     deleteMessageRequest(messageId) {
-        return axiosInstance.delete(`dialogs/messages/${messageId}`)
+        return axiosInstance.delete(`dialogs/messages/${messageId}`).then(res => res.data)
     },
 
     restoreMessageRequest(messageId) {
         return axiosInstance.put(`dialogs/messages/${messageId}/restore`)
     },
 
-    getOnlyNewMessagesRequest(userId, date) {
-        return axiosInstance.get(`dialogs/${userId}/messages/new?newerThen=${date}`)
+    getMessagesNewerThenRequest(userId, date) {
+        return axiosInstance.get(`dialogs/${userId}/messages/new?newerThen=${date}`).then(res => res.data);
     },
 
     getCountOfNewMessagesRequest() {
