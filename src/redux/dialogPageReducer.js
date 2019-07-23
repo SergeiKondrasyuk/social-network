@@ -1,4 +1,4 @@
-import {dialogsAPI} from "../dal/axios-instance";
+import {dialogsAPI, serverAPI} from "../dal/axios-instance";
 
 const SEND_MESSAGE = 'SEND_MESSAGE';
 const DELETE_MESSAGE = 'DELETE_MESSAGE';
@@ -17,6 +17,7 @@ let initialState = {
     messages: [],
     selectedDialogId: null,
     currentUserAvatar: null,
+    myAvatar: null,
     newMessagesCount: 0,
     needRefresh: false,
     currentDialogMessagesCount: 0,
@@ -39,7 +40,8 @@ const dialogPageReducer = (state = initialState, action) => {
                 ...state,
                 messages: action.messages,
                 currentDialogMessagesCount: action.messagesTotalCount,
-                currentUserAvatar: action.avatar
+                currentUserAvatar: action.avatar,
+                myAvatar: action.myAvatar,
             }
         }
         case DELETE_MESSAGE: {
@@ -75,11 +77,11 @@ const dialogPageReducer = (state = initialState, action) => {
 export const sendMessage = (message) => ({type: SEND_MESSAGE, message});
 export const deleteMessage = (messageId) => ({type: DELETE_MESSAGE, messageId});
 export const setAllDialogs = (dialogs) => ({type: SET_ALL_DIALOGS, payload: {dialogs}});
-export const setMessages = (messages, messagesTotalCount, avatar) => ({
+export const setMessages = (messages, messagesTotalCount, avatar, myAvatar) => ({
     type: SET_MESSAGES,
     messages,
     messagesTotalCount,
-    avatar
+    avatar, myAvatar,
 });
 export const setCurrentDialog = (selectedDialogId) => ({type: SET_CURRENT_DIALOG, payload: {selectedDialogId}});
 export const putUpDialog = (dialogId) => ({type: PUT_UP_DIALOG, dialogId});
@@ -99,12 +101,14 @@ export const getAllDialogs = () => (dispatch) => {
 };
 
 export const getMessagesWithUser = (userId) => async (dispatch, getState) => {
-    let state = getState().dialogPage;
-    let res = await dialogsAPI.getMessagesWithUserRequest(userId)
-    if (res.messages.some(m => !m.viewed)) {
+    let state = getState();
+    let messagesRes = await dialogsAPI.getMessagesWithUserRequest(userId);
+    let myAvatar = (await serverAPI.profileInfoRequest(state.auth.userData.id)).data.photos.small;
+    if (messagesRes.messages.some(m => !m.viewed)) {
         dispatch(setNeedRefresh(true))
     }
-    dispatch(setMessages(res.messages, res.messagesTotalCount, state.dialogs[0].photos.small)); //!!!!!!!!!!
+    let avatar = state.dialogPage.dialogs.find(d => d.id == userId).photos.small;
+    dispatch(setMessages(messagesRes.messages, messagesRes.messagesTotalCount, avatar, myAvatar));
     dispatch(setHasNewMessages(userId, false));
 };
 

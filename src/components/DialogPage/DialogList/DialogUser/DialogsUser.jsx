@@ -10,7 +10,6 @@ const DialogUser = (props) => {
                 return (<span style={{fontSize: '10px'}} className={s.newMessageCount}>99+</span>)
             }
             case (props.newMessagesCount > 9) : {
-                debugger
                 return (<span style={{fontSize: '15px'}} className={s.newMessageCount}>{props.newMessagesCount}</span>)
             }
             case (props.newMessagesCount > 0) : {

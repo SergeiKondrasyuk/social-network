@@ -13,6 +13,9 @@ const MessageContainer = (props) => {
         viewed={props.viewed}
         addedTime={props.addedTime}
         id={props.id}
+        senderId={props.senderId}
+        authId={props.authId}
+        myAvatar={props.myAvatar}
         deleteMessageWithUser={props.deleteMessageWithUser}
     />
 
@@ -20,7 +23,8 @@ const MessageContainer = (props) => {
 
 const mapStateToProps = (state) => {
     return {
-        state: state
+        state: state,
+        authId: state.auth.userData.id,
     }
 };
 

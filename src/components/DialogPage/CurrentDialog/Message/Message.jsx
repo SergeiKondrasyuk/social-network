@@ -3,9 +3,11 @@ import s from './Message.module.css'
 
 
 const Message = (props) => {
-    debugger
+
     return <div style={props.type === 'incoming' ? {alignSelf: 'flex-end'} : {}} className={s.message}>
-        <img alt='User avatar' className={s.dialogAva} src={props.avatar}/>
+        <img alt='User avatar' className={s.dialogAva}
+             src={props.avatar}
+        />
         <p className={s.userName}>{props.user}</p>
         <div className={s.messageBlock}>
             <div className={s.angle}></div>
@@ -17,7 +19,7 @@ const Message = (props) => {
                 props.deleteMessageWithUser(props.id)
             }}>Delete
             </button>
-            <button className={s.spamButton}>Spam</button>
+            {props.senderId !== props.authId && <button className={s.spamButton}>Spam</button>}
         </div>
 
     </div>

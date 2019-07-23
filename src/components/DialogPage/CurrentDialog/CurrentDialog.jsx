@@ -9,8 +9,8 @@ const CurrentDialog = (props) => {
 
     let currentDialogMessages = props.dialogPage.messages.map(p =>
         <MessageContainer message={p.body} user={p.senderName} id={p.id}
-                 avatar={props.auth.userData.id !== p.senderId && props.currentUserAvatar}
-                 viewed={p.viewed} addedTime={p.addedAt}/>
+                 avatar={props.auth.userData.id !== p.senderId ? props.currentUserAvatar : props.myAvatar}
+                 viewed={p.viewed} addedTime={p.addedAt} senderId={p.senderId}/>
     );
 
     let sendMessage = (values) => {
