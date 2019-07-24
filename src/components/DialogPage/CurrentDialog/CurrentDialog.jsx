@@ -3,6 +3,8 @@ import s from './CurrentDialog.module.css'
 import Field from 'redux-form/es/Field';
 import {reduxForm} from 'redux-form';
 import MessageContainer from './Message/MessageContainer';
+import {Textarea} from '../../common/FormsControl';
+import {requiredFieldValidator} from '../../../utils/validators';
 
 const CurrentDialog = (props) => {
 
@@ -33,8 +35,8 @@ const AddMessageForm = (props) => {
     return (
         <form onSubmit={props.handleSubmit}>
             <div>
-                <Field component='textarea' name='newMessageTextArea' placeholder='Enter you message...'
-                       className={s.newMessageTextArea}
+                <Field component={Textarea} name='newMessageTextArea' placeholder='Enter you message...'
+                       className={s.newMessageTextArea}  validate={[requiredFieldValidator]}
                 />
             </div>
             <div className={s.sendButton}>
