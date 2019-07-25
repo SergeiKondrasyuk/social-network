@@ -2,7 +2,7 @@
   "name": "firstproject",
   "version": "0.1.0",
   "private": true,
-  "homepage": "hhttps://bendercdf.github.io/firstproject/",
+  "homepage": "https://bendercdf.github.io/firstproject/",
   "dependencies": {
     "@babel/core": "7.2.2",
     "@svgr/webpack": "4.1.0",
