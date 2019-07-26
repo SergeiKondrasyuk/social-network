@@ -29,7 +29,7 @@ const Login = (props) => {
             <span>Remember me: </span> <Field component={Input} type='checkbox' name='rememberMe'/>
         </div>
 
-        {props.login.loginResult === 10 &&
+        {props.login.loginStatus === 'CAPTCHA_REQUIRED' &&
         <div>
             <img src={props.login.captchaUrl} alt='captcha'/>
             <div><span>Enter captcha: </span><Field component={Input} name='captcha'/></div>

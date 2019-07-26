@@ -3,25 +3,20 @@ import {serverAPI} from '../dal/axios-instance';
 
 const SET_CAPTCHA_URL = 'SET_CAPTCHA_URL';
 const SET_LOGIN_STATUS = 'SET_LOGIN_STATUS';
-const SET_LOGIN_RESULT = 'SET_LOGIN_RESULT';
 const SET_LOGIN_STATUS_MESSAGE = 'SET_LOGIN_STATUS_MESSAGE';
 
 export const loginStatuses = {
     NOT_INITIALIZED: 'NOT_INITIALIZED',
     ERROR: 'ERROR',
+    CAPTCHA_REQUIRED: 'CAPTCHA_REQUIRED',
     IN_PROGRESS: 'IN_PROGRESS',
     SUCCESS: 'SUCCESS'
 };
 
 let initialState = {
     loginStatus: loginStatuses.NOT_INITIALIZED,
-    email: '',
-    password: '',
-    rememberMe: false,
-    captcha: '',
     captchaUrl: '',
     loginStatusMessage: '',
-    loginResult: null,
 };
 
 const loginReducer = (state = initialState, action) => {
@@ -34,11 +29,6 @@ const loginReducer = (state = initialState, action) => {
         case SET_LOGIN_STATUS : {
             return {
                 ...state, loginStatus: action.loginStatus
-            }
-        }
-        case SET_LOGIN_RESULT : {
-            return {
-                ...state, loginResult: action.loginResult
             }
         }
         case SET_LOGIN_STATUS_MESSAGE : {
@@ -54,16 +44,13 @@ const loginReducer = (state = initialState, action) => {
 
 export const setCaptchaUrl = (captchaUrl) => ({type: SET_CAPTCHA_URL, captchaUrl});
 export const setLoginStatus = (loginStatus) => ({type: SET_LOGIN_STATUS, loginStatus});
-export const setLoginResult = (loginResult) => ({type: SET_LOGIN_RESULT, loginResult});
 export const setLoginStatusMessage = (loginStatusMessage) => ({type: SET_LOGIN_STATUS_MESSAGE, loginStatusMessage});
 
 
-export const loginAttempt = (values) => (dispatch, getState) => {
-    let state = getState().login;
+export const loginAttempt = (values) => (dispatch) => {
     dispatch(setLoginStatus(loginStatuses.IN_PROGRESS));
     serverAPI.loginRequest(values.email, values.password, values.rememberMe, values.captcha)
         .then(res => {
-            dispatch(setLoginResult(res.data.resultCode));
             switch (res.data.resultCode) {
                 case 0:
                     dispatch(setLoginStatusMessage('Login success'));
@@ -75,7 +62,7 @@ export const loginAttempt = (values) => (dispatch, getState) => {
                     dispatch(setLoginStatusMessage(res.data.messages[0]));
                     break;
                 case 10:
-                    dispatch(setLoginStatus(loginStatuses.ERROR));
+                    dispatch(setLoginStatus(loginStatuses.CAPTCHA_REQUIRED));
                     dispatch(setLoginStatusMessage(res.data.messages[0]));
                     serverAPI.captchaRequest().then((res) => {
                         dispatch(setCaptchaUrl(res.data.url));
