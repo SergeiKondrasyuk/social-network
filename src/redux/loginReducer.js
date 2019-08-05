@@ -1,5 +1,6 @@
 import {me, setIsAuth} from "./authReducer";
 import {serverAPI} from '../dal/axios-instance';
+import {stopSubmit} from 'redux-form'
 
 const SET_CAPTCHA_URL = 'SET_CAPTCHA_URL';
 const SET_LOGIN_STATUS = 'SET_LOGIN_STATUS';
@@ -16,7 +17,6 @@ export const loginStatuses = {
 let initialState = {
     loginStatus: loginStatuses.NOT_INITIALIZED,
     captchaUrl: '',
-    loginStatusMessage: '',
 };
 
 const loginReducer = (state = initialState, action) => {
@@ -31,11 +31,6 @@ const loginReducer = (state = initialState, action) => {
                 ...state, loginStatus: action.loginStatus
             }
         }
-        case SET_LOGIN_STATUS_MESSAGE : {
-            return {
-                ...state, loginStatusMessage: action.loginStatusMessage
-            }
-        }
         default: {
             return state;
         }
@@ -44,7 +39,6 @@ const loginReducer = (state = initialState, action) => {
 
 export const setCaptchaUrl = (captchaUrl) => ({type: SET_CAPTCHA_URL, captchaUrl});
 export const setLoginStatus = (loginStatus) => ({type: SET_LOGIN_STATUS, loginStatus});
-export const setLoginStatusMessage = (loginStatusMessage) => ({type: SET_LOGIN_STATUS_MESSAGE, loginStatusMessage});
 
 
 export const loginAttempt = (values) => (dispatch) => {
@@ -53,17 +47,18 @@ export const loginAttempt = (values) => (dispatch) => {
         .then(res => {
             switch (res.data.resultCode) {
                 case 0:
-                    dispatch(setLoginStatusMessage('Login success'));
                     dispatch(setLoginStatus(loginStatuses.SUCCESS));
                     dispatch(me());
                     break;
                 case 1:
+                    let stopSubmitLoginPswrd = stopSubmit('login-form', {_error: res.data.messages[0]});
+                    dispatch(stopSubmitLoginPswrd);
                     dispatch(setLoginStatus(loginStatuses.ERROR));
-                    dispatch(setLoginStatusMessage(res.data.messages[0]));
                     break;
                 case 10:
+                    let stopSubmitCaptcha = stopSubmit('login-form', {_error: res.data.messages[0]});
+                    dispatch(stopSubmitCaptcha);
                     dispatch(setLoginStatus(loginStatuses.CAPTCHA_REQUIRED));
-                    dispatch(setLoginStatusMessage(res.data.messages[0]));
                     serverAPI.captchaRequest().then((res) => {
                         dispatch(setCaptchaUrl(res.data.url));
                     });
@@ -80,7 +75,6 @@ export const logOutAttempt = () => (dispatch) => {
             if (res.data.resultCode === 0) {
                 dispatch(setIsAuth(false, {id: null, login: null, email: null,}));
                 dispatch(setLoginStatus(loginStatuses.NOT_INITIALIZED));
-                dispatch(setLoginStatusMessage('Logout success'));
             }
         });
 };

@@ -18,7 +18,6 @@ const HeaderContainer = (props) => {
     return <Header state={props.state}
                    setLoginStatus={props.setLoginStatus}
                    setIsAuth={props.setIsAuth}
-                   setLoginStatusMessage={props.setLoginStatusMessage}
                    isAuth={props.isAuth}
                    newMessagesCount={props.newMessagesCount}
                    me={props.me}
@@ -36,7 +35,7 @@ const mapStateToProps = (state) => {
 
 
 export default connect(mapStateToProps, {
-    me, setLoginStatus, setLoginStatusMessage, setIsAuth, logOutAttempt, getCountOfNewMessages
+    me, setLoginStatus, setIsAuth, logOutAttempt, getCountOfNewMessages
 })(HeaderContainer);
 
 

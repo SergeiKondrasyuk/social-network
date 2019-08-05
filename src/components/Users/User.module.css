@@ -46,8 +46,10 @@
 }
 
 .pagination {
-    width: 200px;
-    margin: auto;
+    width: auto;
+    position: absolute;
+    left: 50%;
+    transform: translate(-40%);
 }
 
 .pagination span{

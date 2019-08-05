@@ -3,3 +3,8 @@
 {
     border: solid 2px red
 }
+
+.formSummaryError {
+    padding: 5px 0;
+    color: red;
+}

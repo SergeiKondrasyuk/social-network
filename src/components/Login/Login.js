@@ -4,6 +4,8 @@ import {loginStatuses} from "../../redux/loginReducer";
 import {Field, reduxForm} from 'redux-form';
 import {maxLengthValidator, minLengthValidator, requiredFieldValidator} from '../../utils/validators';
 import {Input} from '../common/FormsControl';
+import s from './../common/FormsControls.module.css'
+
 
 let maxLength254 = maxLengthValidator(254);
 let minLength3 = minLengthValidator(3);
@@ -34,11 +36,11 @@ const Login = (props) => {
             <img src={props.login.captchaUrl} alt='captcha'/>
             <div><span>Enter captcha: </span><Field component={Input} name='captcha'/></div>
         </div>}
+        {props.error && <div className={s.formSummaryError}>{props.error}</div>}
         <div>
             <button type='submit' disabled={props.login.loginStatus === loginStatuses.IN_PROGRESS}>Login</button>
         </div>
 
-        <div>{props.login.loginStatusMessage}</div>
     </form>)
 };
 let LoginReduxForm = reduxForm({
