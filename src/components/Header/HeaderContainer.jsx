@@ -9,7 +9,6 @@ import {getCountOfNewMessages} from '../../redux/dialogPageReducer';
 const HeaderContainer = (props) => {
 
     useEffect(() => {
-        props.me();
         setInterval(() => {
             props.getCountOfNewMessages();
         }, 8000)
@@ -35,7 +34,7 @@ const mapStateToProps = (state) => {
 
 
 export default connect(mapStateToProps, {
-    me, setLoginStatus, setIsAuth, logOutAttempt, getCountOfNewMessages
+    setLoginStatus, setIsAuth, logOutAttempt, getCountOfNewMessages
 })(HeaderContainer);
 
 

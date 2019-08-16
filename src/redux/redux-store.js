@@ -10,6 +10,7 @@ import loginReducer from "./loginReducer";
 import thunk from "redux-thunk";
 import authReducer from "./authReducer";
 import {logger} from 'redux-logger';
+import appReducer from './appReducer';
 
 let reducers = combineReducers({
     profilePage: profilePageReducer,
@@ -19,6 +20,7 @@ let reducers = combineReducers({
     users: usersReducer,
     login: loginReducer,
     auth: authReducer,
+    app: appReducer,
     form: formReducer
 });
 

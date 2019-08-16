@@ -30,7 +30,7 @@ const authReducer = (state = initialState, action) => {
 };
 
 export const me = () => (dispatch) => {
-    serverAPI.meRequest().then(res => {
+    return serverAPI.meRequest().then(res => {
         if (res.data.resultCode === 0) {
             let {id, login, email} = res.data.data;
             let userData = {id, login, email};

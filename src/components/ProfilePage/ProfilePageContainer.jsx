@@ -13,14 +13,31 @@ import {RedirectToLogin} from "../../hocs/redirectToLogin";
 
 class ProfilePageContainer extends Component {
 
+    constructor(props){
+        super(props);
+        this.state = {
+            userId: null
+        }
+    }
+
     componentDidMount() {
-        this.props.me();
         let userId = this.props.match.params.userId;
         if (!userId) {
             userId = this.props.auth.userData.id;
         }
         this.props.getProfileInfo(userId);
         this.props.getStatus(userId);
+    }
+
+    componentDidUpdate(prevProps) {/*
+        debugger
+        let userId = this.props.match.params.userId;
+        if (!userId) {
+            userId = this.props.auth.userData.id;
+        }
+        if (userId !== prevProps.state.userId) {
+        this.props.getProfileInfo(userId);
+        this.props.getStatus(userId);}*/
     }
 
     render() {

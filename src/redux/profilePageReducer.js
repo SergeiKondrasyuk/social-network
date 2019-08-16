@@ -54,10 +54,7 @@ const profilePageReducer = (state = initialState, action) => {
             return cloneState;
         }
         case SET_PROFILE_INFO_REQUEST_STATUS: {
-            return {
-                ...state,
-                profileInfoRequestStatus: action.getUsersStatus,
-            }
+            return {...state, profileInfoRequestStatus: action.getUsersStatus,}
         }
         case ON_ABOUT_ME_CHANGE: {
             let cloneState = {...state};
