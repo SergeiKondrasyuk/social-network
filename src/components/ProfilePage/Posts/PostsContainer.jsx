@@ -7,7 +7,6 @@ import {getAuthReducer, getProfilePageReducer} from '../../../redux/selectors';
 const PostsConnected = (props) => {
 
     if (props.profileInfo.userId!=props.auth.userData.id){
-        debugger
         return null
     }
 

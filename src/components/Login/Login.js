@@ -5,10 +5,12 @@ import {Field, reduxForm} from 'redux-form';
 import {maxLengthValidator, minLengthValidator, requiredFieldValidator} from '../../utils/validators';
 import {Input} from '../common/FormsControl';
 import s from './../common/FormsControls.module.css'
-
+import style from './Login.module.css'
+import Button from '@material-ui/core/Button';
 
 let maxLength254 = maxLengthValidator(254);
 let minLength3 = minLengthValidator(3);
+
 
 const Login = (props) => {
 
@@ -16,30 +18,37 @@ const Login = (props) => {
         return <Redirect to={'/profile/'}/>
     }
 
-    return (<form onSubmit={props.handleSubmit}>
-        <div>
-            <span>Email: </span>
-            <Field component={Input} type='email' id='email' name='email' placeholder='Your email'
-                   validate={[requiredFieldValidator, maxLength254, minLength3]}/>
-        </div>
-        <div>
-            <span>Password: </span>
-            <Field component={Input} type='password' name='password' placeholder='Your password'
-                   validate={[requiredFieldValidator, maxLength254, minLength3]} warn={minLength3}/>
-        </div>
-        <div>
-            <span>Remember me: </span> <Field component={Input} type='checkbox' name='rememberMe'/>
-        </div>
+    return (<form className={style.loginForm} onSubmit={props.handleSubmit}>
+            <div className={style.fields}>
+                <div className={style.email}>
+                    <Field component={Input} type='email' id='email' name='email' label="Email address"
+                           autoComplete="email" autoFocus fieldType='input'
+                           validate={[requiredFieldValidator, maxLength254, minLength3]}/>
+                </div>
+                <div className={style.password}>
+                    <Field component={Input} type='password' id='password' name='password' label="Password"
+                           autoComplete="password" fieldType='input'
+                           validate={[requiredFieldValidator, maxLength254, minLength3]} warn={minLength3}/>
+                </div>
+                <div>
+                    <span>Remember me: </span> <Field component={Input} type='checkbox' fieldType='checkbox'
+                                                      name='rememberMe'/>
+                </div>
 
-        {props.login.loginStatus === 'CAPTCHA_REQUIRED' &&
-        <div>
-            <img src={props.login.captchaUrl} alt='captcha'/>
-            <div><span>Enter captcha: </span><Field component={Input} name='captcha'/></div>
-        </div>}
-        {props.error && <div className={s.formSummaryError}>{props.error}</div>}
-        <div>
-            <button type='submit' disabled={props.login.loginStatus === loginStatuses.IN_PROGRESS}>Login</button>
-        </div>
+                {props.login.loginStatus === 'CAPTCHA_REQUIRED' &&
+                <div><div>Please enter anti-bot symbols</div>
+                    <img src={props.login.captchaUrl} alt='captcha'/>
+                    <div><Field component={Input} name='captcha' type='captcha' id='captcha'
+                                label="captcha" autoComplete="captcha" fieldType='input'/>
+                    </div>
+                </div>}
+                {props.error && <div className={s.formSummaryError}>{props.error}</div>}
+                <div>
+                    <Button type="submit"
+                            disabled={props.login.loginStatus === loginStatuses.IN_PROGRESS}
+                            variant="contained" color="primary">Login</Button>
+                </div>
+            </div>
 
     </form>)
 };

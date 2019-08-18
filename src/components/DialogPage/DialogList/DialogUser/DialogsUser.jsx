@@ -1,33 +1,32 @@
 import React from 'react'
 import s from './DialogUser.module.css'
 import {NavLink} from "react-router-dom";
+import Badge from '@material-ui/core/Badge';
+import MailIcon from '@material-ui/icons/Mail';
+import Chip from '@material-ui/core/Chip';
+import Avatar from '@material-ui/core/Avatar';
 
 const DialogUser = (props) => {
 
-    const newMessageCountElement = (props) => {
-        switch (true) {
-            case (props.newMessagesCount > 99) : {
-                return (<span style={{fontSize: '10px'}} className={s.newMessageCount}>99+</span>)
-            }
-            case (props.newMessagesCount > 9) : {
-                return (<span style={{fontSize: '15px'}} className={s.newMessageCount}>{props.newMessagesCount}</span>)
-            }
-            case (props.newMessagesCount > 0) : {
-                return (<span style={{fontSize: '18px'}} className={s.newMessageCount}>{props.newMessagesCount}</span>)
-            }
-            default:
-                return null;
-        }
-    };
 
     return <div className={s.userName}>
-        <img className={s.avatar} src={props.avatar}/>
-        <NavLink to={'/dialogs/' + props.id} activeClassName={s.active}>{props.dialog}</NavLink>
+
+        <span className={s.userChip}>
+            <NavLink to={'/dialogs/' + props.id} activeClassName={s.active}>
+                <Chip
+                    avatar={
+                        <Avatar alt="user avatar" src={props.avatar} style={{marginTop: '15px'}}/>
+                    }
+                    label={props.dialog}
+                />
+            </NavLink>
+        </span>
+
 
         {!!props.newMessagesCount &&
-        <><img src='../../../img/icon-new-message.png' className={s.newMessageIcon}/>
-            {newMessageCountElement(props)}
-            </>
+        <Badge className={s.badge} badgeContent={props.newMessagesCount} color="primary">
+            <MailIcon/>
+        </Badge>
         }
     </div>
 }

@@ -45,7 +45,6 @@ const dialogPageReducer = (state = initialState, action) => {
             }
         }
         case DELETE_MESSAGE: {
-            debugger
             return {
                 ...state,
                 messages: state.messages.filter(m => {
@@ -64,7 +63,7 @@ const dialogPageReducer = (state = initialState, action) => {
         }
         case SET_ALL_DIALOGS:
         case SET_CURRENT_DIALOG:
-            return update(state, action)
+            return update(state, action);
         case SET_NEW_MESSAGES_COUNT:
             return {
                 ...update(state, action)
@@ -78,16 +77,12 @@ export const sendMessage = (message) => ({type: SEND_MESSAGE, message});
 export const deleteMessage = (messageId) => ({type: DELETE_MESSAGE, messageId});
 export const setAllDialogs = (dialogs) => ({type: SET_ALL_DIALOGS, payload: {dialogs}});
 export const setMessages = (messages, messagesTotalCount, avatar, myAvatar) => ({
-    type: SET_MESSAGES,
-    messages,
-    messagesTotalCount,
-    avatar, myAvatar,
+    type: SET_MESSAGES, messages, messagesTotalCount, avatar, myAvatar,
 });
 export const setCurrentDialog = (selectedDialogId) => ({type: SET_CURRENT_DIALOG, payload: {selectedDialogId}});
 export const putUpDialog = (dialogId) => ({type: PUT_UP_DIALOG, dialogId});
 export const setCountOfNewMessages = (newMessagesCount) => ({
-    type: SET_NEW_MESSAGES_COUNT,
-    payload: {newMessagesCount}
+    type: SET_NEW_MESSAGES_COUNT, payload: {newMessagesCount}
 });
 export const setHasNewMessages = (userId, hasNewMessages) => ({type: SET_HAS_NEW_MESSAGES, userId, hasNewMessages});
 export const setNeedRefresh = (needRefresh) => ({type: SET_NEED_REFRESH, payload: {needRefresh}});
@@ -114,7 +109,6 @@ export const getMessagesWithUser = (userId) => async (dispatch, getState) => {
 
 export const sendMessageToUser = (userId, message) => async (dispatch) => {
     let response = await dialogsAPI.sendMessageToUserRequest(userId, message);
-    debugger
     dispatch(sendMessage(response.data.data.message));
 };
 
@@ -148,7 +142,6 @@ export const putUpDialogToTop = (userId) => (dispatch, getState) => {
 export const deleteMessageWithUser = (messageId) => (dispatch) => {
     dialogsAPI.deleteMessageRequest(messageId).then(res => {
         if (res.resultCode === 0) {
-            debugger
             dispatch(deleteMessage(messageId));
         }
     });

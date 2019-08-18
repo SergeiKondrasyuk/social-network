@@ -106,7 +106,6 @@ const profilePageReducer = (state = initialState, action) => {
             return cloneState;
         }
         case ON_PHOTO_CHANGE: {
-            debugger
             let cloneState = {...state};
             cloneState.profileInfo.photo = action.photo;
             return cloneState;

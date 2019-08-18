@@ -11,8 +11,6 @@ const LoginContainer = (props) => {
     };
 
     return <LoginReduxForm onSubmit={bllSubmit}
-                           initialValues={{email: props.login.email, password: props.login.password,
-                               rememberMe: props.login.rememberMe, captcha: props.login.captcha }}
                            login={props.login}
                            auth={props.auth}
                            loginAttempt={props.loginAttempt}

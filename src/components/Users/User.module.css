@@ -4,11 +4,11 @@
 
 .user {
     display: grid;
-    margin: 0px auto 10px auto;
     grid-template-areas: 'a n' 'a s' 'a fu';
     grid-template-rows: 20px 20px 40px;
     grid-template-columns: 100px 300px;
-    grid-gap: 10px;
+    padding: 0 10px 20px 10px;
+    grid-gap: 5px;
 }
 
 .userPhoto {
@@ -17,6 +17,7 @@
 
 .followUnFollowButton {
     grid-area: fu;
+    width: 120px;
 }
 
 .itsYouMessage {
@@ -32,13 +33,16 @@
 }
 
 .users {
-    display: -webkit-flex;
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
     justify-content: flex-start;
     align-content: flex-start;
     align-items: flex-start;
+}
+
+.user {
+    width: 300px;
 }
 
 .selectedPage {
@@ -59,6 +63,11 @@
 }
 
 .preloader {
-    position: fixed;
-    margin: 20%;
+    position: absolute;
+    top: 30vh;
+    left: 50vw;
+}
+
+.followIcon {
+    margin-left: 5px;
 }

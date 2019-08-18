@@ -1,8 +1,8 @@
 import React, {useEffect} from 'react';
 import {connect} from 'react-redux';
 import Header from './Header';
-import {logOutAttempt, setLoginStatus, setLoginStatusMessage} from '../../redux/loginReducer';
-import {me, setIsAuth} from '../../redux/authReducer';
+import {logOutAttempt, setLoginStatus} from '../../redux/loginReducer';
+import {setIsAuth} from '../../redux/authReducer';
 import {getCountOfNewMessages} from '../../redux/dialogPageReducer';
 
 
