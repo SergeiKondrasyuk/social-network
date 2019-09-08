@@ -17,5 +17,5 @@ export const getProfilePageReducer = (state) => {
 };
 
 export const getUsersSelector = createSelector(getUsersReducer, (users) => {
-    return users.users;
+    return users.users.filter(u => true);
 });

@@ -29,7 +29,7 @@ const DialogUser = (props) => {
         </Badge>
         }
     </div>
-}
+};
 
 export default DialogUser;
 

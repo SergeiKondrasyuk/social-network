@@ -1,12 +1,12 @@
 import {serverAPI} from '../dal/axios-instance';
 
-const SET_USERS = 'SET_USERS';
-const SET_STATUS = 'SET_STATUS';
-const SET_CURRENT_PAGE = 'SET_CURRENT_PAGE';
-const TOGGLE_IS_FETCHING = 'TOGGLE_IS_FETCHING';
-const TOGGLE_IS_FOLLOWING_PROGRESS = 'TOGGLE_IS_FOLLOWING_PROGRESS';
-const FOLLOW = 'FOLLOW';
-const UN_FOLLOW = 'UN_FOLLOW';
+const SET_USERS = 'USER/SET_USERS';
+const SET_STATUS = 'USER/SET_STATUS';
+const SET_CURRENT_PAGE = 'USER/SET_CURRENT_PAGE';
+const TOGGLE_IS_FETCHING = 'USER/TOGGLE_IS_FETCHING';
+const TOGGLE_IS_FOLLOWING_PROGRESS = 'USER/TOGGLE_IS_FOLLOWING_PROGRESS';
+const FOLLOW = 'USER/FOLLOW';
+const UN_FOLLOW = 'USER/UN_FOLLOW';
 
 export const statuses = {
     NOT_INITIALIZED: 'NOT_INITIALIZED',
@@ -60,7 +60,7 @@ const usersReducer = (state = initialState, action) => {
                 followingInProgress: action.isFetchingValue
                     ? [...state.followingInProgress, action.userId]
                     : state.followingInProgress.filter(id => id != action.userId)
-            }
+            };
         default:
             return state;
     }
@@ -78,40 +78,37 @@ export const setFollowingInProgress = (isFetchingValue, userId) => ({
 export const followAC = (userId) => ({type: FOLLOW, userId});
 export const unFollowAC = (userId) => ({type: UN_FOLLOW, userId});
 
-export const getUsers = (pageNumber) => (dispatch, getState) => {
+export const getUsers = (pageNumber) => async (dispatch, getState) => {
     dispatch(setIsFetching(true));
     let state = getState().users;
-
     dispatch(setStatus(statuses.IN_PROGRESS));
-    serverAPI.getUsersRequest(pageNumber, state.usersCountOnPage)
-        .then((res) => {
-            dispatch(setStatus(statuses.SUCCESS));
-            dispatch(setUsers(res.data.items, res.data.totalCount));
-            dispatch(setIsFetching(false));
-        });
+    let response = await serverAPI.getUsersRequest(pageNumber, state.usersCountOnPage)
+    if (!response.error) {
+        dispatch(setStatus(statuses.SUCCESS));
+        dispatch(setUsers(response.data.items, response.data.totalCount));
+        dispatch(setIsFetching(false));
+    }
 };
 
-export const followUser = (userId) => (dispatch) => {
+const followUnFollowFlow = async (dispatch, userId, apiMethod, actionCreator) => {
     dispatch(setFollowingInProgress(true, userId));
-    serverAPI.followUser(userId)
-        .then((res) => {
-            if (res.data.resultCode === 0) {
-                dispatch(followAC(userId));
-                dispatch(setFollowingInProgress(false, userId));
-            }
-        });
+    let response = await apiMethod(userId);
+    if (response.data.resultCode === 0) {
+        dispatch(actionCreator(userId));
+        dispatch(setFollowingInProgress(false, userId));
+    }
 };
 
-export const unFollowUser = (userId) => (dispatch) => {
-    dispatch(setFollowingInProgress(true, userId));
-    serverAPI.unFollowUser(userId)
-        .then((res) => {
-            if (res.data.resultCode === 0) {
-                dispatch(unFollowAC(userId));
-                dispatch(setFollowingInProgress(false, userId));
-            }
-        });
+export const followUser = (userId) => {
+    return async (dispatch) => {
+        followUnFollowFlow(dispatch, userId, serverAPI.followUser.bind(userId), followAC);
+    }
 };
 
+export const unFollowUser = (userId) => {
+    return async (dispatch) => {
+        followUnFollowFlow(dispatch, userId, serverAPI.unFollowUser.bind(userId), unFollowAC);
+    }
+};
 
 export default usersReducer;

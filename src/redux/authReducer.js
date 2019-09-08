@@ -29,14 +29,13 @@ const authReducer = (state = initialState, action) => {
     }
 };
 
-export const me = () => (dispatch) => {
-    return serverAPI.meRequest().then(res => {
-        if (res.data.resultCode === 0) {
-            let {id, login, email} = res.data.data;
-            let userData = {id, login, email};
-            dispatch(setIsAuth(true, userData));
-        }
-    });
+export const me = () => async (dispatch) => {
+    let response = await serverAPI.meRequest();
+    if (response.data.resultCode === 0) {
+        let {id, login, email} = response.data.data;
+        let userData = {id, login, email};
+        dispatch(setIsAuth(true, userData));
+    }
 };
 
 export const setIsAuth = (value, userData) => ({type: SET_IS_AUTH, value, userData});

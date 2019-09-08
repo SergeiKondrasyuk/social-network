@@ -1,9 +1,7 @@
 import React, {useEffect} from 'react';
 import {connect} from 'react-redux';
 import Users from './Users';
-import {
-    getUsers, followUser, unFollowUser, setCurrentPage
-} from '../../redux/usersReducer';
+import {getUsers, followUser, unFollowUser, setCurrentPage} from '../../redux/usersReducer';
 import {getAuthReducer, getUsersReducer, getUsersSelector} from '../../redux/selectors';
 import Preloader from '../common/Preloader';
 import style from './User.module.css'

@@ -27,22 +27,21 @@ class ProfileCard extends Component {
 
     changeProfileEditMode = (value) => {
         this.setState({profileEditMode: value});
-    }
+    };
 
     onSaveButtonClick = () => {
         this.props.putProfileInfo(this.props.profilePage.profileInfo);
         this.setState({profileEditMode: false});
-    }
+    };
 
     onCancelButtonClick = () => {
         this.props.getProfileInfo(this.props.auth.userData.id);
         this.setState({profileEditMode: false});
-    }
-
+    };
 
     render() {
         let {profileInfo, profileStatus} = this.props.profilePage;
-        let meId = this.props.auth.userData.id
+        let meId = this.props.auth.userData.id;
         let aboutMeRef = React.createRef();
         let fullNameRef = React.createRef();
         let lookingForAJobRef = React.createRef();

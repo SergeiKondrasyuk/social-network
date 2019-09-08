@@ -1,23 +1,24 @@
 import {serverAPI} from '../dal/axios-instance';
 
-const ADD_POST = 'ADD_POST';
-const UPDATE_NEW_POST = 'UPDATE_NEW_POST';
-const SET_PROFILE_INFO_REQUEST_STATUS = 'SET_PROFILE_INFO_REQUEST_STATUS';
-const SET_PROFILE_INFO = 'SET_PROFILE_INFO';
-const SET_PROFILE_STATUS = 'SET_PROFILE_STATUS';
-const ON_CONTACT_CHANGE = 'ON_CONTACT_CHANGE';
-const ON_ABOUT_ME_CHANGE = 'ON_ABOUT_ME_CHANGE';
-const ON_FULL_NAME_CHANGE = 'ON_FULL_NAME_CHANGE';
-const SET_LOOKING_JOB_STATUS = 'SET_LOOKING_JOB_STATUS';
-const ON_JOB_DESCRIPTION_CHANGE = 'ON_JOB_DESCRIPTION_CHANGE';
-const ON_PHOTO_CHANGE = 'ON_PHOTO_CHANGE';
-const SET_PHOTO_UPDATE_ERROR_MESSAGE = 'SET_PHOTO_UPDATE_ERROR_MESSAGE';
-const SET_PROFILE_UPDATE_ERROR_MESSAGE = 'SET_PROFILE_UPDATE_ERROR_MESSAGE';
+const ADD_POST = 'PROFILE/ADD_POST';
+const DELETE_POST = 'PROFILE/DELETE_POST';
+const UPDATE_NEW_POST = 'PROFILE/UPDATE_NEW_POST';
+const SET_PROFILE_INFO_REQUEST_STATUS = 'PROFILE/SET_PROFILE_INFO_REQUEST_STATUS';
+const SET_PROFILE_INFO = 'PROFILE/SET_PROFILE_INFO';
+const SET_PROFILE_STATUS = 'PROFILE/SET_PROFILE_STATUS';
+const ON_CONTACT_CHANGE = 'PROFILE/ON_CONTACT_CHANGE';
+const ON_ABOUT_ME_CHANGE = 'PROFILE/ON_ABOUT_ME_CHANGE';
+const ON_FULL_NAME_CHANGE = 'PROFILE/ON_FULL_NAME_CHANGE';
+const SET_LOOKING_JOB_STATUS = 'PROFILE/SET_LOOKING_JOB_STATUS';
+const ON_JOB_DESCRIPTION_CHANGE = 'PROFILE/ON_JOB_DESCRIPTION_CHANGE';
+const ON_PHOTO_CHANGE = 'PROFILE/ON_PHOTO_CHANGE';
+const SET_PHOTO_UPDATE_ERROR_MESSAGE = 'PROFILE/SET_PHOTO_UPDATE_ERROR_MESSAGE';
+const SET_PROFILE_UPDATE_ERROR_MESSAGE = 'PROFILE/SET_PROFILE_UPDATE_ERROR_MESSAGE';
 
 export const getProfileInfoStatuses = {
     NOT_INITIALIZED: 'NOT_INITIALIZED',
     ERROR: 'ERROR',
-    INPROGRESS: 'IN_PROGRESS',
+    IN_PROGRESS: 'IN_PROGRESS',
     SUCCESS: 'SUCCESS'
 };
 
@@ -38,92 +39,78 @@ let initialState =
 
 const profilePageReducer = (state = initialState, action) => {
 
-    switch (action.type) {
-        case ADD_POST: {
-            let cloneState = {...state};
-            if (state.newPost.trim()) {
-                let newPost = {id: 4, text: state.newPost, likeCount: 0};
-                cloneState.postData = [...cloneState.postData, newPost];
-                cloneState.newPost = '';
+        switch (action.type) {
+            case ADD_POST: {
+                let cloneState = {...state};
+                if (state.newPost.trim()) {
+                    let newPost = {id: 4, text: state.newPost, likeCount: 0};
+                    cloneState.postData = [...cloneState.postData, newPost];
+                    cloneState.newPost = '';
+                }
+                return cloneState;
             }
-            return cloneState;
-        }
-        case UPDATE_NEW_POST: {
-            let cloneState = {...state};
-            cloneState.newPost = action.text;
-            return cloneState;
-        }
-        case SET_PROFILE_INFO_REQUEST_STATUS: {
-            return {...state, profileInfoRequestStatus: action.getUsersStatus,}
-        }
-        case ON_ABOUT_ME_CHANGE: {
-            let cloneState = {...state};
-            cloneState.profileInfo.aboutMe = action.value;
-            return cloneState;
-        }
-        case ON_FULL_NAME_CHANGE: {
-            let cloneState = {...state};
-            cloneState.profileInfo.fullName = action.value;
-            return cloneState;
-        }
-        case SET_LOOKING_JOB_STATUS: {
-            let cloneState = {...state};
-            cloneState.profileInfo.lookingForAJob = action.value;
-            return cloneState;
-        }
-        case ON_JOB_DESCRIPTION_CHANGE: {
-            let cloneState = {...state};
-            cloneState.profileInfo.lookingForAJobDescription = action.value;
-            return cloneState;
-        }
-        case SET_PROFILE_INFO: {
-            return {
-                ...state,
-                profileInfo: action.profileInfo,
+            case DELETE_POST: {
+                return {...state, posts: state.posts.filter(p => p.id !== action.postId)};
             }
-        }
-        case SET_PROFILE_STATUS: {
-            return {
-                ...state,
-                profileStatus: action.profileStatus,
+            case UPDATE_NEW_POST: {
+                let cloneState = {...state};
+                cloneState.newPost = action.text;
+                return cloneState;
             }
-        }
-        case SET_PHOTO_UPDATE_ERROR_MESSAGE: {
-            return {
-                ...state,
-                updatePhotoErrorMessage: action.value
+            case SET_PROFILE_INFO_REQUEST_STATUS: {
+                return {...state, profileInfoRequestStatus: action.getUsersStatus,}
             }
-        }
-        case SET_PROFILE_UPDATE_ERROR_MESSAGE: {
-            return {
-                ...state,
-                updateProfileErrorMessage: action.value
+            case ON_ABOUT_ME_CHANGE: {
+                let cloneState = {...state};
+                cloneState.profileInfo.aboutMe = action.value;
+                return cloneState;
             }
+            case ON_FULL_NAME_CHANGE: {
+                let cloneState = {...state};
+                cloneState.profileInfo.fullName = action.value;
+                return cloneState;
+            }
+            case SET_LOOKING_JOB_STATUS: {
+                let cloneState = {...state};
+                cloneState.profileInfo.lookingForAJob = action.value;
+                return cloneState;
+            }
+            case ON_JOB_DESCRIPTION_CHANGE: {
+                let cloneState = {...state};
+                cloneState.profileInfo.lookingForAJobDescription = action.value;
+                return cloneState;
+            }
+            case SET_PROFILE_INFO:
+                return {...state, profileInfo: action.profileInfo};
+            case SET_PROFILE_STATUS:
+                return {...state, profileStatus: action.profileStatus};
+            case SET_PHOTO_UPDATE_ERROR_MESSAGE:
+                return {...state, updatePhotoErrorMessage: action.value};
+            case SET_PROFILE_UPDATE_ERROR_MESSAGE:
+                return {...state, updateProfileErrorMessage: action.value};
+            case ON_CONTACT_CHANGE:
+                return {
+                    ...state, profileInfo: {
+                        ...state.profileInfo,
+                        contacts: {...state.profileInfo.contacts, [action.contactKey]: action.value}
+                    }
+                };
+            case
+            ON_PHOTO_CHANGE:
+                return {...state, profileInfo: {...state.profileInfo, photo: action.photo}};
+            default:
+                return state;
         }
-        case ON_CONTACT_CHANGE: {
-            let cloneState = {...state};
-            cloneState.profileInfo.contacts[action.contactKey] = action.value;
-            return cloneState;
-        }
-        case ON_PHOTO_CHANGE: {
-            let cloneState = {...state};
-            cloneState.profileInfo.photo = action.photo;
-            return cloneState;
-        }
-
-        default:
-            return state;
     }
-};
+;
 
-export const getProfileInfo = (userId) => (dispatch) => {
-    dispatch(setProfileInfoRequestStatus(getProfileInfoStatuses.INPROGRESS));
-    serverAPI.profileInfoRequest(userId).then(res => {
-        if (res.status === 200) {
-            dispatch(setProfileInfo(res.data));
-            dispatch(setProfileInfoRequestStatus(getProfileInfoStatuses.SUCCESS));
-        }
-    });
+export const getProfileInfo = (userId) => async (dispatch) => {
+    dispatch(setProfileInfoRequestStatus(getProfileInfoStatuses.IN_PROGRESS));
+    let response = await serverAPI.profileInfoRequest(userId)
+    if (response.status === 200) {
+        dispatch(setProfileInfo(response.data));
+        dispatch(setProfileInfoRequestStatus(getProfileInfoStatuses.SUCCESS));
+    }
 };
 
 export const putProfileInfo = () => (dispatch, getState) => {
@@ -139,36 +126,33 @@ export const putProfileInfo = () => (dispatch, getState) => {
         });
 };
 
-export const updateStatus = (status) => (dispatch) => {
-    serverAPI.updateStatusRequest(status).then(res => {
-        if (res.data.resultCode === 0) {
-            dispatch(setProfileStatus(status))
-        }
-    });
+export const updateStatus = (status) => async (dispatch) => {
+    let response = await serverAPI.updateStatusRequest(status);
+    if (response.data.resultCode === 0) {
+        dispatch(setProfileStatus(status))
+    }
 };
 
-export const getStatus = (userId) => (dispatch) => {
-    serverAPI.getStatusRequest(userId).then(res => {
-        if (res.status === 200) {
-            dispatch(setProfileStatus(res.data))
-        }
-    });
+export const getStatus = (userId) => async (dispatch) => {
+    let response = await serverAPI.getStatusRequest(userId);
+    if (response.status === 200) {
+        dispatch(setProfileStatus(response.data))
+    }
 };
 
-export const uploadPhoto = (photo) => (dispatch, getState) => {
+export const uploadPhoto = (photo) => async (dispatch, getState) => {
     let userId = getState().profilePage.profileInfo.userId;
-    serverAPI.uploadPhotoRequest(photo).then(res => {
-        if (res.data.resultCode === 0) {
-            dispatch(onPhotoChange(res.data.photo));
-            dispatch(getProfileInfo(userId))
-        } else {
-            dispatch(setPhotoUpdateErrorMessage(res.data.messages));
-        }
-    });
-};
-
+    let response = await serverAPI.uploadPhotoRequest(photo);
+    if (response.data.resultCode === 0) {
+        dispatch(onPhotoChange(response.data.photo));
+        dispatch(getProfileInfo(userId))
+    } else {
+        dispatch(setPhotoUpdateErrorMessage(response.data.messages));
+    }
+}
 
 export const addPostAC = () => ({type: ADD_POST});
+export const deletePostAC = (postId) => ({type: DELETE_POST, postId});
 export const updateNewPostTextAC = (newPost) => ({type: UPDATE_NEW_POST, text: newPost});
 export const setProfileInfoRequestStatus = (status) => ({
     type: SET_PROFILE_INFO_REQUEST_STATUS,

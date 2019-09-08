@@ -1,5 +1,5 @@
 {
-  "name": "firstproject",
+  "name": "social-network",
   "version": "0.1.0",
   "private": true,
   "homepage": "https://.github.io//",
@@ -131,8 +131,8 @@
       "node"
     ],
     "watchPlugins": [
-      "D:\\firstproject\\node_modules\\jest-watch-typeahead\\filename.js",
-      "D:\\firstproject\\node_modules\\jest-watch-typeahead\\testname.js"
+      "jest-watch-typeahead/filename",
+      "jest-watch-typeahead/testname"
     ]
   },
   "babel": {
