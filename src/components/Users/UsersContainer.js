@@ -22,6 +22,10 @@ const UsersConnected = (props) => {
                      followUser={props.followUser}
                      unFollowUser={props.unFollowUser}
                      setCurrentPage={props.setCurrentPage}
+                     usersTotalCount={props.usersTotalCount}
+                     usersCountOnPage={props.usersCountOnPage}
+                     followingInProgress={props.followingInProgress}
+                     currentPage={props.currentPage}
             />}
 
 
@@ -31,6 +35,10 @@ const UsersConnected = (props) => {
 const mapStateToProps = (state) => {
     return {
         usersReducer: getUsersReducer(state),
+        usersTotalCount: getUsersReducer(state).usersTotalCount,
+        usersCountOnPage: getUsersReducer(state).usersCountOnPage,
+        followingInProgress: getUsersReducer(state).followingInProgress,
+        currentPage: getUsersReducer(state).currentPage,
         users: getUsersSelector(state),
         auth: getAuthReducer(state),
     }

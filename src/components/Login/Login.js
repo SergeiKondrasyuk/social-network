@@ -12,13 +12,13 @@ let maxLength254 = maxLengthValidator(254);
 let minLength3 = minLengthValidator(3);
 
 
-const Login = (props) => {
+const Login = ({handleSubmit, error, login, isAuth}) => {
 
-    if (props.auth.isAuth) {
+    if (isAuth) {
         return <Redirect to={'/profile/'}/>
     }
 
-    return (<form className={style.loginForm} onSubmit={props.handleSubmit}>
+    return (<form className={style.loginForm} onSubmit={handleSubmit}>
             <div className={style.fields}>
                 <div className={style.email}>
                     <Field component={Input} type='email' id='email' name='email' label="Email address"
@@ -35,17 +35,17 @@ const Login = (props) => {
                                                       name='rememberMe'/>
                 </div>
 
-                {props.login.loginStatus === 'CAPTCHA_REQUIRED' &&
+                {login.loginStatus === 'CAPTCHA_REQUIRED' &&
                 <div><div>Please enter anti-bot symbols</div>
-                    <img src={props.login.captchaUrl} alt='captcha'/>
+                    <img src={login.captchaUrl} alt='captcha'/>
                     <div><Field component={Input} name='captcha' type='captcha' id='captcha'
                                 label="captcha" autoComplete="captcha" fieldType='input'/>
                     </div>
                 </div>}
-                {props.error && <div className={s.formSummaryError}>{props.error}</div>}
+                {error && <div className={s.formSummaryError}>{error}</div>}
                 <div>
                     <Button type="submit"
-                            disabled={props.login.loginStatus === loginStatuses.IN_PROGRESS}
+                            disabled={login.loginStatus === loginStatuses.IN_PROGRESS}
                             variant="contained" color="primary">Login</Button>
                 </div>
             </div>

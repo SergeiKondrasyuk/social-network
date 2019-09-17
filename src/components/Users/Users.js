@@ -1,14 +1,9 @@
 import React from 'react';
 import style from './User.module.css'
 import User from "./User";
+import Pagination from "../common/Pagination";
 
-const Users = (props) => {
-
-    let pagesCount = Math.ceil(props.usersReducer.usersTotalCount / props.usersReducer.usersCountOnPage);
-    let pages = [];
-    for (let i = 1; i <= pagesCount; i++) {
-        pages.push(i);
-    }
+const Users = ({usersTotalCount, usersCountOnPage, currentPage, followingInProgress, auth, users, ...props}) => {
 
     let onPageChanged = (pageNumber) => {
         props.setCurrentPage(pageNumber);
@@ -16,22 +11,15 @@ const Users = (props) => {
     };
 
     return <>
-        <div className={style.users}>{props.users.map(u =>
+        <div className={style.users}>{users.map(u =>
             <User id={u.id} photo={u.photos.small} status={u.status} name={u.name} followed={u.followed}
-                  followingInProgress={props.usersReducer.followingInProgress} unFollowUser={props.unFollowUser}
-                  isAuth={props.auth.isAuth} followUser={props.followUser} authId={props.auth.userData.id}/>
+                  followingInProgress={followingInProgress} unFollowUser={props.unFollowUser}
+                  isAuth={auth.isAuth} followUser={props.followUser} authId={auth.userData.id}/>
         )}
         </div>
 
-        <div className={style.pagination}>
-            {pages.map(p =>
-                <span className={props.usersReducer.currentPage === p && style.selectedPage}
-                      onClick={() => {
-                          onPageChanged(p)
-                      }}
-                >{p}</span>
-            )}
-        </div>
+        <Pagination usersTotalCount={usersTotalCount} usersCountOnPage={usersCountOnPage} currentPage={currentPage}
+                    onPageChanged={onPageChanged}/>
     </>
 };
 

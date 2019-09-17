@@ -12,7 +12,7 @@ const LoginContainer = (props) => {
 
     return <LoginReduxForm onSubmit={bllSubmit}
                            login={props.login}
-                           auth={props.auth}
+                           isAuth={props.auth.isAuth}
                            loginAttempt={props.loginAttempt}
     />
 };

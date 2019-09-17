@@ -45,23 +45,6 @@
     width: 300px;
 }
 
-.selectedPage {
-    background-color: darkseagreen;
-}
-
-.pagination {
-    width: auto;
-    position: absolute;
-    left: 50%;
-    transform: translate(-40%);
-}
-
-.pagination span{
-    padding: 5px;
-    border-radius: 3px;
-    cursor: pointer;
-}
-
 .preloader {
     position: absolute;
     top: 30vh;
