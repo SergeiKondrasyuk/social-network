@@ -1,6 +1,6 @@
 import {applyMiddleware, createStore, compose} from "redux";
 import {reducer as formReducer} from 'redux-form'
-import {combineReducers} from "redux/es/redux";
+import {combineReducers} from "redux";
 import profilePageReducer from "./profilePageReducer";
 import dialogPageReducer from "./dialogPageReducer";
 import navReducer from "./navReducer";

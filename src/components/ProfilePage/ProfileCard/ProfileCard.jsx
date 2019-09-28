@@ -1,28 +1,12 @@
 import React, {Component} from 'react';
 import s from './ProfileCard.module.css';
 import anonymousUser from '../../../img/anonymous-user.png';
+import ProfileStatus from "./ProfileStatus";
 
 class ProfileCard extends Component {
 
     state = {
-        statusEditMode: false,
         profileEditMode: false,
-        statusValue: this.props.profilePage.profileStatus,
-    };
-
-    onStatusBlurEvent = () => {
-        this.setState({statusEditMode: false});
-        if (this.props.profilePage.profileStatus !== this.state.statusValue) {
-            this.props.updateStatus(this.state.statusValue);
-        }
-    };
-
-    onStatusClickEvent = () => {
-        this.setState({statusEditMode: true});
-    };
-
-    onStatusChange = (e) => {
-        this.setState({statusValue: e.currentTarget.value});
     };
 
     changeProfileEditMode = (value) => {
@@ -30,23 +14,22 @@ class ProfileCard extends Component {
     };
 
     onSaveButtonClick = () => {
-        this.props.putProfileInfo(this.props.profilePage.profileInfo);
+        this.props.putProfileInfo(this.props.profileInfo);
         this.setState({profileEditMode: false});
     };
 
     onCancelButtonClick = () => {
-        this.props.getProfileInfo(this.props.auth.userData.id);
+        this.props.getProfileInfo(this.props.meId);
         this.setState({profileEditMode: false});
     };
 
     render() {
-        let {profileInfo, profileStatus} = this.props.profilePage;
-        let meId = this.props.auth.userData.id;
+        let profileInfo = this.props.profileInfo;
+        let meId = this.props.meId;
         let aboutMeRef = React.createRef();
         let fullNameRef = React.createRef();
         let lookingForAJobRef = React.createRef();
         let JobDescriptionRef = React.createRef();
-        let statusInputRef = React.createRef();
 
         let onAboutMeChange = () => this.props.onAboutMeChange(aboutMeRef.current.value);
         let onFullNameChange = () => this.props.onFullNameChange(fullNameRef.current.value);
@@ -82,12 +65,7 @@ class ProfileCard extends Component {
                     {(profileInfo.userId === meId) &&
                     <button onClick={() => this.changeProfileEditMode(true)}>edit</button>}
                 </div>
-                <div>
-                    <span><b>Status: </b></span>{this.state.statusEditMode
-                    ? <input value={this.state.statusValue} onBlur={this.onStatusBlurEvent}
-                             ref={statusInputRef} autoFocus={true} onChange={this.onStatusChange}/>
-                    : <span onClick={this.onStatusClickEvent} style={{cursor: 'pointer'}}>{profileStatus}</span>}
-                </div>
+                <ProfileStatus updateStatus={this.props.updateStatus} status={this.props.status}/>
                 <div>
                     <span><b>About me: </b></span>{this.state.profileEditMode ?
                     <input onChange={onAboutMeChange} value={profileInfo.aboutMe}

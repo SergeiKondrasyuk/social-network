@@ -11,7 +11,7 @@ import {getAuthReducer, getProfilePageReducer} from '../../../redux/selectors';
 
 const ProfileCardConnected = (props) => {
     return <ProfileCard profilePage={props.profilePage}
-                        auth={props.auth}
+                        meId={props.auth.userData.id}
                         getProfileInfo={props.getProfileInfo}
                         putProfileInfo={props.putProfileInfo}
                         onContactChange={props.onContactChange}
@@ -22,6 +22,8 @@ const ProfileCardConnected = (props) => {
                         uploadPhoto={props.uploadPhoto}
                         updateStatus={props.updateStatus}
                         setErrorMessage={props.setErrorMessage}
+                        status={props.profilePage.profileStatus}
+                        profileInfo={props.profilePage.profileInfo}
     />
 };
 
